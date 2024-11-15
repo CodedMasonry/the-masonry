@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { CycleText } from "~/components/cycle-text";
 import { ModeToggle } from "~/components/mode-toggle";
 
 export default function HomePage() {
@@ -8,7 +9,6 @@ export default function HomePage() {
     </main>
   );
 }
-
 function Header() {
   return (
     <div className="ml-36 mt-36 flex flex-row">
@@ -23,7 +23,16 @@ function Header() {
         <h1 className="text-6xl font-extrabold text-primary drop-shadow-lg">
           Hello, I'm Brock.
         </h1>
-        <h2 className="text-4xl drop-shadow-lg">Software Developer</h2>
+        <h2 className="text-4xl drop-shadow-lg">
+          <CycleText
+            options={[
+              "Software Developer",
+              "Cybersecurity Enthusiast",
+              "Photographer",
+              "Drone Pilot",
+            ]}
+          />
+        </h2>
         <p className="max-w-3xl drop-shadow-lg">
           I'm a high school student from Columbus, Ohio with years of
           programming experience, focusing on network programming, and malware
@@ -33,9 +42,7 @@ function Header() {
           aspects of technology, emphasizing clear communication and
           collaboration to push results.
         </p>
-        <div className="flex space-x-4">
-          <ModeToggle />
-        </div>
+        <div className="flex space-x-4"></div>
       </div>
     </div>
   );

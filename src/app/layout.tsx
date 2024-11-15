@@ -3,6 +3,7 @@ import { ThemeProvider } from "~/components/theme-provider";
 
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
+import { Navbar } from "~/components/navbar";
 
 export const metadata: Metadata = {
   title: "Brock Shaffer",
@@ -26,6 +27,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Navbar />
           {children}
         </ThemeProvider>
       </body>

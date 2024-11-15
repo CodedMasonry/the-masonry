@@ -100,3 +100,37 @@
       80px 80px;
   }
 }
+
+.translate-in-2 {
+  animation: translateIn 2s ease-out var(--delay);
+}
+
+@keyframes translateIn {
+  0% {
+    translate: -16px 0px;
+  }
+
+  100% {
+    translate: 0px 0px;
+  }
+}
+
+@keyframes SlideTransition {
+  from {
+    translate: 0px -16px;
+  }
+
+  to {
+    translate: 0px 16px;
+  }
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 40rem;
+  }
+}
