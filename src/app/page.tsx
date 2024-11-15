@@ -1,37 +1,42 @@
-import Link from "next/link";
+import Image from "next/image";
+import { ModeToggle } from "~/components/mode-toggle";
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
+    <main className="flex">
+      <Header />
+    </main>
+  );
+}
+
+function Header() {
+  return (
+    <div className="ml-36 mt-36 flex flex-row">
+      <Image
+        src="/dog.webp"
+        alt=""
+        width={384}
+        height={384}
+        className="aspect-square size-96 rounded-md border shadow-lg"
+      />
+      <div className="ml-8 mt-8 flex flex-col space-y-2">
+        <h1 className="text-6xl font-extrabold text-primary drop-shadow-lg">
+          Hello, I'm Brock.
         </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
+        <h2 className="text-4xl drop-shadow-lg">Software Developer</h2>
+        <p className="max-w-3xl drop-shadow-lg">
+          I'm a high school student from Columbus, Ohio with years of
+          programming experience, focusing on network programming, and malware
+          development. Having a diverse skill set in these areas gives me a
+          well-rounded understanding of the cybersecurity landscape. I'm also
+          passionate about bridging the gap between the technical and business
+          aspects of technology, emphasizing clear communication and
+          collaboration to push results.
+        </p>
+        <div className="flex space-x-4">
+          <ModeToggle />
         </div>
       </div>
-    </main>
+    </div>
   );
 }
