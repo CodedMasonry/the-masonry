@@ -1,16 +1,18 @@
 import Image from "next/image";
 import { CycleText, StaggerButtons } from "~/components/index-components";
-import { ModeToggle } from "~/components/mode-toggle";
 import { Navbar } from "~/components/navbar";
+import { SpotifyAccessToken } from "~/server/spotify";
 
-export default function HomePage() {
+export default async function HomePage() {
   return (
     <main className="flex flex-col">
       <Navbar />
       <Header />
+      <Spotify />
     </main>
   );
 }
+
 function Header() {
   return (
     <div className="ml-36 mt-32 flex flex-row">
@@ -49,4 +51,9 @@ function Header() {
       </div>
     </div>
   );
+}
+
+async function Spotify() {
+  const token = await SpotifyAccessToken();
+  return <div className="flex flex-row"></div>;
 }
