@@ -3,12 +3,11 @@ import { ThemeProvider } from "~/components/theme-provider";
 
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
-import { Navbar } from "~/components/navbar";
 
 export const metadata: Metadata = {
   title: "Brock Shaffer",
   description: "A guy showcasing the stuff he does",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: "/favicon.svg" }],
 };
 
 export default function RootLayout({
@@ -27,7 +26,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
           {children}
         </ThemeProvider>
       </body>

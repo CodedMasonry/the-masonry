@@ -1,17 +1,19 @@
 import Image from "next/image";
-import { CycleText } from "~/components/cycle-text";
+import { CycleText, StaggerButtons } from "~/components/index-components";
 import { ModeToggle } from "~/components/mode-toggle";
+import { Navbar } from "~/components/navbar";
 
 export default function HomePage() {
   return (
-    <main className="flex">
+    <main className="flex flex-col">
+      <Navbar />
       <Header />
     </main>
   );
 }
 function Header() {
   return (
-    <div className="ml-36 mt-36 flex flex-row">
+    <div className="ml-36 mt-32 flex flex-row">
       <Image
         src="/dog.webp"
         alt=""
@@ -20,7 +22,10 @@ function Header() {
         className="aspect-square size-96 rounded-md border shadow-lg"
       />
       <div className="ml-8 mt-8 flex flex-col space-y-2">
-        <h1 className="text-6xl font-extrabold text-primary drop-shadow-lg">
+        <h1
+          className="text-6xl font-extrabold text-primary drop-shadow-lg"
+          id="name"
+        >
           Hello, I'm Brock.
         </h1>
         <h2 className="text-4xl drop-shadow-lg">
@@ -33,16 +38,14 @@ function Header() {
             ]}
           />
         </h2>
-        <p className="max-w-3xl drop-shadow-lg">
-          I'm a high school student from Columbus, Ohio with years of
-          programming experience, focusing on network programming, and malware
-          development. Having a diverse skill set in these areas gives me a
-          well-rounded understanding of the cybersecurity landscape. I'm also
-          passionate about bridging the gap between the technical and business
-          aspects of technology, emphasizing clear communication and
-          collaboration to push results.
+        <p className="max-w-3xl pb-4 pt-4 drop-shadow-lg">
+          I'm a high school student from Columbus, Ohio with several years of
+          programming experience, focusing on network programming, and Backend
+          development. I'm passionate about bridging the gap between the
+          technical and business aspects of technology, emphasizing clear
+          communication and collaboration to push results.
         </p>
-        <div className="flex space-x-4"></div>
+        <StaggerButtons />
       </div>
     </div>
   );
