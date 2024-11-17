@@ -1,21 +1,22 @@
 import Image from "next/image";
-import { CycleText, StaggerButtons } from "~/components/index-components";
+import { CycleText, StaggerButtons } from "~/components/spotify";
 import { Navbar } from "~/components/navbar";
-import { SpotifyAccessToken } from "~/server/spotify";
+import { SpotifySection } from "~/components/spotify";
+import { api } from "~/trpc/server";
 
 export default async function HomePage() {
   return (
     <main className="flex flex-col">
       <Navbar />
       <Header />
-      <Spotify />
+      <SpotifySection />
     </main>
   );
 }
 
 function Header() {
   return (
-    <div className="ml-36 mt-32 flex flex-row">
+    <div className="ml-36 mt-28 flex flex-row">
       <Image
         src="/dog.webp"
         alt=""
@@ -51,9 +52,4 @@ function Header() {
       </div>
     </div>
   );
-}
-
-async function Spotify() {
-  const token = await SpotifyAccessToken();
-  return <div className="flex flex-row"></div>;
 }

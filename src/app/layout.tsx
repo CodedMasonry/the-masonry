@@ -1,12 +1,14 @@
 import "~/styles/globals.css";
-import { ThemeProvider } from "~/components/theme-provider";
 
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
+import { TRPCReactProvider } from "~/trpc/react";
+import { ThemeProvider } from "~/components/theme-provider";
+
 export const metadata: Metadata = {
   title: "Brock Shaffer",
-  description: "A guy showcasing the stuff he does",
+  description: "My portfolio site",
   icons: [{ rel: "icon", url: "/favicon.svg" }],
 };
 
@@ -14,20 +16,18 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${GeistSans.variable}`}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={`${GeistSans.variable}`} suppressHydrationWarning>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <TRPCReactProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </TRPCReactProvider>
       </body>
     </html>
   );

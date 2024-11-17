@@ -1,9 +1,10 @@
 "use server";
 
 import { Redis } from "@upstash/redis";
-import { unstable_cache } from "next/cache";
+import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 import queryString from "query-string";
+import { z } from "zod";
 import { env } from "~/env";
 
 const redis = Redis.fromEnv();
@@ -24,8 +25,75 @@ export const SpotifyAccessToken = unstable_cache(
     return await fetchSpotifyAccess(refreshToken!);
   },
   ["SpotifyAccessToken"],
-  { revalidate: 1800 },
+  { revalidate: 1800, tags: ["spotify"] },
 );
+
+const PlaybackSchema = z.object({
+  device: z.object({
+    name: z.string(),
+    type: z.string(),
+  }),
+  is_playing: z.boolean(),
+  shuffle_state: z.boolean(),
+  repeat_state: z.enum(["off", "track", "context"]),
+  timestamp: z.number(),
+  progress_ms: z.number(),
+  item: z.object({
+    album: z.object({
+      album_type: z.string(),
+      external_urls: z.object({ spotify: z.string() }),
+      images: z.array(
+        z.object({ height: z.number(), url: z.string(), width: z.number() }),
+      ),
+      name: z.string(),
+      release_date: z.string(),
+      total_tracks: z.number(),
+    }),
+    artists: z.array(
+      z.object({
+        external_urls: z.object({ spotify: z.string() }),
+        name: z.string(),
+      }),
+    ),
+    duration_ms: z.number(),
+    explicit: z.boolean(),
+    external_urls: z.object({ spotify: z.string() }),
+    name: z.string(),
+  }),
+});
+export type PlaybackResponse = z.infer<typeof PlaybackSchema>;
+
+/// Returns the current playback; If hash is real, check the hash against the generate object.
+/// Returns null if hash matches
+export async function GetPlayback() {
+  try {
+    const token = await SpotifyAccessToken();
+    const response = await fetch("https://api.spotify.com/v1/me/player", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+
+    if (!response.ok) {
+      revalidatePath("spotify");
+      throw new Error("Response not ok");
+    }
+
+    console.log(response);
+    const json = await response.json();
+    const parsed = PlaybackSchema.parse(json);
+
+    return parsed;
+  } catch (error) {
+    console.log("Failed while getting playback: ", error);
+  }
+}
+
+/*
+
+Authentication Functions
+
+*/
 
 /// Cryptographically secure types
 function generateRandomString(length: number): string {
@@ -39,7 +107,8 @@ function generateRandomString(length: number): string {
 /// Handle authenticating user
 function Authenticate() {
   var state = generateRandomString(16);
-  var scope = "user-read-private user-read-email";
+  var scope =
+    "user-read-playback-state user-read-currently-playing user-modify-playback-state user-read-recently-played";
 
   redirect(
     "https://accounts.spotify.com/authorize?" +
