@@ -2,7 +2,11 @@
 
 import {
   IconArrowsShuffle,
+  IconDeviceLaptop,
+  IconDeviceMobile,
+  IconDeviceSpeaker,
   IconExplicit,
+  IconPhone,
   IconRepeat,
   IconRepeatOnce,
 } from "@tabler/icons-react";
@@ -186,7 +190,7 @@ export function SpotifySection() {
             />
             <ClientVinyl isPlaying={data.is_playing} />
           </div>
-          <div className="mt-16 space-y-1 drop-shadow-lg">
+          <div className="mt-16 flex flex-col drop-shadow-lg">
             <h3 className="text-6xl font-semibold">{data.item.name}</h3>
             <div className="flex min-h-6 space-x-2">
               {data.item.explicit && <IconExplicit />}
@@ -204,11 +208,26 @@ export function SpotifySection() {
               {formatMilliseconds(data.progress_ms!)} /{" "}
               {formatMilliseconds(data.item.duration_ms!)}
             </p>
+            <div className="mb-4 mt-auto flex">
+              Playing now on <Device type={data.device.type} />{" "}
+              {data.device.name}
+            </div>
           </div>
         </div>
       )}
     </div>
   );
+}
+
+function Device({ type }: { type: string }) {
+  const lowercase = type.toLowerCase();
+  if (lowercase == "computer") {
+    return <IconDeviceLaptop />;
+  } else if (lowercase == "smartphone") {
+    return <IconDeviceMobile />;
+  } else {
+    return <IconDeviceSpeaker />;
+  }
 }
 
 function formatMilliseconds(ms: number): string {

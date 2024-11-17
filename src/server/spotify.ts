@@ -76,10 +76,12 @@ export async function GetPlayback() {
 
     if (!response.ok) {
       revalidatePath("spotify");
-      throw new Error("Response not ok");
+      throw new Error("Response not 200");
+    }
+    if (response.status == 204) {
+      return null;
     }
 
-    console.log(response);
     const json = await response.json();
     const parsed = PlaybackSchema.parse(json);
 
