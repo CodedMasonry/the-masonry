@@ -148,6 +148,7 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
           height={384}
           alt=""
           loading="lazy"
+          className="drop-shadow-lg"
         />
       </motion.div>
     );
