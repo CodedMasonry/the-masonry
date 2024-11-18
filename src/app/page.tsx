@@ -1,8 +1,7 @@
+import dynamic from "next/dynamic";
 import Image from "next/image";
-import { Suspense } from "react";
-import { CycleText, SpotifyClientSection, StaggerButtons } from "~/app/client";
+import { CycleText, StaggerButtons } from "~/app/client";
 import { Navbar } from "~/components/navbar";
-import { Skeleton } from "~/components/ui/skeleton";
 
 export default async function HomePage() {
   return (
@@ -54,13 +53,20 @@ function Header() {
   );
 }
 
+// Lazy load Client Section
+const SpotifyClientSection = dynamic(() =>
+  import("~/app/client").then((mod) => mod.SpotifyClientSection),
+);
+
 function Spotify() {
   return (
     <div className="mb-32 ml-36 mt-32 flex flex-col">
       <h3 className="-ml-4 mb-4 text-3xl underline decoration-primary">
         I listen to a decent amount of music.
       </h3>
-      <SpotifyClientSection />
+      <div className="h-96">
+        <SpotifyClientSection />
+      </div>
     </div>
   );
 }

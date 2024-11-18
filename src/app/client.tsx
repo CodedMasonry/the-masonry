@@ -219,8 +219,13 @@ export function SpotifyClientSection() {
 
   return (
     <AnimatePresence mode="wait">
-      {data && <CurrentlyPlaying data={data} progress={progress!} />}
-      {data == null && <NothingPlaying />}
+      {response.isError ? (
+        <ErrorPlaying error={response.error.message} />
+      ) : data ? (
+        <CurrentlyPlaying data={data} progress={progress!} />
+      ) : (
+        <NothingPlaying />
+      )}
     </AnimatePresence>
   );
 }
@@ -346,6 +351,33 @@ function NothingPlaying() {
         </p>
         <p className="mt-4 text-2xl font-light underline decoration-primary">
           But this section will update when I turn the music on
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
+function ErrorPlaying({ error }: { error: string }) {
+  return (
+    <motion.div
+      key="ErrorPlaying"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
+      className="flex flex-row"
+    >
+      <div className="mr-44">
+        <IconMoodSad
+          color="white"
+          className="absolute z-10 h-96 w-96 rounded-xl bg-destructive shadow-md"
+        />
+      </div>
+      <div className="mt-16 flex flex-col drop-shadow-lg">
+        <h3 className="text-6xl font-semibold">We Receieved An Error</h3>
+        <p className="mt-4 text-4xl">{error}</p>
+        <p className="mt-4 text-2xl font-light underline decoration-primary">
+          If the error is on my side, I will fix it as soon as I can.
         </p>
       </div>
     </motion.div>
