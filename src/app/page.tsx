@@ -1,7 +1,10 @@
+import { IconMoodSad } from "@tabler/icons-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { Suspense } from "react";
 import { CycleText, StaggerButtons } from "~/app/client";
 import { Navbar } from "~/components/navbar";
+import { Skeleton } from "~/components/ui/skeleton";
 
 export default async function HomePage() {
   return (

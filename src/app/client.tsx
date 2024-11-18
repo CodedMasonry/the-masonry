@@ -248,7 +248,7 @@ function CurrentlyPlaying({
     >
       <div className="mr-44">
         <Image
-          src={data?.item.album.images[0]?.url as string}
+          src={data?.item.album.images[1]?.url as string}
           alt=""
           width={384}
           height={384}
@@ -259,7 +259,7 @@ function CurrentlyPlaying({
         <ClientVinyl isPlaying={data.is_playing} />
       </div>
       <div className="mt-16 flex flex-col drop-shadow-lg">
-        <h3 className="text-6xl font-semibold">{data.item.name}</h3>
+        <h4 className="text-6xl font-semibold">{data.item.name}</h4>
         <div className="mt-1 flex min-h-6 space-x-2">
           {data.item.explicit && (
             <Tooltip delayDuration={200}>
@@ -302,12 +302,12 @@ function CurrentlyPlaying({
             </Tooltip>
           )}
         </div>
-        <h4 className="mt-1 text-4xl">
+        <h5 className="mt-1 text-4xl">
           {data.item.artists.map((v) => v.name).join(", ")}
-        </h4>
-        <h5 className="mt-1 text-2xl font-light">
-          {data.item.album.name} ({data.item.album.release_date})
         </h5>
+        <h6 className="mt-1 text-2xl font-light">
+          {data.item.album.name} ({data.item.album.release_date})
+        </h6>
         <p className="mt-1">
           {formatMilliseconds(progress!)} /{" "}
           {formatMilliseconds(data.item.duration_ms!)}
@@ -345,7 +345,7 @@ function NothingPlaying() {
         />
       </div>
       <div className="mt-16 flex flex-col drop-shadow-lg">
-        <h3 className="text-6xl font-semibold">Nothings Playing</h3>
+        <h4 className="text-6xl font-semibold">Nothings Playing</h4>
         <p className="mt-4 text-4xl">
           I can't show you something that doesn't exist
         </p>
@@ -374,7 +374,7 @@ function ErrorPlaying({ error }: { error: string }) {
         />
       </div>
       <div className="mt-16 flex flex-col drop-shadow-lg">
-        <h3 className="text-6xl font-semibold">We Receieved An Error</h3>
+        <h4 className="text-6xl font-semibold">We Receieved An Error</h4>
         <p className="mt-4 text-4xl">{error}</p>
         <p className="mt-4 text-2xl font-light underline decoration-primary">
           If the error is on my side, I will fix it as soon as I can.

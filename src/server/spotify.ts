@@ -60,8 +60,7 @@ const PlaybackSchema = z.object({
 });
 export type PlaybackResponse = z.infer<typeof PlaybackSchema>;
 
-/// Returns the current playback; If hash is real, check the hash against the generate object.
-/// Returns null if hash matches
+/// Returns the current playback
 export async function GetPlayback() {
   try {
     const token = await SpotifyAccessToken();
