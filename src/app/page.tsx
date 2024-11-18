@@ -2,7 +2,6 @@ import Image from "next/image";
 import { CycleText, StaggerButtons } from "~/components/spotify";
 import { Navbar } from "~/components/navbar";
 import { SpotifySection } from "~/components/spotify";
-import { api } from "~/trpc/server";
 
 export default async function HomePage() {
   return (

@@ -41,17 +41,14 @@ const PlaybackSchema = z.object({
   item: z.object({
     album: z.object({
       album_type: z.string(),
-      external_urls: z.object({ spotify: z.string() }),
       images: z.array(
         z.object({ height: z.number(), url: z.string(), width: z.number() }),
       ),
       name: z.string(),
       release_date: z.string(),
-      total_tracks: z.number(),
     }),
     artists: z.array(
       z.object({
-        external_urls: z.object({ spotify: z.string() }),
         name: z.string(),
       }),
     ),
@@ -75,8 +72,8 @@ export async function GetPlayback() {
     });
 
     if (!response.ok) {
-      revalidatePath("spotify");
-      throw new Error("Response not 200");
+      revalidatePath("/");
+      return null;
     }
     if (response.status == 204) {
       return null;

@@ -6,11 +6,12 @@ import {
   IconDeviceMobile,
   IconDeviceSpeaker,
   IconExplicit,
-  IconPhone,
+  IconMoodSad,
   IconRepeat,
   IconRepeatOnce,
 } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "motion/react";
+import { revalidatePath } from "next/cache";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { buttonVariants } from "~/components/ui/button";
@@ -137,10 +138,10 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
         initial={{ x: 0 }}
         whileInView={{ x: 112, rotate: 360 }}
         transition={{
-          x: { duration: 1, type: "spring" },
+          x: { duration: 1, type: "spring", delay: 0.5 },
           rotate: { repeat: Infinity, duration: 3, ease: "linear" },
         }}
-        className="drop-shadow-lg"
+        className="size-96 drop-shadow-lg"
       >
         <Image
           src="/vinyl.webp"
@@ -148,7 +149,7 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
           height={384}
           alt=""
           loading="lazy"
-          className="drop-shadow-lg"
+          className="size-96 drop-shadow-lg"
         />
       </motion.div>
     );
@@ -160,63 +161,157 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
         height={384}
         alt=""
         loading="lazy"
-        className="translate-x-28"
+        className="size-96 translate-x-28"
       />
     );
   }
 }
 
 export function SpotifySection() {
+  // Utility to invalidate cache
+  const utils = api.useUtils();
+  // Fetch data hook
   const response = api.spotify.getPlayback.useQuery(void 0, {
     staleTime: 10 * 1000,
   });
+  // Parse response to either an object or null
   const data = useMemo(() => response.data ?? null, [response]);
+  // Simulating live timing
+  const [progress, setProgress] = useState<number | null>(null);
+
+  // Update progress based on data changes
+  useEffect(() => {
+    if (data?.progress_ms) {
+      setProgress(data.progress_ms); // Reset progress to the new data's progress_ms
+    } else {
+      setProgress(null); // Reset progress to null if data is null
+    }
+  }, [data]);
+
+  // Increment every second
+  useEffect(() => {
+    //Implementing the setInterval method
+    const interval = setInterval(() => {
+      // If data is real
+      if (data?.progress_ms) {
+        // If progress is real & music is playing
+        if (progress && data.is_playing) {
+          // If duration is less than how long it should be
+          if (progress < data.item.duration_ms) {
+            setProgress(progress + 1000);
+          } else if (progress >= data.item.duration_ms) {
+            // Revalidate local cache because we hit the precieved end of the song
+            utils.spotify.invalidate();
+          }
+        } else {
+          setProgress(data.progress_ms);
+        }
+      }
+    }, 1000);
+
+    //Clearing the interval
+    return () => clearInterval(interval);
+  }, [response]);
 
   return (
     <div className="mb-32 ml-36 mt-32 flex flex-col">
       <h3 className="-ml-4 mb-4 text-3xl underline decoration-primary">
         I listen to a decent amount of music.
       </h3>
-      {data && (
-        <div className="flex flex-row">
-          <div className="mr-44">
-            <Image
-              src={data?.item.album.images[0]?.url as string}
-              alt=""
-              width={384}
-              height={384}
-              unoptimized
-              loading="lazy"
-              className="absolute z-10 h-96 w-96 rounded-xl bg-background shadow-md"
-            />
-            <ClientVinyl isPlaying={data.is_playing} />
-          </div>
-          <div className="mt-16 flex flex-col drop-shadow-lg">
-            <h3 className="text-6xl font-semibold">{data.item.name}</h3>
-            <div className="flex min-h-6 space-x-2">
-              {data.item.explicit && <IconExplicit />}
-              {data.repeat_state == "context" && <IconRepeat />}
-              {data.repeat_state == "track" && <IconRepeatOnce />}
-              {data.shuffle_state && <IconArrowsShuffle />}
-            </div>
-            <h4 className="text-4xl">
-              {data.item.artists.map((v) => v.name).join(", ")}
-            </h4>
-            <h5 className="text-2xl font-light">
-              {data.item.album.name} ({data.item.album.release_date})
-            </h5>
-            <p>
-              {formatMilliseconds(data.progress_ms!)} /{" "}
-              {formatMilliseconds(data.item.duration_ms!)}
-            </p>
-            <div className="mb-4 mt-auto flex">
-              Playing now on <Device type={data.device.type} />{" "}
-              {data.device.name}
-            </div>
-          </div>
-        </div>
-      )}
+      <AnimatePresence mode="wait">
+        {data && <CurrentlyPlaying data={data} progress={progress!} />}
+        {data == null && <NothingPlaying />}
+      </AnimatePresence>
     </div>
+  );
+}
+
+function CurrentlyPlaying({
+  data,
+  progress,
+}: {
+  data: PlaybackResponse;
+  progress: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
+      className="flex flex-row"
+    >
+      <div className="mr-44">
+        <Image
+          src={data?.item.album.images[0]?.url as string}
+          alt=""
+          width={384}
+          height={384}
+          unoptimized
+          loading="lazy"
+          className="absolute z-10 h-96 w-96 rounded-xl bg-background shadow-md"
+        />
+        <ClientVinyl isPlaying={data.is_playing} />
+      </div>
+      <div className="mt-16 flex flex-col drop-shadow-lg">
+        <h3 className="text-6xl font-semibold">{data.item.name}</h3>
+        <div className="mt-1 flex min-h-6 space-x-2">
+          {data.item.explicit && <IconExplicit />}
+          {data.repeat_state == "context" && <IconRepeat />}
+          {data.repeat_state == "track" && <IconRepeatOnce />}
+          {data.shuffle_state && <IconArrowsShuffle />}
+        </div>
+        <h4 className="mt-1 text-4xl">
+          {data.item.artists.map((v) => v.name).join(", ")}
+        </h4>
+        <h5 className="mt-1 text-2xl font-light">
+          {data.item.album.name} ({data.item.album.release_date})
+        </h5>
+        <p className="mt-1">
+          {formatMilliseconds(progress!)} /{" "}
+          {formatMilliseconds(data.item.duration_ms!)}
+        </p>
+        <div className="mb-4 mt-auto flex">
+          Playing now on <Device type={data.device.type} /> {data.device.name}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function NothingPlaying() {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1, delay: 2 }}
+      className="flex flex-row"
+    >
+      <div className="mr-44">
+        <IconMoodSad
+          color="white"
+          className="absolute z-10 h-96 w-96 rounded-xl bg-destructive shadow-md"
+        />
+        <Image
+          src="/broken_vinyl.webp"
+          alt=""
+          width={384}
+          height={384}
+          loading="lazy"
+          className="h-96 w-96 translate-x-28 rounded-xl drop-shadow-lg"
+        />
+      </div>
+      <div className="mt-16 flex flex-col drop-shadow-lg">
+        <h3 className="text-6xl font-semibold">Nothings Playing</h3>
+        <p className="mt-4 text-4xl">
+          I can't show you something that doesn't exist
+        </p>
+        <p className="mt-4 text-2xl font-light underline decoration-primary">
+          But this section will update when I turn the music on
+        </p>
+      </div>
+    </motion.div>
   );
 }
 
