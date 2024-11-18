@@ -11,10 +11,14 @@ import {
   IconRepeatOnce,
 } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "motion/react";
-import { revalidatePath } from "next/cache";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { buttonVariants } from "~/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 import { PlaybackResponse } from "~/server/spotify";
 import { api } from "~/trpc/react";
 
@@ -167,7 +171,7 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
   }
 }
 
-export function SpotifySection() {
+export function SpotifyClientSection() {
   // Utility to invalidate cache
   const utils = api.useUtils();
   // Fetch data hook
@@ -214,15 +218,10 @@ export function SpotifySection() {
   }, [response]);
 
   return (
-    <div className="mb-32 ml-36 mt-32 flex flex-col">
-      <h3 className="-ml-4 mb-4 text-3xl underline decoration-primary">
-        I listen to a decent amount of music.
-      </h3>
-      <AnimatePresence mode="wait">
-        {data && <CurrentlyPlaying data={data} progress={progress!} />}
-        {data == null && <NothingPlaying />}
-      </AnimatePresence>
-    </div>
+    <AnimatePresence mode="wait">
+      {data && <CurrentlyPlaying data={data} progress={progress!} />}
+      {data == null && <NothingPlaying />}
+    </AnimatePresence>
   );
 }
 
@@ -235,6 +234,7 @@ function CurrentlyPlaying({
 }) {
   return (
     <motion.div
+      key="CurrentlyPlaying"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -256,10 +256,46 @@ function CurrentlyPlaying({
       <div className="mt-16 flex flex-col drop-shadow-lg">
         <h3 className="text-6xl font-semibold">{data.item.name}</h3>
         <div className="mt-1 flex min-h-6 space-x-2">
-          {data.item.explicit && <IconExplicit />}
-          {data.repeat_state == "context" && <IconRepeat />}
-          {data.repeat_state == "track" && <IconRepeatOnce />}
-          {data.shuffle_state && <IconArrowsShuffle />}
+          {data.item.explicit && (
+            <Tooltip delayDuration={200}>
+              <TooltipTrigger asChild>
+                <IconExplicit />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>This song is marked Explicit by Spotify</p>
+              </TooltipContent>
+            </Tooltip>
+          )}
+          {data.repeat_state == "context" && (
+            <Tooltip delayDuration={200}>
+              <TooltipTrigger asChild>
+                <IconRepeat />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Playback is set to repeat</p>
+              </TooltipContent>
+            </Tooltip>
+          )}
+          {data.repeat_state == "track" && (
+            <Tooltip delayDuration={500}>
+              <TooltipTrigger asChild>
+                <IconRepeatOnce />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Playback is set to repeat this song</p>
+              </TooltipContent>
+            </Tooltip>
+          )}
+          {data.shuffle_state && (
+            <Tooltip delayDuration={500}>
+              <TooltipTrigger asChild>
+                <IconArrowsShuffle />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Playback is set to shuffle</p>
+              </TooltipContent>
+            </Tooltip>
+          )}
         </div>
         <h4 className="mt-1 text-4xl">
           {data.item.artists.map((v) => v.name).join(", ")}
@@ -282,6 +318,7 @@ function CurrentlyPlaying({
 function NothingPlaying() {
   return (
     <motion.div
+      key="NothingPlaying"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

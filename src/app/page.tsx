@@ -1,14 +1,15 @@
 import Image from "next/image";
-import { CycleText, StaggerButtons } from "~/components/spotify";
+import { Suspense } from "react";
+import { CycleText, SpotifyClientSection, StaggerButtons } from "~/app/client";
 import { Navbar } from "~/components/navbar";
-import { SpotifySection } from "~/components/spotify";
+import { Skeleton } from "~/components/ui/skeleton";
 
 export default async function HomePage() {
   return (
     <main className="flex flex-col">
       <Navbar />
       <Header />
-      <SpotifySection />
+      <Spotify />
     </main>
   );
 }
@@ -49,6 +50,17 @@ function Header() {
         </p>
         <StaggerButtons />
       </div>
+    </div>
+  );
+}
+
+function Spotify() {
+  return (
+    <div className="mb-32 ml-36 mt-32 flex flex-col">
+      <h3 className="-ml-4 mb-4 text-3xl underline decoration-primary">
+        I listen to a decent amount of music.
+      </h3>
+      <SpotifyClientSection />
     </div>
   );
 }
