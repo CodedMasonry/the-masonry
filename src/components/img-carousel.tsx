@@ -2,17 +2,13 @@
 
 import * as React from "react";
 
-import { Card, CardContent } from "~/components/ui/card";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "~/components/ui/carousel";
 import Image from "next/image";
 import AutoScroll from "embla-carousel-auto-scroll";
-import { motion } from "motion/react";
 
 export function ImageCarousel({
   images,

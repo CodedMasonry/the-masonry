@@ -1,7 +1,7 @@
 "use server";
 
 import { Redis } from "@upstash/redis";
-import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
+import { unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 import queryString from "query-string";
 import { z } from "zod";
@@ -71,14 +71,15 @@ export async function GetPlayback() {
     });
 
     if (!response.ok) {
-      revalidatePath("/");
       return null;
     }
     if (response.status == 204) {
       return null;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const json = await response.json();
+    // Json parsed here
     const parsed = PlaybackSchema.parse(json);
     // Only return year for release date (looks cleaner)
     parsed.item.album.release_date = parsed.item.album.release_date.split('-')[0]!
@@ -106,8 +107,8 @@ function generateRandomString(length: number): string {
 
 /// Handle authenticating user
 function Authenticate() {
-  var state = generateRandomString(16);
-  var scope =
+  const state = generateRandomString(16);
+  const scope =
     "user-read-playback-state user-read-currently-playing user-modify-playback-state user-read-recently-played";
 
   redirect(
@@ -149,7 +150,11 @@ export async function fetchSpotifyAccess(refreshToken: string) {
       throw new Error(`HTTP Error. Status: ${response.status}`);
     }
 
+    // Always know what will be returned json
+    // So we are fine with unknown type
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const data = await response.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     return data.access_token as string;
   } catch (error) {
     console.log("Error: ", error);
