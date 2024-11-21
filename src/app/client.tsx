@@ -2,11 +2,15 @@
 
 import {
   IconArrowsShuffle,
+  IconBrandGithub,
+  IconBrandSpotify,
   IconDeviceLaptop,
   IconDeviceMobile,
   IconDeviceSpeaker,
   IconExplicit,
+  IconFile,
   IconMoodSad,
+  IconPhoto,
   IconRepeat,
   IconRepeatOnce,
 } from "@tabler/icons-react";
@@ -21,6 +25,23 @@ import {
 } from "~/components/ui/tooltip";
 import { PlaybackResponse } from "~/server/spotify";
 import { api } from "~/trpc/react";
+import React from "react";
+import { Carousel } from "~/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import { ImageCarousel } from "~/components/img-carousel";
+
+export function DrawTitle() {
+  return (
+    <motion.h1
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 2, type: "spring" }}
+      className="text-7xl font-extrabold text-primary drop-shadow-lg"
+    >
+      Hello, I'm Brock.
+    </motion.h1>
+  );
+}
 
 export function CycleText({ options }: { options: Array<string> }) {
   const [index, setIndex] = useState(0);
@@ -35,7 +56,7 @@ export function CycleText({ options }: { options: Array<string> }) {
   }, [options.length]);
 
   return (
-    <div className="overflow h-10">
+    <div className="overflow h-12">
       <AnimatePresence mode="sync">
         <motion.div
           key={options[index]}
@@ -80,13 +101,7 @@ export function StaggerButtons() {
         href="/summary"
         className={buttonVariants({ variant: "default", size: "lg" })}
       >
-        <Image
-          src="/icons/file.svg"
-          alt=""
-          width={24}
-          height={24}
-          className="invert"
-        />
+        <IconFile />
         Resume
       </motion.a>
       <motion.a
@@ -94,13 +109,7 @@ export function StaggerButtons() {
         href="/photos"
         className={buttonVariants({ variant: "ghost", size: "lg" })}
       >
-        <Image
-          src="/icons/photo.svg"
-          alt=""
-          width={24}
-          height={24}
-          className="dark:invert"
-        />
+        <IconPhoto />
         Photos
       </motion.a>
       <motion.a
@@ -108,13 +117,7 @@ export function StaggerButtons() {
         href="/spotify"
         className={buttonVariants({ variant: "ghost", size: "lg" })}
       >
-        <Image
-          src="/icons/spotify.png"
-          alt=""
-          width={24}
-          height={24}
-          className="dark:invert"
-        />
+        <IconBrandSpotify />
         Spotify
       </motion.a>
       <motion.a
@@ -122,13 +125,7 @@ export function StaggerButtons() {
         href="https://github.com/CodedMasonry"
         className={buttonVariants({ variant: "ghost", size: "lg" })}
       >
-        <Image
-          src="/icons/github.svg"
-          alt=""
-          width={24}
-          height={24}
-          className="dark:invert"
-        />
+        <IconBrandGithub />
         Github
       </motion.a>
     </motion.div>
@@ -143,7 +140,7 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
         whileInView={{ x: 112, rotate: 360 }}
         transition={{
           x: { duration: 1, type: "spring", delay: 0.5 },
-          rotate: { repeat: Infinity, duration: 3, ease: "linear" },
+          rotate: { repeat: Infinity, duration: 5, ease: "linear" },
         }}
         className="size-96 drop-shadow-lg"
       >
@@ -219,9 +216,7 @@ export function SpotifyClientSection() {
 
   return (
     <AnimatePresence mode="wait">
-      {response.isError ? (
-        <ErrorPlaying error={response.error.message} />
-      ) : data ? (
+      {data ? (
         <CurrentlyPlaying data={data} progress={progress!} />
       ) : (
         <NothingPlaying />
@@ -240,9 +235,9 @@ function CurrentlyPlaying({
   return (
     <motion.div
       key="CurrentlyPlaying"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 100 }}
       transition={{ duration: 1 }}
       className="flex flex-row"
     >
@@ -370,7 +365,7 @@ function ErrorPlaying({ error }: { error: string }) {
       <div className="mr-44">
         <IconMoodSad
           color="white"
-          className="absolute z-10 h-96 w-96 rounded-xl bg-destructive shadow-md"
+          className="h-96 w-96 rounded-xl bg-destructive shadow-md"
         />
       </div>
       <div className="mt-16 flex flex-col drop-shadow-lg">
@@ -399,4 +394,23 @@ function formatMilliseconds(ms: number): string {
   const minutes = Math.floor(ms / 60000);
   const seconds = Math.floor((ms % 60000) / 1000);
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
+export function ClientCarousel({ images }: { images: Array<string> }) {
+  // First Half of images
+  const setOne = images.slice(0, images.length / 2);
+  // Second half
+  const setTwo = images.slice(images.length / 2, images.length);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.25, type: "spring" }}
+      className="flex w-full flex-col"
+    >
+      <ImageCarousel images={setOne} direction="forward" />
+      <ImageCarousel images={setTwo} direction="backward" />
+    </motion.div>
+  );
 }

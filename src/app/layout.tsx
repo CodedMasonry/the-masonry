@@ -9,7 +9,7 @@ import { TooltipProvider } from "~/components/ui/tooltip";
 
 export const metadata: Metadata = {
   title: "Brock Shaffer",
-  description: "My portfolio site",
+  description: "A guy who made a website",
   icons: [{ rel: "icon", url: "/favicon.svg" }],
 };
 

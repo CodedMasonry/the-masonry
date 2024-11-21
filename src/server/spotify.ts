@@ -80,6 +80,8 @@ export async function GetPlayback() {
 
     const json = await response.json();
     const parsed = PlaybackSchema.parse(json);
+    // Only return year for release date (looks cleaner)
+    parsed.item.album.release_date = parsed.item.album.release_date.split('-')[0]!
 
     return parsed;
   } catch (error) {
