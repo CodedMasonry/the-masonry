@@ -7,9 +7,7 @@ import {
   DrawTitle,
   StaggerButtons,
 } from "~/app/client";
-import { ImageCarousel } from "~/components/img-carousel";
 import { Navbar } from "~/components/navbar";
-import { Badge } from "~/components/ui/badge";
 import { Separator } from "~/components/ui/separator";
 import { utapi } from "~/server/uploadthing";
 
@@ -63,7 +61,7 @@ function SectionSpotify() {
         I listen to a significant amount of music.
       </h3>
       <p className="text-lg">
-        So I created a sections that shows what I'm currently listening to.
+        So I created a sections that shows what I&apos;m currently listening to.
       </p>
       <div className="mt-4 h-96">
         <Suspense>

@@ -23,11 +23,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-import { PlaybackResponse } from "~/server/spotify";
+import { type PlaybackResponse } from "~/server/spotify";
 import { api } from "~/trpc/react";
 import React from "react";
-import { Carousel } from "~/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
 import { ImageCarousel } from "~/components/img-carousel";
 
 export function DrawTitle() {
@@ -38,7 +36,7 @@ export function DrawTitle() {
       transition={{ duration: 2, type: "spring" }}
       className="text-7xl font-extrabold text-primary drop-shadow-lg"
     >
-      Hello, I'm Brock.
+      Hello, I&apos;m Brock.
     </motion.h1>
   );
 }
@@ -202,7 +200,7 @@ export function SpotifyClientSection() {
             setProgress(progress + 1000);
           } else if (progress >= data.item.duration_ms) {
             // Revalidate local cache because we hit the precieved end of the song
-            utils.spotify.invalidate();
+            void utils.spotify.invalidate();
           }
         } else {
           setProgress(data.progress_ms);
@@ -212,7 +210,7 @@ export function SpotifyClientSection() {
 
     //Clearing the interval
     return () => clearInterval(interval);
-  }, [response]);
+  }, [data, progress, response, utils.spotify]);
 
   return (
     <AnimatePresence mode="wait">
@@ -243,7 +241,9 @@ function CurrentlyPlaying({
     >
       <div className="mr-44">
         <Image
-          src={data?.item.album.images[1]?.url as string}
+          // There is assumed to always be 2 thumbnails, each with a link.
+          // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+          src={data?.item.album.images[1]?.url!}
           alt=""
           width={384}
           height={384}
@@ -304,8 +304,8 @@ function CurrentlyPlaying({
           {data.item.album.name} ({data.item.album.release_date})
         </h6>
         <p className="mt-1">
-          {formatMilliseconds(progress!)} /{" "}
-          {formatMilliseconds(data.item.duration_ms!)}
+          {formatMilliseconds(progress)} /{" "}
+          {formatMilliseconds(data.item.duration_ms)}
         </p>
         <div className="mb-4 mt-auto flex">
           Playing now on <Device type={data.device.type} /> {data.device.name}
@@ -342,37 +342,10 @@ function NothingPlaying() {
       <div className="mt-16 flex flex-col drop-shadow-lg">
         <h4 className="text-6xl font-semibold">Nothings Playing</h4>
         <p className="mt-4 text-4xl">
-          I can't show you something that doesn't exist
+          I can&apos;t show you something that doesn&apos;t exist
         </p>
         <p className="mt-4 text-2xl font-light underline decoration-primary">
           But this section will update when I turn the music on
-        </p>
-      </div>
-    </motion.div>
-  );
-}
-
-function ErrorPlaying({ error }: { error: string }) {
-  return (
-    <motion.div
-      key="ErrorPlaying"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 1 }}
-      className="flex flex-row"
-    >
-      <div className="mr-44">
-        <IconMoodSad
-          color="white"
-          className="h-96 w-96 rounded-xl bg-destructive shadow-md"
-        />
-      </div>
-      <div className="mt-16 flex flex-col drop-shadow-lg">
-        <h4 className="text-6xl font-semibold">We Receieved An Error</h4>
-        <p className="mt-4 text-4xl">{error}</p>
-        <p className="mt-4 text-2xl font-light underline decoration-primary">
-          If the error is on my side, I will fix it as soon as I can.
         </p>
       </div>
     </motion.div>
