@@ -14,7 +14,7 @@ import {
   IconRepeat,
   IconRepeatOnce,
 } from "@tabler/icons-react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, delay, motion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { buttonVariants } from "~/components/ui/button";
@@ -38,6 +38,40 @@ export function DrawTitle() {
     >
       Hello, I&apos;m Brock.
     </motion.h1>
+  );
+}
+
+export function DrawSubTitle() {
+  return (
+    <motion.h2
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 2, type: "spring", delay: 0.5 }}
+      className="text-4xl drop-shadow-lg"
+    >
+      <CycleText
+        options={[
+          "Software Developer",
+          "Cybersecurity Enthusiast",
+          "Photographer",
+          "Drone Pilot",
+        ]}
+      />
+    </motion.h2>
+  );
+}
+
+export function DrawTitleBody() {
+  return (
+    <motion.p
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 2, type: "spring", delay: 1 }}
+      className="max-w-3xl pb-4 pt-4 drop-shadow-lg"
+    >
+      Being a software engineer, I wanted to write code, and I wanted to convey
+      who I am beyond just words, so I created a website.
+    </motion.p>
   );
 }
 
@@ -147,7 +181,7 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
           width={384}
           height={384}
           alt=""
-          loading="lazy"
+          loading="eager"
           className="size-96 drop-shadow-lg"
         />
       </motion.div>
@@ -159,7 +193,7 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
         width={384}
         height={384}
         alt=""
-        loading="lazy"
+        loading="eager"
         className="size-96 translate-x-28"
       />
     );
@@ -248,7 +282,7 @@ function CurrentlyPlaying({
           width={384}
           height={384}
           unoptimized
-          loading="lazy"
+          loading="eager"
           className="absolute z-10 h-96 w-96 rounded-xl bg-background shadow-md"
         />
         <ClientVinyl isPlaying={data.is_playing} />

@@ -4,7 +4,9 @@ import React, { Suspense } from "react";
 import {
   ClientCarousel,
   CycleText,
+  DrawSubTitle,
   DrawTitle,
+  DrawTitleBody,
   StaggerButtons,
 } from "~/app/client";
 import { Navbar } from "~/components/navbar";
@@ -29,20 +31,8 @@ function SectionHeader() {
     <div className="ml-36 mt-28 flex flex-row">
       <div className="ml-8 mt-8 flex flex-col space-y-2">
         <DrawTitle />
-        <h2 className="text-4xl drop-shadow-lg">
-          <CycleText
-            options={[
-              "Software Developer",
-              "Cybersecurity Enthusiast",
-              "Photographer",
-              "Drone Pilot",
-            ]}
-          />
-        </h2>
-        <p className="max-w-3xl pb-4 pt-4 drop-shadow-lg">
-          Being a software engineer, I wanted to write code, and I wanted to
-          convey who I am beyond just words, so I created a website.
-        </p>
+        <DrawSubTitle />
+        <DrawTitleBody />
         <StaggerButtons />
       </div>
     </div>
