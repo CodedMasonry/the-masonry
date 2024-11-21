@@ -98,7 +98,7 @@ export function StaggerButtons() {
     >
       <motion.a
         variants={item}
-        href="/summary"
+        href="/resume"
         className={buttonVariants({ variant: "default", size: "lg" })}
       >
         <IconFile />
@@ -106,7 +106,7 @@ export function StaggerButtons() {
       </motion.a>
       <motion.a
         variants={item}
-        href="/photos"
+        href="#photos"
         className={buttonVariants({ variant: "ghost", size: "lg" })}
       >
         <IconPhoto />
@@ -114,7 +114,7 @@ export function StaggerButtons() {
       </motion.a>
       <motion.a
         variants={item}
-        href="/spotify"
+        href="#spotify"
         className={buttonVariants({ variant: "ghost", size: "lg" })}
       >
         <IconBrandSpotify />
