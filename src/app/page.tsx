@@ -23,7 +23,7 @@ export default async function HomePage() {
 
 function SectionHeader() {
   return (
-    <div className="relative ml-8 mr-6 mt-8 flex flex-col space-y-2 md:ml-36 md:mt-28">
+    <div className="relative ml-8 mr-4 mt-10 flex flex-col space-y-2 md:ml-36 md:mt-28">
       <h1 className="text-6xl font-extrabold text-primary drop-shadow-lg md:text-7xl">
         Hello, I&apos;m Brock.
       </h1>
@@ -57,7 +57,7 @@ function SectionSpotify() {
   return (
     <div
       id="spotify"
-      className="ml-8 mr-6 mt-28 flex flex-col md:ml-36 md:mt-32"
+      className="ml-8 mr-4 mt-28 flex flex-col md:ml-36 md:mt-32"
     >
       <h3 className="mb-2 text-3xl font-medium underline decoration-primary md:-ml-4 md:text-4xl">
         I listen to a significant amount of music.
@@ -81,7 +81,7 @@ async function SectionImages() {
 
   return (
     <div>
-      <div id="photos" className="mb-8 ml-8 mr-6 mt-24 md:ml-36 md:mt-32">
+      <div id="photos" className="mb-8 ml-8 mr-4 mt-24 md:ml-36 md:mt-32">
         <h3 className="text-3xl font-medium underline decoration-primary drop-shadow-lg md:-ml-4 md:text-4xl">
           Photos expresses a mood in a snapshot of time.
         </h3>

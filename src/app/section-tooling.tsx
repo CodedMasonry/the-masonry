@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function SectionTooling() {
   return (
     <div className="flex flex-col">
-      <div className="mb-8 ml-8 mr-6 mt-28 md:ml-36 md:mt-32">
+      <div className="mb-8 ml-8 mr-r mt-28 md:ml-36 md:mt-32">
         <h3 className="text-4xl font-medium underline decoration-primary drop-shadow-lg md:-ml-4">
           A Website allows me to show, not just tell.
         </h3>
