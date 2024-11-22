@@ -165,7 +165,7 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
       <motion.div
         key="Vinyl"
         initial={{ x: 0 }}
-        whileInView={{ x: "33%"}}
+        whileInView={{ x: "33%" }}
         transition={{
           duration: 1,
           type: "spring",
@@ -249,7 +249,7 @@ function CurrentlyPlaying({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1 }}
+      transition={{ duration: 1, delayChildren: 1, delay: 1 }}
       className="mr-6 flex flex-col md:flex-row"
     >
       <div className="relative mr-44 size-64 md:size-96">
