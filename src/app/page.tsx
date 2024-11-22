@@ -1,3 +1,4 @@
+import { IconFile } from "@tabler/icons-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import React, { Suspense } from "react";
@@ -49,15 +50,9 @@ function SectionHeader() {
       <div className="-ml-2">
         <a
           href="/resume"
-          className={`m-2 shadow-md ${buttonVariants({ variant: "default", size: "lg" })}`}
+          className={`m-2 text-primary-foreground shadow-md ${buttonVariants({ variant: "default", size: "lg" })}`}
         >
-          <Image
-            src="/icons/paper.svg"
-            alt=""
-            width={28}
-            height={28}
-            className="invert"
-          />
+          <IconFile stroke={2} color="text-primary-foreground" />
           Resume
         </a>
         <a

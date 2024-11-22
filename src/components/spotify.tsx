@@ -13,11 +13,6 @@ import {
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
 import { type PlaybackResponse } from "~/server/spotify";
 import { api } from "~/trpc/react";
 
@@ -91,7 +86,7 @@ function CurrentlyPlaying({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1, delay: 0.5, delayChildren: 0.5 }}
+      transition={{ duration: 1 }}
       className="mr-6 flex flex-col md:flex-row"
     >
       <div className="relative mr-44 size-64 md:size-96">
@@ -101,8 +96,8 @@ function CurrentlyPlaying({
           src={data?.item.album.images[1]?.url!}
           alt=""
           fill
+          loading="eager"
           unoptimized
-          priority
           className="absolute z-10 rounded-xl bg-background shadow-md md:ml-0"
         />
         <ClientVinyl isPlaying={data.is_playing} />
@@ -110,46 +105,10 @@ function CurrentlyPlaying({
       <div className="mt-4 flex flex-col drop-shadow-lg md:ml-0 md:mt-16">
         <h4 className="text-5xl font-semibold md:text-6xl">{data.item.name}</h4>
         <div className="mt-1 flex min-h-6 space-x-2">
-          {data.item.explicit && (
-            <Tooltip delayDuration={200}>
-              <TooltipTrigger asChild>
-                <IconExplicit />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>This song is marked Explicit by Spotify</p>
-              </TooltipContent>
-            </Tooltip>
-          )}
-          {data.repeat_state == "context" && (
-            <Tooltip delayDuration={200}>
-              <TooltipTrigger asChild>
-                <IconRepeat />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Playback is set to repeat</p>
-              </TooltipContent>
-            </Tooltip>
-          )}
-          {data.repeat_state == "track" && (
-            <Tooltip delayDuration={500}>
-              <TooltipTrigger asChild>
-                <IconRepeatOnce />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Playback is set to repeat this song</p>
-              </TooltipContent>
-            </Tooltip>
-          )}
-          {data.shuffle_state && (
-            <Tooltip delayDuration={500}>
-              <TooltipTrigger asChild>
-                <IconArrowsShuffle />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Playback is set to shuffle</p>
-              </TooltipContent>
-            </Tooltip>
-          )}
+          {data.item.explicit && <IconExplicit />}
+          {data.repeat_state == "context" && <IconRepeat />}
+          {data.repeat_state == "track" && <IconRepeatOnce />}
+          {data.shuffle_state && <IconArrowsShuffle />}
         </div>
         <h5 className="mt-1 text-3xl md:text-4xl">
           {data.item.artists.map((v) => v.name).join(", ")}
@@ -185,10 +144,10 @@ function NothingPlaying() {
           className="absolute z-10 size-64 rounded-xl bg-destructive shadow-md md:size-96"
         />
         <Image
-          src="/broken_vinyl.webp"
+          src="/vinyl.webp"
           alt=""
           fill
-          priority
+          loading="eager"
           className="translate-x-20 rounded-xl drop-shadow-lg md:translate-x-28"
         />
       </div>
@@ -213,7 +172,7 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
         initial={{ x: 0 }}
         whileInView={{ x: "33%", rotate: 360 }}
         transition={{
-          x: { duration: 1, type: "spring", delay: 0.5 },
+          x: { duration: 1, delay: 0.5 },
           rotate: { repeat: Infinity, duration: 4, ease: "linear" },
         }}
         className="relative size-64 drop-shadow-lg md:size-96"
@@ -223,6 +182,7 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
           fill
           alt=""
           loading="eager"
+          priority
           className="drop-shadow-lg"
         />
       </motion.div>
@@ -235,12 +195,11 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
         whileInView={{ x: "33%" }}
         transition={{
           duration: 1,
-          type: "spring",
           delay: 0.5,
         }}
         className="relative size-64 drop-shadow-lg md:size-96"
       >
-        <Image src="/vinyl.webp" alt="" fill loading="eager" />
+        <Image src="/vinyl.webp" alt="" fill priority loading="eager" />
       </motion.div>
     );
   }

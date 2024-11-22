@@ -36,13 +36,11 @@ const PlaybackSchema = z.object({
   is_playing: z.boolean(),
   shuffle_state: z.boolean(),
   repeat_state: z.enum(["off", "track", "context"]),
-  timestamp: z.number(),
   progress_ms: z.number(),
   item: z.object({
     album: z.object({
-      album_type: z.string(),
       images: z.array(
-        z.object({ height: z.number(), url: z.string(), width: z.number() }),
+        z.object({ url: z.string() }),
       ),
       name: z.string(),
       release_date: z.string(),
@@ -54,7 +52,6 @@ const PlaybackSchema = z.object({
     ),
     duration_ms: z.number(),
     explicit: z.boolean(),
-    external_urls: z.object({ spotify: z.string() }),
     name: z.string(),
   }),
 });
