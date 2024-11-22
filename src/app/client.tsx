@@ -63,8 +63,8 @@ export function StaggerButtons() {
     show: {
       opacity: 1,
       transition: {
-        delayChildren: .5,
-        staggerChildren: 0.1,
+        delayChildren: 0.5,
+        staggerChildren: 0.25,
       },
     },
   };
@@ -85,7 +85,7 @@ export function StaggerButtons() {
       <motion.a
         variants={item}
         href="/resume"
-        className={`mr-4 ${buttonVariants({ variant: "default", size: "lg" })}`}
+        className={`mr-4 border border-border ${buttonVariants({ variant: "default", size: "lg" })}`}
       >
         <IconFile />
         Resume
