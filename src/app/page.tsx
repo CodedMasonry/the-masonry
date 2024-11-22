@@ -1,11 +1,13 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import React from "react";
-import { CycleText } from "~/app/client";
+import React, { Suspense } from "react";
+import { CycleText } from "~/app/cycle-text";
 import { Navbar } from "~/components/navbar";
 import { buttonVariants } from "~/components/ui/button";
 import { utapi } from "~/server/uploadthing";
 
+// Lazy load Client Section
+const SpotifyClientSection = dynamic(() => import("~/components/spotify"));
 const ClientCarousel = dynamic(() => import("~/app/client-carousel"));
 const SectionTooling = dynamic(() => import("~/app/section-tooling"));
 
@@ -102,11 +104,6 @@ function SectionHeader() {
   );
 }
 
-// Lazy load Client Section
-const SpotifyClientSection = dynamic(() =>
-  import("~/app/client").then((mod) => mod.SpotifyClientSection),
-);
-
 function SectionSpotify() {
   return (
     <div
@@ -132,6 +129,10 @@ async function SectionImages() {
     .then((v) =>
       v.files.map((img) => "https://utfs.io/a/dxgc3f8f0p/" + img.key),
     );
+  // First Half of images
+  const setOne = images.slice(0, images.length / 2);
+  // Second half
+  const setTwo = images.slice(images.length / 2, images.length);
 
   return (
     <div>
@@ -144,7 +145,9 @@ async function SectionImages() {
           inspires me to take them.
         </p>
       </div>
-      <ClientCarousel images={images} />
+      <Suspense>
+        <ClientCarousel setOne={setOne} setTwo={setTwo} />
+      </Suspense>
     </div>
   );
 }

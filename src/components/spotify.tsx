@@ -1,5 +1,3 @@
-"use client";
-
 import {
   IconArrowsShuffle,
   IconDeviceLaptop,
@@ -20,80 +18,8 @@ import {
 } from "~/components/ui/tooltip";
 import { type PlaybackResponse } from "~/server/spotify";
 import { api } from "~/trpc/react";
-import React from "react";
 
-export function CycleText({ options }: { options: Array<string> }) {
-  const [index, setIndex] = useState(0);
-
-  // Rotate text automatically on an interval
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % options.length);
-    }, 3000);
-
-    return () => clearInterval(interval); // Cleanup interval on unmount
-  }, [options.length]);
-
-  return (
-    <div className="overflow h-12">
-      <AnimatePresence mode="sync">
-        <motion.div
-          key={options[index]}
-          initial={{ opacity: 0, y: -25 }}
-          animate={{ opacity: [0, 0, 1], y: 0 }}
-          exit={{ opacity: [1, 0, 0], y: 25 }}
-          transition={{ duration: 0.5, times: [0, 0.5, 1] }}
-          className="absolute left-0 top-0 underline decoration-primary"
-        >
-          {options[index]}
-        </motion.div>
-      </AnimatePresence>
-    </div>
-  );
-}
-
-export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
-  if (isPlaying) {
-    return (
-      <motion.div
-        key="Vinyl"
-        initial={{ x: 0 }}
-        whileInView={{ x: "33%", rotate: 360 }}
-        transition={{
-          x: { duration: 1, type: "spring", delay: 0.5 },
-          rotate: { repeat: Infinity, duration: 4, ease: "linear" },
-        }}
-        className="relative size-64 drop-shadow-lg md:size-96"
-      >
-        <Image
-          src="/vinyl.webp"
-          fill
-          alt=""
-          loading="eager"
-          className="drop-shadow-lg"
-        />
-      </motion.div>
-    );
-  } else {
-    return (
-      <motion.div
-        key="Vinyl"
-        initial={{ x: 0 }}
-        whileInView={{ x: "33%" }}
-        transition={{
-          duration: 1,
-          type: "spring",
-          delay: 0.5,
-        }}
-        className="relative size-64 drop-shadow-lg md:size-96"
-      >
-        <Image src="/vinyl.webp" alt="" fill loading="eager" />
-      </motion.div>
-    );
-  }
-}
-
-export function SpotifyClientSection() {
+export default function SpotifyClientSection() {
   // Utility to invalidate cache
   const utils = api.useUtils();
   // Fetch data hook
@@ -166,7 +92,7 @@ function CurrentlyPlaying({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1, delay: .5, delayChildren: .5 }}
+      transition={{ duration: 1, delay: 0.5, delayChildren: 0.5 }}
       className="mr-6 flex flex-col md:flex-row"
     >
       <div className="relative mr-44 size-64 md:size-96">
@@ -278,6 +204,47 @@ function NothingPlaying() {
       </div>
     </motion.div>
   );
+}
+
+export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
+  if (isPlaying) {
+    return (
+      <motion.div
+        key="Vinyl"
+        initial={{ x: 0 }}
+        whileInView={{ x: "33%", rotate: 360 }}
+        transition={{
+          x: { duration: 1, type: "spring", delay: 0.5 },
+          rotate: { repeat: Infinity, duration: 4, ease: "linear" },
+        }}
+        className="relative size-64 drop-shadow-lg md:size-96"
+      >
+        <Image
+          src="/vinyl.webp"
+          fill
+          alt=""
+          loading="eager"
+          className="drop-shadow-lg"
+        />
+      </motion.div>
+    );
+  } else {
+    return (
+      <motion.div
+        key="Vinyl"
+        initial={{ x: 0 }}
+        whileInView={{ x: "33%" }}
+        transition={{
+          duration: 1,
+          type: "spring",
+          delay: 0.5,
+        }}
+        className="relative size-64 drop-shadow-lg md:size-96"
+      >
+        <Image src="/vinyl.webp" alt="" fill loading="eager" />
+      </motion.div>
+    );
+  }
 }
 
 function Device({ type }: { type: string }) {
