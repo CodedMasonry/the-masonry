@@ -169,7 +169,7 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
       <motion.div
         key="Vinyl"
         initial={{ x: 0 }}
-        whileInView={{ x: "33%", rotate: 360 }}
+        whileInView={{ x: "33%"}}
         transition={{
           duration: 1,
           type: "spring",
