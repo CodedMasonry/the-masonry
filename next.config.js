@@ -3,7 +3,6 @@
  * for Docker builds.
  */
 import "./src/env.js";
-import { withPlausibleProxy } from "next-plausible";
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
@@ -35,5 +34,4 @@ const nextConfig = {
   },
 };
 
-const outputConfig = withPlausibleProxy()(nextConfig);
-export default outputConfig;
+export default nextConfig;

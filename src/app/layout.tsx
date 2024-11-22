@@ -6,7 +6,7 @@ import { type Metadata } from "next";
 import { TRPCReactProvider } from "~/trpc/react";
 import { ThemeProvider } from "~/components/theme-provider";
 import { TooltipProvider } from "~/components/ui/tooltip";
-import PlausibleProvider from "next-plausible";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Brock Shaffer",
@@ -23,10 +23,8 @@ export default function RootLayout({
       className={`${GeistSans.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <PlausibleProvider domain="www.brockshaffer.dev" />
-      </head>
       <body className="antialiased">
+        <Analytics />
         <TRPCReactProvider>
           <ThemeProvider
             attribute="class"
