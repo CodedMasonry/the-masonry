@@ -79,7 +79,7 @@ export function StaggerButtons() {
       variants={container}
       initial="hidden"
       animate="show"
-      className=""
+      className="-ml-2"
       transition={{ staggerChildren: 0.5 }}
     >
       <motion.a
