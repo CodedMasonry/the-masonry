@@ -18,9 +18,7 @@ export default async function HomePage() {
       <SectionHeader />
       <SectionSpotify />
       <SectionImages />
-      <Suspense>
-        <SectionTooling />
-      </Suspense>
+      <SectionTooling />
       <SectionFooter />
     </main>
   );
