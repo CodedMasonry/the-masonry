@@ -299,7 +299,10 @@ function ToolCard({
 function SectionFooter() {
   return (
     <div className="mt-32 flex flex-row bg-background p-6">
-      <div className="flex items-center text-2xl">
+      <a
+        href="mailto:brock@brockshaffer.dev"
+        className="flex items-center text-2xl hover:underline"
+      >
         <Image
           src="/favicon.svg"
           alt=""
@@ -308,7 +311,7 @@ function SectionFooter() {
           className="mr-4"
         />
         brock@brockshaffer.dev
-      </div>
+      </a>
     </div>
   );
 }

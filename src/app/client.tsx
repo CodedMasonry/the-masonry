@@ -176,15 +176,14 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
           x: { duration: 1, type: "spring", delay: 0.5 },
           rotate: { repeat: Infinity, duration: 5, ease: "linear" },
         }}
-        className="size-64 drop-shadow-lg md:size-96"
+        className="relative size-64 drop-shadow-lg md:size-96"
       >
         <Image
           src="/vinyl.webp"
-          width={384}
-          height={384}
+          fill
           alt=""
           loading="eager"
-          className="size-64 drop-shadow-lg md:size-96"
+          className="drop-shadow-lg"
         />
       </motion.div>
     );
@@ -273,7 +272,7 @@ function CurrentlyPlaying({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
       transition={{ duration: 1 }}
-      className="flex flex-col md:flex-row mr-6"
+      className="mr-6 flex flex-col md:flex-row"
     >
       <div className="relative mr-44 size-64 md:size-96">
         <Image
