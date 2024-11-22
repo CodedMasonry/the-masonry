@@ -79,39 +79,63 @@ export function StaggerButtons() {
       variants={container}
       initial="hidden"
       animate="show"
-      className="mx-auto -ml-4 grid max-w-screen-sm grid-cols-2 place-items-center gap-4 p-4 md:ml-0 md:max-w-none md:grid-cols-4"
+      className=""
       transition={{ staggerChildren: 0.5 }}
     >
       <motion.a
         variants={item}
         href="/resume"
-        className={`mr-4 border border-border ${buttonVariants({ variant: "default", size: "lg" })}`}
+        className={`m-2 shadow-md ${buttonVariants({ variant: "default", size: "lg" })}`}
       >
-        <IconFile />
+        <Image
+          src="/icons/paper.svg"
+          alt=""
+          width={28}
+          height={28}
+          className="invert"
+        />
         Resume
       </motion.a>
       <motion.a
         variants={item}
         href="#photos"
-        className={`mr-4 ${buttonVariants({ variant: "ghost", size: "lg" })}`}
+        className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
       >
-        <IconPhoto />
+        <Image
+          src="/icons/photo.svg"
+          alt=""
+          width={28}
+          height={28}
+          className="dark:invert"
+        />
         Photos
       </motion.a>
       <motion.a
         variants={item}
         href="#spotify"
-        className={`mr-4 ${buttonVariants({ variant: "ghost", size: "lg" })}`}
+        className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
       >
-        <IconBrandSpotify />
+        <Image
+          src="/icons/spotify_mark.png"
+          alt=""
+          width={28}
+          height={28}
+          className="dark:invert"
+        />
         Spotify
       </motion.a>
       <motion.a
         variants={item}
         href="https://github.com/CodedMasonry"
-        className={buttonVariants({ variant: "ghost", size: "lg" })}
+        className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
       >
-        <IconBrandGithub />
+        <Image
+          src="/icons/github.svg"
+          alt=""
+          width={28}
+          height={28}
+          className="dark:invert"
+        />
         Github
       </motion.a>
     </motion.div>
@@ -127,7 +151,7 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
         whileInView={{ x: "33%", rotate: 360 }}
         transition={{
           x: { duration: 1, type: "spring", delay: 0.5 },
-          rotate: { repeat: Infinity, duration: 5, ease: "linear" },
+          rotate: { repeat: Infinity, duration: 4, ease: "linear" },
         }}
         className="relative size-64 drop-shadow-lg md:size-96"
       >
