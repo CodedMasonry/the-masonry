@@ -1,8 +1,9 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import React from "react";
-import { CycleText, StaggerButtons } from "~/app/client";
+import { CycleText } from "~/app/client";
 import { Navbar } from "~/components/navbar";
+import { buttonVariants } from "~/components/ui/button";
 import { utapi } from "~/server/uploadthing";
 
 const ClientCarousel = dynamic(() => import("~/app/client-carousel"));
@@ -43,7 +44,60 @@ function SectionHeader() {
         Being a software developer, I wanted to write code, and I wanted to
         convey who I am beyond just words, so I created a website.{" "}
       </p>
-      <StaggerButtons />
+      <div className="-ml-2">
+        <a
+          href="/resume"
+          className={`m-2 shadow-md ${buttonVariants({ variant: "default", size: "lg" })}`}
+        >
+          <Image
+            src="/icons/paper.svg"
+            alt=""
+            width={28}
+            height={28}
+            className="invert"
+          />
+          Resume
+        </a>
+        <a
+          href="#photos"
+          className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
+        >
+          <Image
+            src="/icons/photo.svg"
+            alt=""
+            width={28}
+            height={28}
+            className="dark:invert"
+          />
+          Photos
+        </a>
+        <a
+          href="#spotify"
+          className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
+        >
+          <Image
+            src="/icons/spotify_mark.png"
+            alt=""
+            width={28}
+            height={28}
+            className="dark:invert"
+          />
+          Spotify
+        </a>
+        <a
+          href="https://github.com/CodedMasonry"
+          className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
+        >
+          <Image
+            src="/icons/github.svg"
+            alt=""
+            width={28}
+            height={28}
+            className="dark:invert"
+          />
+          Github
+        </a>
+      </div>
     </div>
   );
 }

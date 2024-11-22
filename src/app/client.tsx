@@ -13,7 +13,6 @@ import {
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import { buttonVariants } from "~/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
@@ -50,81 +49,6 @@ export function CycleText({ options }: { options: Array<string> }) {
         </motion.div>
       </AnimatePresence>
     </div>
-  );
-}
-
-export function StaggerButtons() {
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        duration: 1,
-        delay: .5,
-      },
-    },
-  };
-
-  return (
-    <motion.div
-      variants={container}
-      initial="hidden"
-      animate="show"
-      className="-ml-2"
-    >
-      <a
-        href="/resume"
-        className={`m-2 shadow-md ${buttonVariants({ variant: "default", size: "lg" })}`}
-      >
-        <Image
-          src="/icons/paper.svg"
-          alt=""
-          width={28}
-          height={28}
-          className="invert"
-        />
-        Resume
-      </a>
-      <a
-        href="#photos"
-        className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
-      >
-        <Image
-          src="/icons/photo.svg"
-          alt=""
-          width={28}
-          height={28}
-          className="dark:invert"
-        />
-        Photos
-      </a>
-      <a
-        href="#spotify"
-        className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
-      >
-        <Image
-          src="/icons/spotify_mark.png"
-          alt=""
-          width={28}
-          height={28}
-          className="dark:invert"
-        />
-        Spotify
-      </a>
-      <a
-        href="https://github.com/CodedMasonry"
-        className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
-      >
-        <Image
-          src="/icons/github.svg"
-          alt=""
-          width={28}
-          height={28}
-          className="dark:invert"
-        />
-        Github
-      </a>
-    </motion.div>
   );
 }
 
@@ -242,7 +166,7 @@ function CurrentlyPlaying({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1 }}
+      transition={{ duration: 1, delay: .5, delayChildren: .5 }}
       className="mr-6 flex flex-col md:flex-row"
     >
       <div className="relative mr-44 size-64 md:size-96">
