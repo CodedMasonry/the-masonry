@@ -27,7 +27,7 @@ function SectionHeader() {
       <h1 className="text-6xl font-extrabold text-primary drop-shadow-lg md:text-7xl">
         Hello, I&apos;m Brock.
       </h1>
-      <h2 className="relative text-4xl drop-shadow-lg">
+      <h2 className="relative my-2 text-4xl">
         <CycleText
           options={[
             "Software Developer",
