@@ -5,6 +5,7 @@ import { CycleText } from "~/components/cycle-text";
 import { Navbar } from "~/components/navbar";
 import SpotifyClientSection from "~/components/spotify";
 import { buttonVariants } from "~/components/ui/button";
+import { Skeleton } from "~/components/ui/skeleton";
 import { utapi } from "~/server/uploadthing";
 import { api, HydrateClient } from "~/trpc/server";
 
@@ -50,14 +51,14 @@ function SectionHeader() {
       <div className="-ml-2">
         <a
           href="/resume"
-          className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
+          className={`m-2 drop-shadow-md ${buttonVariants({ variant: "default", size: "lg" })}`}
         >
           <Image
             src="/icons/paper.svg"
             alt=""
             width={28}
             height={28}
-            className="dark:invert"
+            className="invert"
           />
           Resume
         </a>
@@ -122,8 +123,25 @@ function SectionSpotify() {
       </p>
       <div className="mt-4 min-h-[30rem] md:min-h-96">
         <HydrateClient>
-          <SpotifyClientSection />
+          <Suspense fallback={<SpotifySuspense />}>
+            <SpotifyClientSection />
+          </Suspense>
         </HydrateClient>
+      </div>
+    </div>
+  );
+}
+
+function SpotifySuspense() {
+  return (
+    <div key="NothingPlaying" className="mr-6 flex flex-col md:flex-row">
+      <div className="relative mr-44 size-64 md:size-96">
+        <Skeleton className="z-10 size-64 rounded-xl bg-destructive shadow-md md:size-96" />
+      </div>
+      <div className="mt-4 flex flex-col drop-shadow-lg md:mt-16">
+        <Skeleton className="h-14 w-3/4 md:h-16" />
+        <Skeleton className="mt-2 h-8 w-3/4 md:mt-4 md:h-10" />
+        <Skeleton className="mt-2 h-6 w-3/4 md:mt-4 md:h-7" />
       </div>
     </div>
   );
