@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function SectionTooling() {
   return (
     <div className="flex flex-col">
-      <div className="mb-8 ml-4 mt-28 md:ml-36 md:mt-32">
+      <div className="mb-8 ml-8 mr-6 mt-28 md:ml-36 md:mt-32">
         <h3 className="text-4xl font-medium underline decoration-primary drop-shadow-lg md:-ml-4">
           A Website allows me to show, not just tell.
         </h3>
@@ -14,7 +14,7 @@ export default function SectionTooling() {
           feel represents me, is why I created this website.
         </p>
       </div>
-      <div className="mx-4 rounded-xl border border-border bg-accent shadow-md md:mx-32">
+      <div className="mx-6 rounded-xl border border-border bg-accent shadow-md md:mx-32">
         <h4 className="p-4 text-center text-xl font-semibold">
           Tooling used for this website
         </h4>
@@ -41,7 +41,7 @@ export default function SectionTooling() {
               role="img"
               viewBox="0 0 394 79"
               width="156"
-              className="dark:invert aspect-video"
+              className="aspect-video dark:invert"
             >
               <path
                 d="M261.919 0.0330722H330.547V12.7H303.323V79.339H289.71V12.7H261.919V0.0330722Z"

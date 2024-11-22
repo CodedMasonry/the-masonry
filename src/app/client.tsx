@@ -2,15 +2,11 @@
 
 import {
   IconArrowsShuffle,
-  IconBrandGithub,
-  IconBrandSpotify,
   IconDeviceLaptop,
   IconDeviceMobile,
   IconDeviceSpeaker,
   IconExplicit,
-  IconFile,
   IconMoodSad,
-  IconPhoto,
   IconRepeat,
   IconRepeatOnce,
 } from "@tabler/icons-react";
