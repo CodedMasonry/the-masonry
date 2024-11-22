@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import React, { Suspense } from "react";
-import { CycleText } from "~/app/cycle-text";
+import { CycleText } from "~/components/cycle-text";
 import { Navbar } from "~/components/navbar";
 import { buttonVariants } from "~/components/ui/button";
 import { utapi } from "~/server/uploadthing";
@@ -18,7 +18,9 @@ export default async function HomePage() {
       <SectionHeader />
       <SectionSpotify />
       <SectionImages />
-      <SectionTooling />
+      <Suspense>
+        <SectionTooling />
+      </Suspense>
       <SectionFooter />
     </main>
   );
