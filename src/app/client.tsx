@@ -271,7 +271,7 @@ function CurrentlyPlaying({
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
-      transition={{ duration: 1 }}
+      transition={{ duration: 1, delay: 2 }}
       className="mr-6 flex flex-col md:flex-row"
     >
       <div className="relative mr-44 size-64 md:size-96">
