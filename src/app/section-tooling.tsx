@@ -19,7 +19,7 @@ export default function SectionTooling() {
           Tooling used for this website
         </h4>
         <Separator />
-        <div className="grid grid-cols-2 p-4 md:grid-cols-4">
+        <div className="flex flex-col p-4 md:grid md:grid-cols-4">
           <ToolCard doubleSpan name="Vercel" purpose="Hosting">
             <svg
               aria-label="Vercel logotype"
@@ -40,8 +40,8 @@ export default function SectionTooling() {
               height="32"
               role="img"
               viewBox="0 0 394 79"
-              width="394"
-              className="dark:invert"
+              width="156"
+              className="dark:invert aspect-video"
             >
               <path
                 d="M261.919 0.0330722H330.547V12.7H303.323V79.339H289.71V12.7H261.919V0.0330722Z"

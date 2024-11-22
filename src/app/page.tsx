@@ -23,11 +23,11 @@ export default async function HomePage() {
 
 function SectionHeader() {
   return (
-    <div className="ml-4 mt-8 flex flex-col space-y-2 md:ml-36 md:mt-28">
+    <div className="relative ml-4 mt-8 flex flex-col space-y-2 md:ml-36 md:mt-28">
       <h1 className="text-6xl font-extrabold text-primary drop-shadow-lg md:text-7xl">
         Hello, I&apos;m Brock.
       </h1>
-      <h2 className="text-4xl drop-shadow-lg">
+      <h2 className="relative text-4xl drop-shadow-lg">
         <CycleText
           options={[
             "Software Developer",
@@ -76,7 +76,7 @@ async function SectionImages() {
 
   return (
     <div>
-      <div id="photos" className="mb-8 ml-4 mr-4 mt-28 md:ml-36 md:mt-32">
+      <div id="photos" className="mb-8 ml-4 mr-4 mt-24 md:ml-36 md:mt-32">
         <h3 className="text-4xl font-medium underline decoration-primary drop-shadow-lg md:-ml-4">
           Photos expresses a mood in a snapshot of time.
         </h3>
