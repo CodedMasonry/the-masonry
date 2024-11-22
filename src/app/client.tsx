@@ -34,7 +34,7 @@ export function DrawTitle() {
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 2, type: "spring" }}
-      className="text-7xl font-extrabold text-primary drop-shadow-lg"
+      className="text-6xl font-extrabold text-primary drop-shadow-lg md:text-7xl"
     >
       Hello, I&apos;m Brock.
     </motion.h1>
@@ -67,7 +67,7 @@ export function DrawTitleBody() {
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 2, type: "spring", delay: 1 }}
-      className="max-w-3xl pb-4 pt-4 drop-shadow-lg"
+      className="mr-4 pb-4 pt-2 drop-shadow-lg md:max-w-3xl md:pt-4"
     >
       Being a software engineer, I wanted to write code, and I wanted to convey
       who I am beyond just words, so I created a website.
@@ -111,7 +111,8 @@ export function StaggerButtons() {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.4,
+        delayChildren: 1.5,
+        staggerChildren: 0.5,
       },
     },
   };
@@ -126,12 +127,13 @@ export function StaggerButtons() {
       variants={container}
       initial="hidden"
       animate="show"
-      className="space-x-4"
+      className="mx-auto -ml-4 grid max-w-screen-sm grid-cols-2 place-items-center gap-4 p-4 md:ml-0 md:max-w-none md:grid-cols-4"
+      transition={{ staggerChildren: 0.5 }}
     >
       <motion.a
         variants={item}
         href="/resume"
-        className={buttonVariants({ variant: "default", size: "lg" })}
+        className={`mr-4 ${buttonVariants({ variant: "default", size: "lg" })}`}
       >
         <IconFile />
         Resume
@@ -139,7 +141,7 @@ export function StaggerButtons() {
       <motion.a
         variants={item}
         href="#photos"
-        className={buttonVariants({ variant: "ghost", size: "lg" })}
+        className={`mr-4 ${buttonVariants({ variant: "ghost", size: "lg" })}`}
       >
         <IconPhoto />
         Photos
@@ -147,7 +149,7 @@ export function StaggerButtons() {
       <motion.a
         variants={item}
         href="#spotify"
-        className={buttonVariants({ variant: "ghost", size: "lg" })}
+        className={`mr-4 ${buttonVariants({ variant: "ghost", size: "lg" })}`}
       >
         <IconBrandSpotify />
         Spotify
@@ -169,12 +171,12 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
     return (
       <motion.div
         initial={{ x: 0 }}
-        whileInView={{ x: 112, rotate: 360 }}
+        whileInView={{ x: "33%", rotate: 360 }}
         transition={{
           x: { duration: 1, type: "spring", delay: 0.5 },
           rotate: { repeat: Infinity, duration: 5, ease: "linear" },
         }}
-        className="size-96 drop-shadow-lg"
+        className="size-64 drop-shadow-lg md:size-96"
       >
         <Image
           src="/vinyl.webp"
@@ -182,7 +184,7 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
           height={384}
           alt=""
           loading="eager"
-          className="size-96 drop-shadow-lg"
+          className="size-64 drop-shadow-lg md:size-96"
         />
       </motion.div>
     );
@@ -194,7 +196,7 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
         height={384}
         alt=""
         loading="eager"
-        className="size-96 translate-x-28"
+        className="size-64 translate-x-28 md:size-96"
       />
     );
   }
@@ -271,24 +273,23 @@ function CurrentlyPlaying({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
       transition={{ duration: 1 }}
-      className="flex flex-row"
+      className="flex flex-col md:flex-row mr-6"
     >
-      <div className="mr-44">
+      <div className="relative mr-44 size-64 md:size-96">
         <Image
           // There is assumed to always be 2 thumbnails, each with a link.
           // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
           src={data?.item.album.images[1]?.url!}
           alt=""
-          width={384}
-          height={384}
+          fill
           unoptimized
           loading="eager"
-          className="absolute z-10 h-96 w-96 rounded-xl bg-background shadow-md"
+          className="absolute z-10 rounded-xl bg-background shadow-md md:ml-0"
         />
         <ClientVinyl isPlaying={data.is_playing} />
       </div>
-      <div className="mt-16 flex flex-col drop-shadow-lg">
-        <h4 className="text-6xl font-semibold">{data.item.name}</h4>
+      <div className="mt-4 flex flex-col drop-shadow-lg md:ml-0 md:mt-16">
+        <h4 className="text-5xl font-semibold md:text-6xl">{data.item.name}</h4>
         <div className="mt-1 flex min-h-6 space-x-2">
           {data.item.explicit && (
             <Tooltip delayDuration={200}>
@@ -331,13 +332,13 @@ function CurrentlyPlaying({
             </Tooltip>
           )}
         </div>
-        <h5 className="mt-1 text-4xl">
+        <h5 className="mt-1 text-3xl md:text-4xl">
           {data.item.artists.map((v) => v.name).join(", ")}
         </h5>
-        <h6 className="mt-1 text-2xl font-light">
+        <h6 className="mt-1 text-xl font-light md:text-2xl">
           {data.item.album.name} ({data.item.album.release_date})
         </h6>
-        <p className="mt-1">
+        <p className="mt-1 font-semibold">
           {formatMilliseconds(progress)} /{" "}
           {formatMilliseconds(data.item.duration_ms)}
         </p>
@@ -359,10 +360,10 @@ function NothingPlaying() {
       transition={{ duration: 1, delay: 2 }}
       className="flex flex-row"
     >
-      <div className="mr-44">
+      <div className="mr-44 size-64 md:size-96">
         <IconMoodSad
           color="white"
-          className="absolute z-10 h-96 w-96 rounded-xl bg-destructive shadow-md"
+          className="absolute z-10 rounded-xl bg-destructive shadow-md"
         />
         <Image
           src="/broken_vinyl.webp"
@@ -370,7 +371,7 @@ function NothingPlaying() {
           width={384}
           height={384}
           loading="lazy"
-          className="h-96 w-96 translate-x-28 rounded-xl drop-shadow-lg"
+          className="translate-x-28 rounded-xl drop-shadow-lg"
         />
       </div>
       <div className="mt-16 flex flex-col drop-shadow-lg">

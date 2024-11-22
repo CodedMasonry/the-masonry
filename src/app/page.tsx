@@ -28,13 +28,11 @@ export default async function HomePage() {
 
 function SectionHeader() {
   return (
-    <div className="ml-36 mt-28 flex flex-row">
-      <div className="ml-8 mt-8 flex flex-col space-y-2">
-        <DrawTitle />
-        <DrawSubTitle />
-        <DrawTitleBody />
-        <StaggerButtons />
-      </div>
+    <div className="ml-4 mt-8 flex flex-col space-y-2 md:ml-36 md:mt-28">
+      <DrawTitle />
+      <DrawSubTitle />
+      <DrawTitleBody />
+      <StaggerButtons />
     </div>
   );
 }
@@ -46,14 +44,14 @@ const SpotifyClientSection = dynamic(() =>
 
 function SectionSpotify() {
   return (
-    <div id="spotify" className="ml-36 mt-32 flex flex-col">
-      <h3 className="-ml-4 mb-2 text-4xl font-medium underline decoration-primary">
+    <div id="spotify" className="ml-8 mt-28 flex flex-col md:ml-36 md:mt-32">
+      <h3 className="mb-2 text-4xl font-medium underline decoration-primary md:-ml-4">
         I listen to a significant amount of music.
       </h3>
-      <p className="text-lg">
+      <p className="mr-4 md:text-lg">
         So I created a sections that shows what I&apos;m currently listening to.
       </p>
-      <div className="mt-4 h-96">
+      <div className="mt-4 h-fit">
         <Suspense>
           <SpotifyClientSection />
         </Suspense>
@@ -71,8 +69,8 @@ async function SectionImages() {
 
   return (
     <div>
-      <div id="photos" className="mb-8 ml-36 mt-32">
-        <h3 className="-ml-4 text-4xl font-medium underline decoration-primary drop-shadow-lg">
+      <div id="photos" className="mb-8 ml-4 mr-4 mt-28 md:ml-36 md:mt-32">
+        <h3 className="text-4xl font-medium underline decoration-primary drop-shadow-lg md:-ml-4">
           Photos expresses a mood in a snapshot of time.
         </h3>
         <p className="mt-2 text-lg drop-shadow-lg">
@@ -90,21 +88,21 @@ async function SectionImages() {
 function SectionTooling() {
   return (
     <div className="flex flex-col">
-      <div className="mb-8 ml-36 mt-32">
-        <h3 className="-ml-4 text-4xl font-medium underline decoration-primary drop-shadow-lg">
+      <div className="mb-8 ml-4 mt-28 md:ml-36 md:mt-32">
+        <h3 className="text-4xl font-medium underline decoration-primary drop-shadow-lg md:-ml-4">
           A Website allows me to show, not just tell.
         </h3>
-        <p className="mt-2 text-lg drop-shadow-lg">
+        <p className="mt-2 max-w-2xl text-lg drop-shadow-lg">
           Showing you who I am, with code, with images, and with a style that I
           feel represents me, is why I created this website.
         </p>
       </div>
-      <div className="mx-32 rounded-xl border border-border bg-accent shadow-md">
+      <div className="mx-4 rounded-xl border border-border bg-accent shadow-md md:mx-32">
         <h4 className="p-4 text-center text-xl font-semibold">
           Tooling used for this website
         </h4>
         <Separator />
-        <div className="grid grid-cols-4 p-4">
+        <div className="grid grid-cols-2 p-4 md:grid-cols-4">
           <ToolCard doubleSpan name="Vercel" purpose="Hosting">
             <svg
               aria-label="Vercel logotype"
@@ -255,11 +253,15 @@ function SectionTooling() {
           </ToolCard>
           <ToolCard name="shadcn ui" purpose="UI Library">
             <Image src="/icons/shadcn.png" alt="" width={48} height={48} />
-            <div className="ml-2 text-4xl font-medium">Shadcn/UI</div>
+            <div className="ml-2 text-2xl font-medium md:text-4xl">
+              Shadcn/UI
+            </div>
           </ToolCard>
           <ToolCard name="Tailwind CSS" purpose="Styling Library">
             <Image src="/icons/tailwind.svg" alt="" width={48} height={48} />
-            <div className="ml-2 text-4xl font-medium">tailwindcss</div>
+            <div className="ml-2 text-2xl font-medium md:text-4xl">
+              tailwindcss
+            </div>
           </ToolCard>
         </div>
       </div>
@@ -283,7 +285,7 @@ function ToolCard({
       className={`${doubleSpan && "col-span-2"} flex h-fit flex-col px-6 py-2 text-center`}
     >
       <div
-        className="mx-auto flex h-28 flex-row content-center items-center pt-4 align-middle"
+        className="mx:h-28 mx-auto flex h-24 flex-row content-center items-center pt-4 align-middle"
         aria-label={name}
       >
         {children}

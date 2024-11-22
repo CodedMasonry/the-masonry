@@ -29,15 +29,15 @@ export function ImageCarousel({
     >
       <CarouselContent className="-ml-4">
         {images.map((key, index) => (
-          <CarouselItem key={index} className="basis-1/4 pl-1">
-              <Image
-                src={key}
-                alt=""
-                width={682}
-                height={384}
-                loading="lazy"
-                className="shadow-lg"
-              />
+          <CarouselItem key={index} className="basis-1/2 pl-1 md:basis-1/4">
+            <Image
+              src={key}
+              alt=""
+              width={682}
+              height={384}
+              loading="lazy"
+              className="shadow-lg"
+            />
           </CarouselItem>
         ))}
       </CarouselContent>
