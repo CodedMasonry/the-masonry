@@ -188,6 +188,8 @@ export function SpotifyClientSection() {
   });
   // Parse response to either an object or null
   const data = useMemo(() => response.data ?? null, [response]);
+  // Parse response to see if actually have data
+  const isLoaded = useMemo(() => response.isFetched, [response]);
   // Simulating live timing
   const [progress, setProgress] = useState<number | null>(null);
 
@@ -227,11 +229,12 @@ export function SpotifyClientSection() {
 
   return (
     <AnimatePresence mode="wait">
-      {data ? (
-        <CurrentlyPlaying data={data} progress={progress!} />
-      ) : (
-        <NothingPlaying />
-      )}
+      {isLoaded &&
+        (data ? (
+          <CurrentlyPlaying data={data} progress={progress!} />
+        ) : (
+          <NothingPlaying />
+        ))}
     </AnimatePresence>
   );
 }
@@ -249,7 +252,7 @@ function CurrentlyPlaying({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1, delayChildren: 1, delay: 1 }}
+      transition={{ duration: 1 }}
       className="mr-6 flex flex-col md:flex-row"
     >
       <div className="relative mr-44 size-64 md:size-96">
