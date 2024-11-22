@@ -63,7 +63,8 @@ export function StaggerButtons() {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        delayChildren: .5,
+        staggerChildren: 0.1,
       },
     },
   };
