@@ -65,7 +65,7 @@ function SectionSpotify() {
       <p className="mr-4 md:text-lg">
         So I created a sections that shows what I&apos;m currently listening to.
       </p>
-      <div className="mt-4 h-[30rem] md:h-96">
+      <div className="mt-4 min-h-[30rem] md:min-h-96">
         <SpotifyClientSection />
       </div>
     </div>
