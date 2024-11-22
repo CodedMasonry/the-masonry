@@ -27,19 +27,6 @@ import { type PlaybackResponse } from "~/server/spotify";
 import { api } from "~/trpc/react";
 import React from "react";
 
-export function DrawTitle() {
-  return (
-    <motion.h1
-      initial={{ opacity: 0, x: -100 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 2, type: "spring" }}
-      className="text-6xl font-extrabold text-primary drop-shadow-lg md:text-7xl"
-    >
-      Hello, I&apos;m Brock.
-    </motion.h1>
-  );
-}
-
 export function CycleText({ options }: { options: Array<string> }) {
   const [index, setIndex] = useState(0);
 
@@ -76,7 +63,7 @@ export function StaggerButtons() {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.5,
+        staggerChildren: 0.4,
       },
     },
   };
@@ -134,6 +121,7 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
   if (isPlaying) {
     return (
       <motion.div
+        key="Vinyl"
         initial={{ x: 0 }}
         whileInView={{ x: "33%", rotate: 360 }}
         transition={{
@@ -232,6 +220,7 @@ function CurrentlyPlaying({
   return (
     <motion.div
       key="CurrentlyPlaying"
+      layout
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
@@ -320,7 +309,7 @@ function NothingPlaying() {
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
-      transition={{ duration: 1 }}
+      transition={{ duration: 1, delay: 2 }}
       className="mr-6 flex flex-col md:flex-row"
     >
       <div className="relative mr-44 size-64 md:size-96">

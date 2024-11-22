@@ -1,11 +1,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import React from "react";
-import {
-  CycleText,
-  DrawTitle,
-  StaggerButtons,
-} from "~/app/client";
+import { CycleText, StaggerButtons } from "~/app/client";
 import { Navbar } from "~/components/navbar";
 import { utapi } from "~/server/uploadthing";
 
@@ -28,7 +24,9 @@ export default async function HomePage() {
 function SectionHeader() {
   return (
     <div className="ml-4 mt-8 flex flex-col space-y-2 md:ml-36 md:mt-28">
-      <DrawTitle />
+      <h1 className="text-6xl font-extrabold text-primary drop-shadow-lg md:text-7xl">
+        Hello, I&apos;m Brock.
+      </h1>
       <h2 className="text-4xl drop-shadow-lg">
         <CycleText
           options={[
