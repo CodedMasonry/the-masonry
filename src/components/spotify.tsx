@@ -129,13 +129,7 @@ function NothingPlaying() {
           color="white"
           className="absolute z-10 size-64 rounded-xl bg-destructive shadow-md md:size-96"
         />
-        <Image
-          src="/vinyl.webp"
-          alt=""
-          fill
-          loading="eager"
-          className="translate-x-20 rounded-xl drop-shadow-lg md:translate-x-28"
-        />
+        <ClientVinyl />
       </div>
       <div className="mt-4 flex flex-col drop-shadow-lg md:mt-16">
         <h4 className="text-5xl font-semibold md:text-6xl">Nothings Playing</h4>
@@ -150,7 +144,11 @@ function NothingPlaying() {
   );
 }
 
-export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
+export function ClientVinyl({
+  isPlaying,
+}: {
+  isPlaying?: boolean | undefined;
+}) {
   if (isPlaying) {
     return (
       <motion.div
