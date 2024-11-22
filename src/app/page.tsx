@@ -1,14 +1,14 @@
-import { IconFile } from "@tabler/icons-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import React, { Suspense } from "react";
 import { CycleText } from "~/components/cycle-text";
 import { Navbar } from "~/components/navbar";
+import SpotifyClientSection from "~/components/spotify";
 import { buttonVariants } from "~/components/ui/button";
 import { utapi } from "~/server/uploadthing";
+import { api, HydrateClient } from "~/trpc/server";
 
 // Lazy load Client Section
-const SpotifyClientSection = dynamic(() => import("~/components/spotify"));
 const ClientCarousel = dynamic(() => import("~/app/client-carousel"));
 const SectionTooling = dynamic(() => import("~/app/section-tooling"));
 
@@ -50,9 +50,15 @@ function SectionHeader() {
       <div className="-ml-2">
         <a
           href="/resume"
-          className={`m-2 text-primary-foreground shadow-md ${buttonVariants({ variant: "default", size: "lg" })}`}
+          className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
         >
-          <IconFile stroke={2} color="text-primary-foreground" />
+          <Image
+            src="/icons/paper.svg"
+            alt=""
+            width={28}
+            height={28}
+            className="dark:invert"
+          />
           Resume
         </a>
         <a
@@ -100,6 +106,9 @@ function SectionHeader() {
 }
 
 function SectionSpotify() {
+  // Prefetch data
+  void api.spotify.getPlayback.prefetch();
+
   return (
     <div
       id="spotify"
@@ -112,7 +121,9 @@ function SectionSpotify() {
         So I created a sections that shows what I&apos;m currently listening to.
       </p>
       <div className="mt-4 min-h-[30rem] md:min-h-96">
-        <SpotifyClientSection />
+        <HydrateClient>
+          <SpotifyClientSection />
+        </HydrateClient>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import {
   IconRepeat,
   IconRepeatOnce,
 } from "@tabler/icons-react";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { type PlaybackResponse } from "~/server/spotify";
@@ -63,13 +63,13 @@ export default function SpotifyClientSection() {
   }, [data, progress, response, utils.spotify]);
 
   return (
-    <AnimatePresence mode="wait">
+    <>
       {data ? (
         <CurrentlyPlaying data={data} progress={progress!} />
       ) : (
         <NothingPlaying />
       )}
-    </AnimatePresence>
+    </>
   );
 }
 
@@ -81,19 +81,12 @@ function CurrentlyPlaying({
   progress: number;
 }) {
   return (
-    <motion.div
-      key="CurrentlyPlaying"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 1 }}
-      className="mr-6 flex flex-col md:flex-row"
-    >
+    <div key="CurrentlyPlaying" className="mr-6 flex flex-col md:flex-row">
       <div className="relative mr-44 size-64 md:size-96">
         <Image
           // There is assumed to always be 2 thumbnails, each with a link.
           // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-          src={data?.item.album.images[1]?.url!}
+          src={data.item.album.images[1]?.url!}
           alt=""
           fill
           loading="eager"
@@ -124,20 +117,13 @@ function CurrentlyPlaying({
           Playing now on <Device type={data.device.type} /> {data.device.name}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 function NothingPlaying() {
   return (
-    <motion.div
-      key="NothingPlaying"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 1, delay: 2 }}
-      className="mr-6 flex flex-col md:flex-row"
-    >
+    <div key="NothingPlaying" className="mr-6 flex flex-col md:flex-row">
       <div className="relative mr-44 size-64 md:size-96">
         <IconMoodSad
           color="white"
@@ -160,7 +146,7 @@ function NothingPlaying() {
           But this section will update when I turn the music on
         </p>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -172,7 +158,7 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
         initial={{ x: 0 }}
         whileInView={{ x: "33%", rotate: 360 }}
         transition={{
-          x: { duration: 1, delay: 0.5 },
+          x: { duration: 1, delay: 0.5, type: "spring" },
           rotate: { repeat: Infinity, duration: 4, ease: "linear" },
         }}
         className="relative size-64 drop-shadow-lg md:size-96"
@@ -196,6 +182,7 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
         transition={{
           duration: 1,
           delay: 0.5,
+          type: "spring",
         }}
         className="relative size-64 drop-shadow-lg md:size-96"
       >
