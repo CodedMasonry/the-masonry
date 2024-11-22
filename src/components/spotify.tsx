@@ -20,17 +20,11 @@ export default function SpotifyClientSection() {
   // Utility to invalidate cache
   const utils = api.useUtils();
   // Fetch data hook
-  const [response, responseQuery] = api.spotify.getPlayback.useSuspenseQuery(
-    void 0,
-    {
-      staleTime: 10 * 1000,
-    },
-  );
+  const response = api.spotify.getPlayback.useQuery(void 0, {
+    staleTime: 10 * 1000,
+  });
   // Parse response to either an object or null
-  const data = useMemo(
-    () => responseQuery.data ?? response ?? null,
-    [response, responseQuery],
-  );
+  const data = useMemo(() => response.data ?? null, [response]);
   // Simulating live timing
   const [progress, setProgress] = useState<number | null>(null);
 

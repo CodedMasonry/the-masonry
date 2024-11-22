@@ -31,9 +31,15 @@ export function ImageCarousel({
         {images.map((key, index) => (
           <CarouselItem
             key={index}
-            className="relative h-48 md:h-64 basis-1/2 pl-1 md:basis-1/4"
+            className="relative aspect-video h-48 basis-1/2 pl-1 md:h-64 md:basis-1/4"
           >
-            <Image src={key} alt="" fill loading="lazy" className="shadow-lg" />
+            <Image
+              src={key}
+              alt=""
+              fill
+              loading="lazy"
+              className="aspect-video shadow-lg"
+            />
           </CarouselItem>
         ))}
       </CarouselContent>

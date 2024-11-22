@@ -107,9 +107,6 @@ function SectionHeader() {
 }
 
 function SectionSpotify() {
-  // Prefetch data
-  void api.spotify.getPlayback.prefetch();
-
   return (
     <div
       id="spotify"
@@ -122,11 +119,9 @@ function SectionSpotify() {
         So I created a sections that shows what I&apos;m currently listening to.
       </p>
       <div className="mt-4 min-h-[30rem] md:min-h-96">
-        <HydrateClient>
-          <Suspense fallback={<SpotifySuspense />}>
-            <SpotifyClientSection />
-          </Suspense>
-        </HydrateClient>
+        <Suspense fallback={<SpotifySuspense />}>
+          <SpotifyClientSection />
+        </Suspense>
       </div>
     </div>
   );
