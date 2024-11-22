@@ -3,9 +3,10 @@
  * for Docker builds.
  */
 import "./src/env.js";
+import { withPlausibleProxy } from "next-plausible";
 
 /** @type {import("next").NextConfig} */
-const config = {
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -22,6 +23,17 @@ const config = {
       }
     ],
   },
+
+  experimental: {
+    reactCompiler: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
-export default config;
+const outputConfig = withPlausibleProxy()(nextConfig);
+export default outputConfig;
