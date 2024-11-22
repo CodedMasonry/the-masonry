@@ -59,15 +59,10 @@ export function StaggerButtons() {
     show: {
       opacity: 1,
       transition: {
-        delayChildren: 0.5,
-        staggerChildren: 0.25,
+        duration: 1,
+        delay: .5,
       },
     },
-  };
-
-  const item = {
-    hidden: { opacity: 0, x: -10 },
-    show: { opacity: 1, x: 0, transition: { duration: 0.5 } },
   };
 
   return (
@@ -76,10 +71,8 @@ export function StaggerButtons() {
       initial="hidden"
       animate="show"
       className="-ml-2"
-      transition={{ staggerChildren: 0.5 }}
     >
-      <motion.a
-        variants={item}
+      <a
         href="/resume"
         className={`m-2 shadow-md ${buttonVariants({ variant: "default", size: "lg" })}`}
       >
@@ -91,9 +84,8 @@ export function StaggerButtons() {
           className="invert"
         />
         Resume
-      </motion.a>
-      <motion.a
-        variants={item}
+      </a>
+      <a
         href="#photos"
         className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
       >
@@ -105,9 +97,8 @@ export function StaggerButtons() {
           className="dark:invert"
         />
         Photos
-      </motion.a>
-      <motion.a
-        variants={item}
+      </a>
+      <a
         href="#spotify"
         className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
       >
@@ -119,9 +110,8 @@ export function StaggerButtons() {
           className="dark:invert"
         />
         Spotify
-      </motion.a>
-      <motion.a
-        variants={item}
+      </a>
+      <a
         href="https://github.com/CodedMasonry"
         className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
       >
@@ -133,7 +123,7 @@ export function StaggerButtons() {
           className="dark:invert"
         />
         Github
-      </motion.a>
+      </a>
     </motion.div>
   );
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "motion/react";
 import { ImageCarousel } from "~/components/img-carousel";
 
 export default function ClientCarousel({ images }: { images: Array<string> }) {
@@ -10,14 +9,9 @@ export default function ClientCarousel({ images }: { images: Array<string> }) {
   const setTwo = images.slice(images.length / 2, images.length);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.25 }}
-      className="flex w-full flex-col"
-    >
+    <div className="flex w-full flex-col">
       <ImageCarousel images={setOne} direction="forward" />
       <ImageCarousel images={setTwo} direction="backward" />
-    </motion.div>
+    </div>
   );
 }
