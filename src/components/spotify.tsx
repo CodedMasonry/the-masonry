@@ -30,8 +30,6 @@ export default function SpotifyClientSection() {
   });
   // Parse response to either an object or null
   const data = useMemo(() => response.data ?? null, [response]);
-  // Parse response to see if actually have data
-  const isLoaded = useMemo(() => response.isFetched, [response]);
   // Simulating live timing
   const [progress, setProgress] = useState<number | null>(null);
 
@@ -71,12 +69,11 @@ export default function SpotifyClientSection() {
 
   return (
     <AnimatePresence mode="wait">
-      {isLoaded &&
-        (data ? (
-          <CurrentlyPlaying data={data} progress={progress!} />
-        ) : (
-          <NothingPlaying />
-        ))}
+      {data ? (
+        <CurrentlyPlaying data={data} progress={progress!} />
+      ) : (
+        <NothingPlaying />
+      )}
     </AnimatePresence>
   );
 }
