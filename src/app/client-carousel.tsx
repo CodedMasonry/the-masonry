@@ -13,7 +13,7 @@ export default function ClientCarousel({ images }: { images: Array<string> }) {
     <motion.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.25, type: "spring" }}
+      transition={{ duration: 0.25 }}
       className="flex w-full flex-col"
     >
       <ImageCarousel images={setOne} direction="forward" />

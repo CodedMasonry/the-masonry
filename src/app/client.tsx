@@ -63,7 +63,7 @@ export function StaggerButtons() {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.4,
+        staggerChildren: 0.2,
       },
     },
   };
@@ -141,14 +141,19 @@ export function ClientVinyl({ isPlaying }: { isPlaying: boolean }) {
     );
   } else {
     return (
-      <Image
-        src="/vinyl.webp"
-        width={384}
-        height={384}
-        alt=""
-        loading="eager"
-        className="size-64 translate-x-28 md:size-96"
-      />
+      <motion.div
+        key="Vinyl"
+        initial={{ x: 0 }}
+        whileInView={{ x: "33%", rotate: 360 }}
+        transition={{
+          duration: 1,
+          type: "spring",
+          delay: 0.5,
+        }}
+        className="relative size-64 drop-shadow-lg md:size-96"
+      >
+        <Image src="/vinyl.webp" alt="" fill loading="eager" />
+      </motion.div>
     );
   }
 }
