@@ -14,7 +14,7 @@ import {
   IconRepeat,
   IconRepeatOnce,
 } from "@tabler/icons-react";
-import { AnimatePresence, delay, motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { buttonVariants } from "~/components/ui/button";
@@ -26,7 +26,6 @@ import {
 import { type PlaybackResponse } from "~/server/spotify";
 import { api } from "~/trpc/react";
 import React from "react";
-import { ImageCarousel } from "~/components/img-carousel";
 
 export function DrawTitle() {
   return (
@@ -400,23 +399,4 @@ function formatMilliseconds(ms: number): string {
   const minutes = Math.floor(ms / 60000);
   const seconds = Math.floor((ms % 60000) / 1000);
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
-}
-
-export function ClientCarousel({ images }: { images: Array<string> }) {
-  // First Half of images
-  const setOne = images.slice(0, images.length / 2);
-  // Second half
-  const setTwo = images.slice(images.length / 2, images.length);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.25, type: "spring" }}
-      className="flex w-full flex-col"
-    >
-      <ImageCarousel images={setOne} direction="forward" />
-      <ImageCarousel images={setTwo} direction="backward" />
-    </motion.div>
-  );
 }
