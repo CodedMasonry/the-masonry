@@ -282,7 +282,7 @@ function CurrentlyPlaying({
           alt=""
           fill
           unoptimized
-          loading="eager"
+          priority
           className="absolute z-10 rounded-xl bg-background shadow-md md:ml-0"
         />
         <ClientVinyl isPlaying={data.is_playing} />
@@ -353,32 +353,31 @@ function NothingPlaying() {
   return (
     <motion.div
       key="NothingPlaying"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 100 }}
       transition={{ duration: 1, delay: 2 }}
-      className="flex flex-row"
+      className="mr-6 flex flex-col md:flex-row"
     >
-      <div className="mr-44 size-64 md:size-96">
+      <div className="relative mr-44 size-64 md:size-96">
         <IconMoodSad
           color="white"
-          className="absolute z-10 rounded-xl bg-destructive shadow-md"
+          className="absolute z-10 size-64 rounded-xl bg-destructive shadow-md md:size-96"
         />
         <Image
           src="/broken_vinyl.webp"
           alt=""
-          width={384}
-          height={384}
-          loading="lazy"
-          className="translate-x-28 rounded-xl drop-shadow-lg"
+          fill
+          priority
+          className="translate-x-20 rounded-xl drop-shadow-lg md:translate-x-28"
         />
       </div>
-      <div className="mt-16 flex flex-col drop-shadow-lg">
-        <h4 className="text-6xl font-semibold">Nothings Playing</h4>
-        <p className="mt-4 text-4xl">
+      <div className="mt-4 flex flex-col drop-shadow-lg md:mt-16">
+        <h4 className="text-5xl font-semibold md:text-6xl">Nothings Playing</h4>
+        <p className="mt-2 text-3xl md:mt-4 md:text-4xl">
           I can&apos;t show you something that doesn&apos;t exist
         </p>
-        <p className="mt-4 text-2xl font-light underline decoration-primary">
+        <p className="mt-2 text-xl font-light underline decoration-primary md:mt-4 md:text-2xl">
           But this section will update when I turn the music on
         </p>
       </div>

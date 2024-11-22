@@ -52,9 +52,7 @@ function SectionSpotify() {
         So I created a sections that shows what I&apos;m currently listening to.
       </p>
       <div className="mt-4 h-fit">
-        <Suspense>
-          <SpotifyClientSection />
-        </Suspense>
+        <SpotifyClientSection />
       </div>
     </div>
   );
@@ -78,9 +76,7 @@ async function SectionImages() {
           inspires me to take them.
         </p>
       </div>
-      <Suspense>
-        <ClientCarousel images={images} />
-      </Suspense>
+      <ClientCarousel images={images} />
     </div>
   );
 }
