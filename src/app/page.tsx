@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import React, { Suspense } from "react";
+import React from "react";
 import {
   DrawSubTitle,
   DrawTitle,
@@ -8,8 +8,9 @@ import {
   StaggerButtons,
 } from "~/app/client";
 import { Navbar } from "~/components/navbar";
+import { utapi } from "~/server/uploadthing";
 
-const SectionImages = dynamic(() => import("~/app/section-images"));
+const ClientCarousel = dynamic(() => import("~/app/client-carousel"));
 const SectionTooling = dynamic(() => import("~/app/section-tooling"));
 
 export default async function HomePage() {
@@ -53,6 +54,29 @@ function SectionSpotify() {
       <div className="mt-4 h-fit">
         <SpotifyClientSection />
       </div>
+    </div>
+  );
+}
+
+async function SectionImages() {
+  const images = await utapi
+    .listFiles()
+    .then((v) =>
+      v.files.map((img) => "https://utfs.io/a/dxgc3f8f0p/" + img.key),
+    );
+
+  return (
+    <div>
+      <div id="photos" className="mb-8 ml-4 mr-4 mt-28 md:ml-36 md:mt-32">
+        <h3 className="text-4xl font-medium underline decoration-primary drop-shadow-lg md:-ml-4">
+          Photos expresses a mood in a snapshot of time.
+        </h3>
+        <p className="mt-2 text-lg drop-shadow-lg">
+          The ability to represent a moment, a setting, an emotion is what
+          inspires me to take them.
+        </p>
+      </div>
+      <ClientCarousel images={images} />
     </div>
   );
 }
