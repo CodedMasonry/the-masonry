@@ -2,9 +2,8 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import React from "react";
 import {
-  DrawSubTitle,
+  CycleText,
   DrawTitle,
-  DrawTitleBody,
   StaggerButtons,
 } from "~/app/client";
 import { Navbar } from "~/components/navbar";
@@ -30,8 +29,20 @@ function SectionHeader() {
   return (
     <div className="ml-4 mt-8 flex flex-col space-y-2 md:ml-36 md:mt-28">
       <DrawTitle />
-      <DrawSubTitle />
-      <DrawTitleBody />
+      <h2 className="text-4xl drop-shadow-lg">
+        <CycleText
+          options={[
+            "Software Developer",
+            "Cybersecurity Enthusiast",
+            "Photographer",
+            "Drone Pilot",
+          ]}
+        />
+      </h2>
+      <p className="mr-4 pb-4 pt-2 drop-shadow-lg md:max-w-3xl md:pt-4">
+        Being a software engineer, I wanted to write code, and I wanted to
+        convey who I am beyond just words, so I created a website.{" "}
+      </p>
       <StaggerButtons />
     </div>
   );
@@ -51,7 +62,7 @@ function SectionSpotify() {
       <p className="mr-4 md:text-lg">
         So I created a sections that shows what I&apos;m currently listening to.
       </p>
-      <div className="mt-4 h-fit">
+      <div className="mt-4 h-[30rem] md:h-96">
         <SpotifyClientSection />
       </div>
     </div>
