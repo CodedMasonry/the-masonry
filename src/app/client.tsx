@@ -220,10 +220,9 @@ function CurrentlyPlaying({
   return (
     <motion.div
       key="CurrentlyPlaying"
-      layout
-      initial={{ opacity: 0, x: -100 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 100 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       transition={{ duration: 1 }}
       className="mr-6 flex flex-col md:flex-row"
     >
@@ -306,9 +305,9 @@ function NothingPlaying() {
   return (
     <motion.div
       key="NothingPlaying"
-      initial={{ opacity: 0, x: -100 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 100 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       transition={{ duration: 1, delay: 2 }}
       className="mr-6 flex flex-col md:flex-row"
     >
