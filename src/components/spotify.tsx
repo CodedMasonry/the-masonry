@@ -166,17 +166,15 @@ export function ClientVinyl({
         whileInView={{ x: "33%", rotate: 360 }}
         transition={{
           x: { duration: 1, delay: 0.5, type: "spring" },
-          rotate: { repeat: Infinity, duration: 4, ease: "linear" },
+          rotate: { repeat: Infinity, duration: 3, ease: "linear" },
         }}
-        className="relative size-64 drop-shadow-lg md:size-96"
+        className="relative size-64 md:size-96"
       >
         <Image
           src="/vinyl.webp"
           fill
           alt=""
           loading="eager"
-          priority
-          className="drop-shadow-lg"
         />
       </motion.div>
     );
@@ -191,9 +189,9 @@ export function ClientVinyl({
           delay: 0.5,
           type: "spring",
         }}
-        className="relative size-64 drop-shadow-lg md:size-96"
+        className="relative size-64 md:size-96"
       >
-        <Image src="/vinyl.webp" alt="" fill priority loading="eager" />
+        <Image src="/vinyl.webp" alt="" fill loading="eager" />
       </motion.div>
     );
   }
