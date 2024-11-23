@@ -29,9 +29,6 @@ export default function SpotifyClientSection({
   const response = api.spotify.getPlayback.useQuery(void 0, {
     initialData: initial,
     staleTime: 10 * 1000,
-    trpc: {
-      ssr: false,
-    },
   });
 
   // If we have an up to date response, use it, else use null
@@ -52,7 +49,7 @@ export default function SpotifyClientSection({
   // Increment every second
   useEffect(() => {
     //Implementing the setInterval method
-    const interval = setInterval(async () => {
+    const interval = setInterval(() => {
       // If data is real
       if (data?.progress_ms) {
         // If progress is real & music is playing
@@ -62,7 +59,7 @@ export default function SpotifyClientSection({
             setProgress(progress + 1000);
           } else if (progress >= data.item.duration_ms) {
             // Revalidate local cache because we hit the precieved end of the song
-            await utils.spotify.invalidate();
+            void utils.spotify.invalidate();
           }
         } else {
           setProgress(data.progress_ms);

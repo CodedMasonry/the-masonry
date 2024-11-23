@@ -1,6 +1,5 @@
 "use server";
 
-import { unstable_cache } from "next/cache";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import React, { Suspense } from "react";
@@ -10,7 +9,7 @@ import SpotifyClientSection from "~/components/spotify";
 import { buttonVariants } from "~/components/ui/button";
 import { Skeleton } from "~/components/ui/skeleton";
 import { utapi } from "~/server/uploadthing";
-import { api, HydrateClient } from "~/trpc/server";
+import { api } from "~/trpc/server";
 
 // Lazy load Client Section
 const ClientCarousel = dynamic(() => import("~/app/client-carousel"));
