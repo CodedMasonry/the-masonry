@@ -109,15 +109,9 @@ function SectionHeader() {
   );
 }
 
-// Force the prefetch to update every 10 seconds
-const prefetch = unstable_cache(
-  async () => await api.spotify.getPlayback(),
-  [],
-  { revalidate: 10 },
-);
 async function SectionSpotify() {
   // pull cached prefetch
-  const initial = await prefetch();
+  const initial = await api.spotify.getPlayback();
 
   return (
     <div
