@@ -162,20 +162,16 @@ export function ClientVinyl({
     return (
       <motion.div
         key="Vinyl"
-        initial={{ x: 0 }}
-        whileInView={{ x: "33%", rotate: 360 }}
+        initial={{ x: 0, rotate: 0 }}
+        animate={{ rotate: 360 }}
+        whileInView={{ x: "33%" }}
         transition={{
           x: { duration: 1, delay: 0.5, type: "spring" },
           rotate: { repeat: Infinity, duration: 4, ease: "linear" },
         }}
         className="relative size-64 md:size-96"
       >
-        <Image
-          src="/vinyl.webp"
-          fill
-          alt=""
-          loading="eager"
-        />
+        <Image src="/vinyl.webp" fill alt="" loading="eager" />
       </motion.div>
     );
   } else {
