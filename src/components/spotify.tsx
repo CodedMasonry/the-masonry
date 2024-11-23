@@ -166,7 +166,7 @@ export function ClientVinyl({
         whileInView={{ x: "33%", rotate: 360 }}
         transition={{
           x: { duration: 1, delay: 0.5, type: "spring" },
-          rotate: { repeat: Infinity, duration: 3, ease: "linear" },
+          rotate: { repeat: Infinity, duration: 4, ease: "linear" },
         }}
         className="relative size-64 md:size-96"
       >
