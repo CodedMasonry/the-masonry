@@ -18,8 +18,8 @@ const nextConfig = {
         protocol: "https",
         hostname: "utfs.io",
         port: "",
-        pathname: "/a/dxgc3f8f0p/**"
-      }
+        pathname: "/a/dxgc3f8f0p/**",
+      },
     ],
   },
 };

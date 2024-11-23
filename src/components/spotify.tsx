@@ -16,15 +16,24 @@ import { useEffect, useMemo, useState } from "react";
 import { type PlaybackResponse } from "~/server/spotify";
 import { api } from "~/trpc/react";
 
-export default function SpotifyClientSection() {
+// Have to pass initial as hydration fails without it
+export default function SpotifyClientSection({
+  initial,
+}: {
+  initial: PlaybackResponse | null;
+}) {
   // Utility to invalidate cache
   const utils = api.useUtils();
-  // Fetch data hook
+
+  // Have initial data be passed to client, every other update to refresh every 10 seconds
   const response = api.spotify.getPlayback.useQuery(void 0, {
+    initialData: initial,
     staleTime: 10 * 1000,
   });
-  // Parse response to either an object or null
+
+  // If we have an up to date response, use it, else use null
   const data = useMemo(() => response.data ?? null, [response]);
+
   // Simulating live timing
   const [progress, setProgress] = useState<number | null>(null);
 
@@ -40,7 +49,7 @@ export default function SpotifyClientSection() {
   // Increment every second
   useEffect(() => {
     //Implementing the setInterval method
-    const interval = setInterval(() => {
+    const interval = setInterval(async () => {
       // If data is real
       if (data?.progress_ms) {
         // If progress is real & music is playing
@@ -50,7 +59,7 @@ export default function SpotifyClientSection() {
             setProgress(progress + 1000);
           } else if (progress >= data.item.duration_ms) {
             // Revalidate local cache because we hit the precieved end of the song
-            void utils.spotify.invalidate();
+            await utils.spotify.invalidate();
           }
         } else {
           setProgress(data.progress_ms);
@@ -63,13 +72,13 @@ export default function SpotifyClientSection() {
   }, [data, progress, response, utils.spotify]);
 
   return (
-    <>
+    <div>
       {data ? (
         <CurrentlyPlaying data={data} progress={progress!} />
       ) : (
         <NothingPlaying />
       )}
-    </>
+    </div>
   );
 }
 

@@ -1,3 +1,5 @@
+"use server";
+
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import React, { Suspense } from "react";
@@ -106,7 +108,9 @@ function SectionHeader() {
   );
 }
 
-function SectionSpotify() {
+async function SectionSpotify() {
+  const prefetch = await api.spotify.getPlayback();
+
   return (
     <div
       id="spotify"
@@ -120,7 +124,7 @@ function SectionSpotify() {
       </p>
       <div className="mt-4 min-h-[30rem] md:min-h-96">
         <Suspense fallback={<SpotifySuspense />}>
-          <SpotifyClientSection />
+          <SpotifyClientSection initial={prefetch} />
         </Suspense>
       </div>
     </div>
@@ -129,7 +133,10 @@ function SectionSpotify() {
 
 function SpotifySuspense() {
   return (
-    <div key="NothingPlaying" className="mr-6 flex flex-col md:flex-row">
+    <div
+      key="NothingPlaying"
+      className="mr-6 flex h-[30rem] flex-col md:h-96 md:flex-row"
+    >
       <div className="relative mr-44 size-64 md:size-96">
         <Skeleton className="z-10 size-64 rounded-xl bg-destructive shadow-md md:size-96" />
       </div>
