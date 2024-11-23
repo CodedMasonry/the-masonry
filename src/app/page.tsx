@@ -1,5 +1,6 @@
 "use server";
 
+import { unstable_cache } from "next/cache";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import React, { Suspense } from "react";
@@ -108,8 +109,15 @@ function SectionHeader() {
   );
 }
 
+// Force the prefetch to update every 10 seconds
+const prefetch = unstable_cache(
+  async () => await api.spotify.getPlayback(),
+  [],
+  { revalidate: 10 },
+);
 async function SectionSpotify() {
-  const prefetch = await api.spotify.getPlayback();
+  // pull cached prefetch
+  const initial = await prefetch();
 
   return (
     <div
@@ -124,7 +132,7 @@ async function SectionSpotify() {
       </p>
       <div className="mt-4 min-h-[30rem] md:min-h-96">
         <Suspense fallback={<SpotifySuspense />}>
-          <SpotifyClientSection initial={prefetch} />
+          <SpotifyClientSection initial={initial} />
         </Suspense>
       </div>
     </div>

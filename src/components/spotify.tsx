@@ -29,6 +29,9 @@ export default function SpotifyClientSection({
   const response = api.spotify.getPlayback.useQuery(void 0, {
     initialData: initial,
     staleTime: 10 * 1000,
+    trpc: {
+      ssr: false,
+    },
   });
 
   // If we have an up to date response, use it, else use null
