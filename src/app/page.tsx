@@ -65,7 +65,7 @@ function SectionHeader() {
           Resume
         </a>
         <a
-          href="#photos"
+          href="/photos"
           className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
         >
           <Image
