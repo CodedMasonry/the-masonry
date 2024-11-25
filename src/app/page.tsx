@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import React, { Suspense } from "react";
 import { CycleText } from "~/components/cycle-text";
 import { Navbar } from "~/components/navbar";
@@ -51,7 +52,7 @@ function SectionHeader() {
         convey who I am beyond just words, so I created a website.{" "}
       </p>
       <div className="-ml-2">
-        <a
+        <Link
           href="/resume"
           className={`m-2 drop-shadow-md ${buttonVariants({ variant: "default", size: "lg" })}`}
         >
@@ -63,8 +64,8 @@ function SectionHeader() {
             className="invert"
           />
           Resume
-        </a>
-        <a
+        </Link>
+        <Link
           href="/photos"
           className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
         >
@@ -76,8 +77,8 @@ function SectionHeader() {
             className="dark:invert"
           />
           Photos
-        </a>
-        <a
+        </Link>
+        <Link
           href="#spotify"
           className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
         >
@@ -89,8 +90,8 @@ function SectionHeader() {
             className="dark:invert"
           />
           Spotify
-        </a>
-        <a
+        </Link>
+        <Link
           href="https://github.com/CodedMasonry"
           className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
         >
@@ -102,7 +103,7 @@ function SectionHeader() {
             className="dark:invert"
           />
           Github
-        </a>
+        </Link>
       </div>
     </div>
   );
@@ -182,7 +183,7 @@ async function SectionImages() {
 function SectionFooter() {
   return (
     <div className="mt-32 flex flex-row bg-background p-6">
-      <a
+      <Link
         href="mailto:brock@brockshaffer.dev"
         className="flex items-center text-2xl hover:underline"
       >
@@ -194,7 +195,7 @@ function SectionFooter() {
           className="mr-4"
         />
         brock@brockshaffer.dev
-      </a>
+      </Link>
     </div>
   );
 }
