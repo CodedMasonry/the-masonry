@@ -16,7 +16,7 @@ async function DisplayImages() {
   const images = (await utapi.listFiles()).files;
 
   return (
-    <div className="grid w-screen grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="mx-6 mb-6 grid max-w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {images.map((img, index) => (
         <Link
           key={img.key}
