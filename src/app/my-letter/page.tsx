@@ -16,7 +16,10 @@ export default async function Page() {
   }
 }
 
-export async function CheckPasswordInput(_prevState: any, formData: FormData) {
+export async function CheckPasswordInput(
+  _prevState: unknown,
+  formData: FormData,
+) {
   const cookieStore = await cookies();
 
   const pass = formData.get("password");
