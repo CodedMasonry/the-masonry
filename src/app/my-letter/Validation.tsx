@@ -19,7 +19,7 @@ export async function CheckPasswordInput(
     };
   }
 
-  hasher.update(pass.toString());
+  hasher.update(pass.slice(0, pass.length).toString());
   const data = hasher.digest("hex");
   console.log(data);
 
