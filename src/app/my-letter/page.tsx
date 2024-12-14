@@ -21,7 +21,7 @@ export default async function Page() {
 function Letter() {
   return (
     <main className={`bg-background/50 ${GeistMono.variable}`}>
-      <div className="flex max-w-4xl flex-col space-y-4 pb-8 pl-8 pr-8 pt-16 md:pl-16 md:pt-28 md:text-lg">
+      <div className="flex max-w-4xl flex-col space-y-4 pb-8 pl-8 pr-8 pt-16 md:pl-16 md:pt-20 md:text-lg">
         <h1 className="text-4xl font-bold underline decoration-primary md:text-5xl">
           Given Up
         </h1>
