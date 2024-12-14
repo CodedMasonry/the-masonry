@@ -15,14 +15,14 @@ export function CatchPage() {
   return (
     <main className="flex flex-col">
       <Navbar />
-      <div className="flex flex-col items-center">
-        <h1 className="mt-64 text-7xl font-bold underline decoration-primary">
+      <div className="ml-4 mr-4 flex flex-col items-center mb-6">
+        <h1 className="mt-48 text-6xl font-bold underline decoration-primary md:mt-64 md:text-7xl">
           My Letter.
         </h1>
-        <h2 className="mt-4 text-5xl font-light">
+        <h2 className="mt-4 text-4xl font-light md:text-5xl">
           If you stumbled upon this page, you can close it.
         </h2>
-        <h3 className="mt-32 text-3xl font-medium">
+        <h3 className="mt-32 text-2xl font-medium md:text-3xl">
           If I sent you the password, Please enter it below.
         </h3>
         <form
