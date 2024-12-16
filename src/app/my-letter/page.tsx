@@ -42,16 +42,39 @@ function Letter() {
         </h2>
         <p>
           If you wanted honesty, that&apos;s all you had to say.
-          <br /> I never wanted to let you down or have you go, it&apos;s better
-          off this way.
+          <br />
+          I never wanted to let you down or have you go, it&apos;s better off
+          this way.
           <br />
           ...
+          <br />
+          I'm Not Okay,
+          <br />
+          I'm Not Okay,
+          <br />
+          I'm Not Okay,
+          <br />
+          You wear me out.
           <br />
           What will it take to show you that it&apos;s not the life it seems?
           <br />
           I&apos;ve told you time and time again,
           <br />
-          You sing the words, but don&apos;t know it means.
+          You sing the words, but [still] don&apos;t know it means
+          <br />
+          To be a joke, and look, another line without a hook,
+          <br />
+          I held you close as we both shook,
+          <br />
+          For the last time, take a good hard look.
+          <br />
+          I'm Not Okay,
+          <br />
+          I'm Not Okay,
+          <br />
+          I'm Not Okay,
+          <br />
+          You wear me out.
           <br />
           ...
           <br />
@@ -59,7 +82,7 @@ function Letter() {
           <br />
           but all the pages all are torn and frayed.
           <br />
-          ...
+          I'm okay, I'm okay! I'm okay now (I'm okay now),
           <br />
           But you really need to listen to me,
           <br />
@@ -80,7 +103,7 @@ function Letter() {
           I&apos;m not okay (okay).
         </p>
         <h2 className="pt-4 text-3xl font-bold underline decoration-primary md:text-4xl">
-          I Don&apos;t Want To Be Here Anymore
+          Not Quite Myself
         </h2>
         <p>
           It's difficult to explain why I decided to kill myself, not that it
@@ -127,7 +150,13 @@ function Letter() {
           <br />
           I don't feel heard.
           <br />
-          I'm lost in my head.
+          I'm Better Off Dead.
+        </p>
+        <p>
+          I'm not here to blame anyone for anything; I take full responsibilty
+          for the choices I've made. I love the people in my life, but I just
+          can't look in the mirror without wanting to put a bullet in that
+          fucking idiot's head..
         </p>
         <h2 className="pt-4 text-3xl font-bold underline decoration-primary md:text-4xl">
           Sleep
@@ -135,62 +164,70 @@ function Letter() {
         <p>
           ...
           <br />
-          Don't you breathe for me
+          Some say now suffer all the childen
           <br />
-          Undeserving of your sympathy
+          And walk away a savior,
           <br />
-          'Cause there ain't no way that I'm sorry for what I did
+          Or a madman and polluted
           <br />
-          And through it all
+          From gutter institutions.
           <br />
-          How could you cry for me?
+          Don't you breathe for me,
           <br />
-          'Cause I don't feel bad about it
+          Undeserving of your sympathy.
           <br />
-          So shut your eyes
+          'Cause there ain't no way that I'm sorry for what I did,
           <br />
-          Kiss me goodbye
+          And through it all,
           <br />
-          And sleep
+          How could you cry, for me?
           <br />
-          Just sleep
+          'Cause I don't feel bad about it.
+          <br />
+          So shut your eyes,
+          <br />
+          Kiss me goodbye,
+          <br />
+          And sleep.
+          <br />
+          Just sleep.
           <br />
         </p>
         <p>
-          The hardest part
+          The hardest part,
           <br />
-          Is letting go of your dreams
+          Is letting go of your dreams.
           <br />
-          A drink for the horror that I'm in
+          A drink for the horror that I'm in,
           <br />
-          For the good guys and the bad guys
+          For the good guys and the bad guys,
           <br />
-          For the monsters that I've been
+          For the monsters that I've been,
           <br />
-          Three cheers for tyranny
+          Three cheers for tyranny,
           <br />
-          Unapologetic apathy
+          Unapologetic apathy,
           <br />
-          'Cause there ain't no way that I'm coming back again
+          'Cause there ain't no way that I'm coming back again.
           <br />
-          And through it all
+          And through it all,
           <br />
-          How could you cry for me?
+          How could you cry, for me?
           <br />
-          'Cause I don't feel bad about it
+          'Cause I don't feel bad about it.
           <br />
-          So shut your eyes
+          So shut your eyes,
           <br />
-          Kiss me goodbye
+          Kiss me goodbye,
           <br />
-          And sleep
+          And sleep.
           <br />
-          Just sleep
+          Just sleep.
           <br />
           ...
         </p>
         <h2 className="pt-4 text-3xl font-bold underline decoration-primary md:text-4xl">
-          Better Off Dead
+          I Don&apos;t Want To Be Here Anymore
         </h2>
         <p>
           You won't remember the words I've said, but I'll remember yours, until
