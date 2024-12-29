@@ -22,6 +22,7 @@ function Letter() {
   return (
     <main className={`bg-background/50 ${GeistMono.variable}`}>
       <div className="flex max-w-4xl flex-col space-y-4 pb-8 pl-8 pr-8 pt-16 md:pl-16 md:pt-20 md:text-lg">
+        <Entry id="1">Entry #1, Suicide Letter, December 14, 2024</Entry>
         <h1 className="text-4xl font-bold underline decoration-primary md:text-5xl">
           Given Up
         </h1>
@@ -232,13 +233,176 @@ function Letter() {
         <p>
           You won't remember the words I've said, but I'll remember yours, until
           my final breath.
-        </p>
-        <p className="pt-6">
+          <br />
+          <br />
           Brock Mason Shaffer,
           <br />
           December 14, 2024
         </p>
       </div>
+      <div className="flex max-w-4xl flex-col space-y-4 pb-8 pl-8 pr-8 pt-16 md:pl-16 md:pt-20 md:text-lg">
+        <Entry id="2">
+          Entry #2, I Don't Know What To Do, December 29, 2024
+        </Entry>
+        <h1 className="text-4xl font-bold underline decoration-primary md:text-5xl">
+          Angels With Dirty Faces
+        </h1>
+        <p>
+          Waiting
+          <br />
+          ...
+          <br />
+          Waiting
+          <br />
+          ...
+          <br />
+          All I've done is{" "}
+          <span className="text-2xl font-bold underline decoration-primary">
+            wait.
+          </span>
+          <br />
+          ...
+          <br />
+          I don't know what to do anymore. All I've felt like I have done for
+          the past several years is just waiting. Waiting on others to complete
+          a project, waiting on the next piece of work to do, waiting until I'm
+          old enough to do anything, waiting until I get paid. It feels like
+          anything I want to do requires just waiting. I feel adequate to work,
+          yet I have to wait until I'm 18, let alone possess a redundant piece
+          of paper attesting my loyalty & commitment, simply to get anywhere
+          near a decent job. I just want to put a gun to my head. It will make
+          time go so much faster. But I can't. I have to wait until I'm 18 just
+          to cough up a significant portion of paper to gain a long-gun. If I
+          want to do anything it is beyond my control, 90% of the time. I can't
+          die, I can't get a good job, I just feel stuck.
+          <br />
+          <br />
+          God, why does everything have to be so expensive? I need help, but I
+          don't have the money for that. It cost on the low end, $200 dollars,
+          for a something chambered in .22 LR. It cost at least $100 for a
+          single session of therapy (It's never a single session). I find it
+          easier to take the prior than the later, it's more reliable.
+          <br />
+          <br />
+          "Your insurance can cover therapy" - no, it can't. Not sustainably.
+          <br />
+          "Your parents can cover therapy" - My family needs the money more than
+          me.
+          <br />
+          "Aren't there better ways of dealing with this?" - I don't want drugs,
+          that's worse.
+          <br />
+          <br />
+          I'm just writing to myself. I'm going insane. God I hate this guy.
+          Drown yourself at this point, I don't want to hear it. Jump off a
+          bridge and make it quick. You've seen the state of your family, the
+          medical conditions, the mental conditions. I don't want that. I don't
+          want to suffer, I want a mercy kill. Slit my throat and let me
+          suffocate on my own blood, it would be less painful then the fate that
+          awaits me.
+          <br />
+          <br />
+        </p>
+        <h2 className="pt-4 text-3xl font-bold underline decoration-primary md:text-4xl">
+          Numb, But I Still Feel It
+        </h2>
+        <p>
+          ...I wish I could get over this feeling of slipping underline
+          <br />
+          I never get that far
+          <br />
+          Everything's so uncertain
+          <br />
+          Can't find the right direction
+          <br />
+          You look in the mirror and tell me you see clear
+          <br />
+          I see, I can see me, but I can't get past this feeling
+          <br />
+          I talk, but no one listens
+          <br />
+          Can't make my own decisions
+          <br />
+          ...
+          <br />
+          Every night I lie asleep
+          <br />
+          And try to wake up from this dream
+          <br />
+          Numb, but I still feel it crawling under my skin
+          <br />
+          I threw it all away, but it stills stays the same
+          <br />
+          Try and forget my name, but it's something I just can't change
+          <br />
+          I threw it all away, but it still stays the same.
+          <br />
+          ...
+          <br />
+          ...I wish I could get over this feeling of slipping under
+          <br />I never get that far
+        </p>
+        <h2 className="pt-4 text-3xl font-bold underline decoration-primary md:text-4xl">
+          Vampires Will Never Hurt You
+        </h2>
+        <p>
+          I feel fractured & lost. One day I will be sane, content. The next, I
+          just want to delete the save file. This mind just won't shut the fuck
+          up, for a single moment. I could be doing so much with the time I
+          have, yet I sit here with my thoughts being a fucking dumbass. You
+          don't deserve success. Put the bullet in the skull, stop being a
+          pussy. Be committal for once in your life. Your life is worthless,
+          only the organs in your body are worth a dime.
+          <br />
+          <br />
+          I write as if I expect anyone to read this, but know that isn't going
+          to happen. I'd rather be forgotten than remembered for my
+          imcompetence. I don't value my life, yet I want to enjoy it. At this
+          point I'm just spiralling, I'm sorry if you chose to read this, I
+          don't want you to read this, but I don't know what else to do. I don't
+          know. I don't know what to do. I don't know what to say. I don't know
+          how to fix it. I can't even look in the mirror with content for the
+          man I see starring back. Nobody respects him, so why should I? He is
+          subpar, he is imcompetent, he is inadequate, he is everything I
+          despise. His name tattered and a perpetual reminder of all the stupid
+          shit he's done.
+          <br />
+          <br />
+          I'm sorry to those whom I've disappointed. I'm a pussy if I kill
+          myself, and a pussy if I don't. I want to let the gun rest but I
+          shakes in my had with keen intent, as thoughts flashing reminding me
+          why it isn't worth living. For however good the future is, the past
+          haunts me and the present taunts me with perpetual anxiety.
+          <br />
+          <br />
+          I need help, please. Please save my soul. I act suicidial, that isn't
+          a joke. If you hand me a gun, I will pull the trigger. This devil in
+          my head goes away with that bullet; unfortunately, I'm taking myself
+          with it.
+          <br />
+          <br />
+          Brock Mason Shaffer,
+          <br />
+          December 29, 2024
+        </p>
+      </div>
     </main>
+  );
+}
+
+function Entry({
+  id,
+  children,
+}: Readonly<{
+  id: string;
+  children: React.ReactNode;
+}>) {
+  return (
+    <div
+      id={id}
+      className="rounded border-2 border-destructive p-2 text-xs font-bold text-destructive"
+    >
+      {children}
+    </div>
   );
 }
