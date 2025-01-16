@@ -20,11 +20,13 @@ export default async function HomePage() {
   return (
     <main className="flex flex-col">
       <Navbar />
+
       <SectionHeader />
       <SectionSpotify />
       <SectionGithub />
       <SectionImages />
       <SectionTooling />
+
       <SectionFooter />
     </main>
   );
@@ -187,11 +189,26 @@ async function SectionImages() {
   );
 }
 
+function SectionProjects() {
+  return (
+    <div
+      className="ml-8 mr-4 mt-28 flex flex-col md:ml-36 md:mt-36"
+    >
+      <h3 className="mb-2 text-3xl font-medium underline decoration-primary md:-ml-4 md:text-4xl">
+        Let me pull some stats from Github
+      </h3>
+      <p className="mr-4 md:text-lg">
+        Might as well showcase them for those who are curious.
+      </p>
+    </div>
+  );
+}
+
 function SectionFooter() {
   return (
     <div className="mt-32 flex flex-row bg-background p-6">
       <Link
-        href="mailto:brock@brockshaffer.dev"
+        href="mailto:contact@brockshaffer.dev"
         className="flex items-center text-2xl hover:underline"
       >
         <Image

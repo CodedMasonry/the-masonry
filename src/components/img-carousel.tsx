@@ -9,6 +9,7 @@ import {
 } from "~/components/ui/carousel";
 import Image from "next/image";
 import AutoScroll from "embla-carousel-auto-scroll";
+import { redirect } from "next/navigation";
 
 export function ImageCarousel({
   images,
@@ -39,6 +40,7 @@ export function ImageCarousel({
               fill
               loading="lazy"
               className="aspect-video shadow-lg"
+              onClick={() => redirect("/photos")}
             />
           </CarouselItem>
         ))}
