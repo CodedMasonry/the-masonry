@@ -22,6 +22,7 @@ export default async function HomePage() {
       <Navbar />
       <SectionHeader />
       <SectionSpotify />
+      <SectionGithub />
       <SectionImages />
       <SectionTooling />
       <SectionFooter />
@@ -151,6 +152,12 @@ function SpotifySuspense() {
   );
 }
 
+function SectionGithub() {
+  return (
+    <div className="ml-8 mr-4 mt-28 flex flex-col md:ml-36 md:mt-32"></div>
+  );
+}
+
 async function SectionImages() {
   const images = await utapi
     .listFiles()
@@ -194,7 +201,7 @@ function SectionFooter() {
           height={32}
           className="mr-4"
         />
-        brock@brockshaffer.dev
+        contact@brockshaffer.dev
       </Link>
     </div>
   );

@@ -26,7 +26,3 @@ function Letter() {
     </main>
   );
 }
-
-function Bold({ children }: { children: React.ReactNode }) {
-  return <span className="text-lg font-semibold">{children}</span>;
-}
