@@ -7,10 +7,10 @@ export default function SectionTooling() {
     <div className="flex flex-col">
       <div className="mb-8 ml-8 mr-4 mt-28 md:ml-36 md:mt-32">
         <h3 className="text-4xl font-medium underline decoration-primary drop-shadow-lg md:-ml-4">
-          A Website allows me to show, not just tell.
+          I&apos;m a Programmer
         </h3>
         <p className="mt-2 max-w-2xl text-lg drop-shadow-lg">
-          Showing you who I am, with code, with images, and with a style that I
+          So showing you who I am, with code, with images, and with a style that I
           feel represents me, is why I created this website.
         </p>
       </div>

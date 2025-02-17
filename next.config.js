@@ -16,10 +16,16 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "utfs.io",
+        hostname: "dxgc3f8f0p.ufs.sh",
         port: "",
-        pathname: "/a/dxgc3f8f0p/**",
+        pathname: "/f/**",
       },
+      {
+        protocol: "https",
+        hostname: "hz2lv8281m.ufs.sh",
+        port: "",
+        pathname: "/f/**",
+      }
     ],
   },
   eslint: {

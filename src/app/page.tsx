@@ -6,14 +6,15 @@ import Link from "next/link";
 import React, { Suspense } from "react";
 import { CycleText } from "~/components/cycle-text";
 import { Navbar } from "~/components/navbar";
-import SpotifyClientSection from "~/components/spotify";
 import { buttonVariants } from "~/components/ui/button";
 import { Skeleton } from "~/components/ui/skeleton";
 import { utapi } from "~/server/uploadthing";
 import { api } from "~/trpc/server";
 
 // Lazy load Client Section
+const SpotifyClientSection = dynamic(() => import("~/components/spotify"));
 const ClientCarousel = dynamic(() => import("~/app/client-carousel"));
+const SectionInDepth = dynamic(() => import("~/app/section-indepth"));
 const SectionTooling = dynamic(() => import("~/app/section-tooling"));
 
 export default async function HomePage() {
@@ -23,8 +24,8 @@ export default async function HomePage() {
 
       <SectionHeader />
       <SectionSpotify />
-      <SectionGithub />
       <SectionImages />
+      <SectionInDepth />
       <SectionTooling />
 
       <SectionFooter />
@@ -122,10 +123,10 @@ async function SectionSpotify() {
       className="ml-8 mr-4 mt-28 flex flex-col md:ml-36 md:mt-32"
     >
       <h3 className="mb-2 text-3xl font-medium underline decoration-primary md:-ml-4 md:text-4xl">
-        I listen to a significant amount of music.
+        I Like Music
       </h3>
       <p className="mr-4 md:text-lg">
-        So I created a sections that shows what I&apos;m currently listening to.
+        So I created a section that shows what I&apos;m currently listening to.
       </p>
       <div className="mt-4 min-h-[30rem] md:min-h-96">
         <Suspense fallback={<SpotifySuspense />}>
@@ -154,18 +155,11 @@ function SpotifySuspense() {
   );
 }
 
-function SectionGithub() {
-  return (
-    <div className="ml-8 mr-4 mt-28 flex flex-col md:ml-36 md:mt-32"></div>
-  );
-}
-
 async function SectionImages() {
   const images = await utapi
     .listFiles()
-    .then((v) =>
-      v.files.map((img) => "https://utfs.io/a/dxgc3f8f0p/" + img.key),
-    );
+    .then((v) => v.files.map((img) => "https:/dxgc3f8f0p.ufs.sh/f/" + img.key));
+
   // First Half of images
   const setOne = images.slice(0, images.length / 2);
   // Second half
@@ -175,11 +169,10 @@ async function SectionImages() {
     <div>
       <div id="photos" className="mb-8 ml-8 mr-4 mt-24 md:ml-36 md:mt-32">
         <h3 className="text-3xl font-medium underline decoration-primary drop-shadow-lg md:-ml-4 md:text-4xl">
-          Photos expresses a mood in a snapshot of time.
+          I&apos;m A Photographer
         </h3>
         <p className="mt-2 drop-shadow-lg md:text-lg">
-          The ability to represent a moment, a setting, an emotion is what
-          inspires me to take them.
+          So I put my work on this website for you to see.
         </p>
       </div>
       <Suspense>
@@ -191,9 +184,7 @@ async function SectionImages() {
 
 function SectionProjects() {
   return (
-    <div
-      className="ml-8 mr-4 mt-28 flex flex-col md:ml-36 md:mt-36"
-    >
+    <div className="ml-8 mr-4 mt-28 flex flex-col md:ml-36 md:mt-36">
       <h3 className="mb-2 text-3xl font-medium underline decoration-primary md:-ml-4 md:text-4xl">
         Let me pull some stats from Github
       </h3>
