@@ -122,9 +122,16 @@ function CurrentlyPlaying({
           {formatMilliseconds(progress)} /{" "}
           {formatMilliseconds(data.item.duration_ms)}
         </p>
-        <div className="mb-4 mt-auto flex">
-          Playing now on <Device type={data.device.type} /> {data.device.name}
-        </div>
+        {data.device && (
+          <div className="mb-4 mt-auto flex">
+            Playing now on <Device type={data.device.type} /> {data.device.name}
+          </div>
+        )}
+        {data.is_previous && (
+          <div className="mb-4 mt-auto flex">
+            No music is playing, but this is the most recent song
+          </div>
+        )}
       </div>
     </div>
   );

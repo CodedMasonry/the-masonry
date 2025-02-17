@@ -28,7 +28,25 @@ export const SpotifyAccessToken = unstable_cache(
   { revalidate: 1800, tags: ["spotify"] },
 );
 
-const PlaybackSchema = z.object({
+const TrackSchema = z.object({
+  album: z.object({
+    images: z.array(
+      z.object({ url: z.string() }),
+    ),
+    name: z.string(),
+    release_date: z.string(),
+  }),
+  artists: z.array(
+    z.object({
+      name: z.string(),
+    }),
+  ),
+  duration_ms: z.number(),
+  explicit: z.boolean(),
+  name: z.string(),
+});
+
+const SpotifyPlaybackSchema = z.object({
   device: z.object({
     name: z.string(),
     type: z.string(),
@@ -37,25 +55,26 @@ const PlaybackSchema = z.object({
   shuffle_state: z.boolean(),
   repeat_state: z.enum(["off", "track", "context"]),
   progress_ms: z.number(),
-  item: z.object({
-    album: z.object({
-      images: z.array(
-        z.object({ url: z.string() }),
-      ),
-      name: z.string(),
-      release_date: z.string(),
-    }),
-    artists: z.array(
-      z.object({
-        name: z.string(),
-      }),
-    ),
-    duration_ms: z.number(),
-    explicit: z.boolean(),
-    name: z.string(),
-  }),
+  item: TrackSchema,
+
+  // Added when passed from RecentlyPlayed
+  is_previous: z.boolean(),
+}).partial({
+  device: true,
+  shuffle_state: true,
+  repeat_state: true,
+  is_previous: true,
 });
-export type PlaybackResponse = z.infer<typeof PlaybackSchema>;
+
+const SpotifyRecentlyPlayedSchema = z.object({
+  items: z.array(
+    z.object({
+      track: TrackSchema,
+    })
+  ),
+});
+
+export type PlaybackResponse = z.infer<typeof SpotifyPlaybackSchema>;
 
 /// Returns the current playback
 export async function GetPlayback() {
@@ -77,11 +96,49 @@ export async function GetPlayback() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const json = await response.json();
     // Json parsed here
-    const parsed = PlaybackSchema.parse(json);
+    const parsed = SpotifyPlaybackSchema.parse(json);
     // Only return year for release date (looks cleaner)
     parsed.item.album.release_date = parsed.item.album.release_date.split('-')[0]!
 
     return parsed;
+  } catch (error) {
+    console.log("Failed while getting playback: ", error);
+  }
+}
+
+/// Returns the most recently played song
+export async function GetRecentlyPlayed() {
+  try {
+    const token = await SpotifyAccessToken();
+    const response = await fetch("https://api.spotify.com/v1/me/player/recently-played?limit=1", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+    if (response.status == 204) {
+      return null;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const json = await response.json();
+    // Json parsed here
+    const parsed = SpotifyRecentlyPlayedSchema.parse(json);
+    // Only return year for release date (looks cleaner)
+    parsed.items[0]!.track.album.release_date = parsed.items[0]!.track.album.release_date.split('-')[0]!
+
+    // Convert Recently Played into Playback
+    const converted = SpotifyPlaybackSchema.parse({
+      is_playing: false,
+      progress_ms: 0,
+      item: parsed.items[0]!.track,
+      is_previous: true,
+    })
+
+    return converted;
   } catch (error) {
     console.log("Failed while getting playback: ", error);
   }
