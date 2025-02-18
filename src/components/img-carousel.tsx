@@ -17,7 +17,6 @@ export default function ImageCarousel({
   const plugin = React.useRef(
     AutoScroll({ speed: 0.5, direction: direction, startDelay: 100 }),
   );
-
   return (
     <Carousel
       plugins={[plugin.current]}
@@ -41,7 +40,6 @@ export default function ImageCarousel({
                 alt=""
                 fill
                 loading="lazy"
-                unoptimized={true}
                 className="aspect-video rounded-lg border-2 border-transparent transition-all group-hover:border-primary"
               />
             </Link>

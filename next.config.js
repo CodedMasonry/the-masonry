@@ -7,7 +7,6 @@ import "./src/env.js";
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["dxgc3f8f0p.ufs.sh"],
     remotePatterns: [
       {
         protocol: "https",

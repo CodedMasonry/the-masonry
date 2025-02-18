@@ -159,7 +159,7 @@ function SpotifySuspense() {
 async function SectionImages() {
   const images = await utapi
     .listFiles()
-    .then((v) => v.files.map((img) => "https:/dxgc3f8f0p.ufs.sh/f/" + img.key));
+    .then((v) => v.files.map((img) => "https://dxgc3f8f0p.ufs.sh/f/" + img.key));
 
   // First Half of images
   const setOne = images.slice(0, images.length / 2);
