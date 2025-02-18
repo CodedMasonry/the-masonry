@@ -43,6 +43,7 @@ const TrackSchema = z.object({
   ),
   duration_ms: z.number(),
   explicit: z.boolean(),
+  external_urls: z.object({ spotify: z.string().url() }),
   name: z.string(),
 });
 

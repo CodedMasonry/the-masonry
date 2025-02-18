@@ -6,6 +6,7 @@ import {
   IconDeviceMobile,
   IconDeviceSpeaker,
   IconExplicit,
+  IconExternalLink,
   IconMoodSad,
   IconRepeat,
   IconRepeatOnce,
@@ -14,6 +15,7 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { type PlaybackResponse } from "~/server/spotify";
+import Link from "next/link";
 import { api } from "~/trpc/react";
 
 // Have to pass initial as hydration fails without it
@@ -26,7 +28,7 @@ export default function SpotifyClientSection({
   const utils = api.useUtils();
 
   // Have initial data be passed to client, every other update to refresh every 10 seconds
-  const response = api.spotify.getPlayback.useQuery(void 0, {
+  const response = api.spotify.getPlayback.useQuery(undefined, {
     initialData: initial,
     staleTime: 10 * 1000,
   });
@@ -91,7 +93,11 @@ function CurrentlyPlaying({
 }) {
   return (
     <div key="CurrentlyPlaying" className="mr-6 flex flex-col md:flex-row">
-      <div className="relative mr-44 size-64 md:size-96">
+      <Link
+        href={data.item.external_urls.spotify}
+        className="group relative mr-44 size-64 cursor-default md:size-96"
+      >
+        <IconExternalLink className="absolute bottom-2 right-2 z-20 translate-y-2 stroke-primary opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100" />
         <Image
           // There is assumed to always be 2 thumbnails, each with a link.
           // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
@@ -100,10 +106,10 @@ function CurrentlyPlaying({
           fill
           loading="eager"
           unoptimized
-          className="absolute z-10 rounded-xl bg-background shadow-md md:ml-0"
+          className="absolute z-10 rounded-xl bg-background shadow-md ring-2 ring-transparent transition group-hover:ring-primary md:ml-0"
         />
         <ClientVinyl isPlaying={data.is_playing} />
-      </div>
+      </Link>
       <div className="mt-4 flex flex-col drop-shadow-lg md:ml-0 md:mt-16">
         <h4 className="text-5xl font-semibold md:text-6xl">{data.item.name}</h4>
         <div className="mt-1 flex min-h-6 space-x-2">
@@ -138,6 +144,20 @@ function CurrentlyPlaying({
 }
 
 function NothingPlaying() {
+  // Utility to invalidate cache
+  const utils = api.useUtils();
+
+  // Check again every 10 seconds
+  useEffect(() => {
+    //Implementing the setInterval method
+    const interval = setInterval(() => {
+      void utils.spotify.invalidate();
+    }, 10000);
+
+    // Clearing the interval
+    return () => clearInterval(interval);
+  }, [utils.spotify]);
+
   return (
     <div key="NothingPlaying" className="mr-6 flex flex-col md:flex-row">
       <div className="relative mr-44 size-64 md:size-96">

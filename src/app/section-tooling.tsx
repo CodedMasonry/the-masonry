@@ -10,10 +10,11 @@ export default function SectionTooling() {
           I&apos;m a Programmer
         </h3>
         <p className="mt-2 max-w-2xl text-lg drop-shadow-lg">
-          So showing you who I am, with code, with images, and with a style that I
-          feel represents me, is why I created this website.
+          So showing you who I am, with code, with images, and with a style that
+          I feel represents me, is why I created this website.
         </p>
       </div>
+      +
       <div className="mx-6 rounded-xl border border-border bg-accent shadow-md md:mx-32">
         <h4 className="p-4 text-center text-xl font-semibold">
           Tooling used for this website
@@ -202,7 +203,7 @@ function ToolCard({
       className={`${doubleSpan && "col-span-2"} flex h-fit flex-col px-6 py-2 text-center`}
     >
       <div
-        className="mx:h-28 mx-auto flex h-24 flex-row content-center items-center pt-4 align-middle"
+        className="mx:h-28 mx-auto flex aspect-auto h-24 flex-row content-center items-center pt-4 align-middle"
         aria-label={name}
       >
         {children}

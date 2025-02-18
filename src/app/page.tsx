@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { Suspense } from "react";
 import { CycleText } from "~/components/cycle-text";
+import Footer from "~/components/footer";
 import { Navbar } from "~/components/navbar";
 import { buttonVariants } from "~/components/ui/button";
 import { Skeleton } from "~/components/ui/skeleton";
@@ -14,7 +15,7 @@ import { api } from "~/trpc/server";
 // Lazy load Client Section
 const SpotifyClientSection = dynamic(() => import("~/components/spotify"));
 const ClientCarousel = dynamic(() => import("~/app/client-carousel"));
-const SectionInDepth = dynamic(() => import("~/app/section-indepth"));
+const SectionMentorships = dynamic(() => import("~/app/section-mentorship"));
 const SectionTooling = dynamic(() => import("~/app/section-tooling"));
 
 export default async function HomePage() {
@@ -25,10 +26,10 @@ export default async function HomePage() {
       <SectionHeader />
       <SectionSpotify />
       <SectionImages />
-      <SectionInDepth />
+      <SectionMentorships />
       <SectionTooling />
 
-      <SectionFooter />
+      <Footer />
     </main>
   );
 }
@@ -191,26 +192,6 @@ function SectionProjects() {
       <p className="mr-4 md:text-lg">
         Might as well showcase them for those who are curious.
       </p>
-    </div>
-  );
-}
-
-function SectionFooter() {
-  return (
-    <div className="mt-32 flex flex-row bg-background p-6">
-      <Link
-        href="mailto:contact@brockshaffer.dev"
-        className="flex items-center text-2xl hover:underline"
-      >
-        <Image
-          src="/favicon.svg"
-          alt=""
-          width={32}
-          height={32}
-          className="mr-4"
-        />
-        contact@brockshaffer.dev
-      </Link>
     </div>
   );
 }

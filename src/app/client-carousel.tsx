@@ -1,6 +1,6 @@
 "use client";
 
-import { ImageCarousel } from "~/components/img-carousel";
+import ImageCarousel from "~/components/img-carousel";
 
 export default function ClientCarousel({
   setOne,
@@ -10,7 +10,7 @@ export default function ClientCarousel({
   setTwo: Array<string>;
 }) {
   return (
-    <div className="flex w-full flex-col shadow-lg">
+    <div className="flex w-full flex-col space-y-2">
       <ImageCarousel images={setOne} direction="forward" />
       <ImageCarousel images={setTwo} direction="backward" />
     </div>
