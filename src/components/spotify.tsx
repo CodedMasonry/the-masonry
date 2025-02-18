@@ -106,7 +106,7 @@ function CurrentlyPlaying({
           fill
           loading="eager"
           unoptimized
-          className="absolute z-10 rounded-xl bg-background shadow-md ring-2 ring-transparent transition group-hover:ring-primary md:ml-0"
+          className={`absolute z-10 rounded-xl bg-background shadow-md ring-2 ring-transparent transition group-hover:ring-primary md:ml-0`}
         />
         <ClientVinyl isPlaying={data.is_playing} />
       </Link>
@@ -168,12 +168,14 @@ function NothingPlaying() {
         <ClientVinyl />
       </div>
       <div className="mt-4 flex flex-col drop-shadow-lg md:mt-16">
-        <h4 className="text-5xl font-semibold md:text-6xl">Nothings Playing</h4>
+        <h4 className="text-5xl font-semibold md:text-6xl">
+          Unexpected Result
+        </h4>
         <p className="mt-2 text-3xl md:mt-4 md:text-4xl">
-          I can&apos;t show you something that doesn&apos;t exist
+          The server needs some time to think about what went wrong
         </p>
         <p className="mt-2 text-xl font-light underline decoration-primary md:mt-4 md:text-2xl">
-          But this section will update when I turn the music on
+          This section will update when the server fixes itself (eventually)
         </p>
       </div>
     </div>

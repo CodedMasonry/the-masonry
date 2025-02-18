@@ -115,8 +115,8 @@ function SectionHeader() {
 }
 
 async function SectionSpotify() {
-  // pull cached prefetch
-  const initial = await api.spotify.getPlayback();
+  // Prefetch
+  const initial = (await api.spotify.getPlayback()) ?? null;
 
   return (
     <div
