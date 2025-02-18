@@ -1,3 +1,4 @@
+import { setTimeout } from "timers/promises";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { GetPlayback, GetRecentlyPlayed } from "~/server/spotify";
 
@@ -16,6 +17,9 @@ export const spotifyRouter = createTRPCRouter({
 
       // Repeat at least 3 times if it fails to fetch data
       attempts++;
+      if (response == null) {
+        await setTimeout(100, null);
+      }
     }
     
     return response;
