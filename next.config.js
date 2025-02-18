@@ -7,6 +7,7 @@ import "./src/env.js";
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   images: {
+    domains: ["dxgc3f8f0p.ufs.sh"],
     remotePatterns: [
       {
         protocol: "https",
@@ -16,16 +17,10 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "dxgc3f8f0p.ufs.sh",
+        hostname: "**.ufs.sh",
         port: "",
         pathname: "/f/**",
       },
-      {
-        protocol: "https",
-        hostname: "hz2lv8281m.ufs.sh",
-        port: "",
-        pathname: "/f/**",
-      }
     ],
   },
   eslint: {
