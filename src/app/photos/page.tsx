@@ -24,7 +24,7 @@ async function DisplayImages() {
           className="relative aspect-video w-full rounded-xl ring-primary hover:border-2 hover:border-accent hover:ring-2 lg:h-64"
         >
           <Image
-            src={"https:/dxgc3f8f0p.ufs.sh/f/" + img.key}
+            src={"https://dxgc3f8f0p.ufs.sh/f/" + img.key}
             alt=""
             fill
             loading={index < 10 ? "eager" : "lazy"}

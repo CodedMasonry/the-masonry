@@ -5,7 +5,7 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const slug = (await params).slug;
-  const url = "https:/dxgc3f8f0p.ufs.sh/f/" + slug;
+  const url = "https://dxgc3f8f0p.ufs.sh/f/" + slug;
 
   return (
     <div className="flex h-screen">
