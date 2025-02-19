@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function SectionMentorships() {
   return (
-    <div className="ml-8 mr-4 mt-28 flex flex-col md:mx-36 md:mt-36">
+    <div className="mx-8 mt-28 flex flex-col md:mx-36 md:mt-36">
       <h3 className="mb-2 text-3xl font-medium underline decoration-primary drop-shadow-lg md:-ml-4 md:text-4xl">
         I Like To Learn
       </h3>
@@ -51,7 +51,7 @@ function GridItem({
         width={112}
         height={112}
         alt=""
-        className="my-auto aspect-square size-28"
+        className="my-auto aspect-square size-32"
       />
       <div className="ml-4 flex flex-col items-start border-l-2 border-foreground pl-4 align-middle transition">
         <h4 className="text-3xl font-semibold">{title}</h4>
