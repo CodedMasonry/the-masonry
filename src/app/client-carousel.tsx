@@ -9,7 +9,6 @@ export default function ClientCarousel({
   setOne: Array<string>;
   setTwo: Array<string>;
 }) {
-  console.log(setOne)
   return (
     <div className="flex w-full flex-col space-y-2">
       <ImageCarousel images={setOne} direction="forward" />
