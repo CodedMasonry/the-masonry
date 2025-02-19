@@ -27,7 +27,7 @@ export default function ImageCarousel({
         {images.map((key, index) => (
           <CarouselItem
             key={index}
-            className="group relative ml-2 aspect-video h-36 w-64 basis-1/2 rounded-lg md:h-64 md:w-auto md:basis-1/4"
+            className="group relative ml-2 aspect-video min-h-36 w-auto basis-1/2 rounded-lg md:min-h-36 md:basis-1/4"
             onMouseEnter={() => plugin.current.stop()}
             onMouseLeave={() => plugin.current.play()}
           >

@@ -51,11 +51,11 @@ function GridItem({
         width={112}
         height={112}
         alt=""
-        className="my-auto aspect-square size-28"
+        className="my-auto aspect-square size-24 md:size-28"
       />
       <div className="ml-4 flex flex-col items-start border-l-2 border-foreground pl-4 align-middle transition">
-        <h4 className="text-3xl font-semibold">{title}</h4>
-        <p className="text-lg">{subtitle}</p>
+        <h4 className="text-2xl font-semibold md:text-3xl">{title}</h4>
+        <p className="md:text-lg">{subtitle}</p>
         <IconChevronRight stroke={3} className="mb-1 mt-auto size-6 self-end" />
       </div>
     </Link>
