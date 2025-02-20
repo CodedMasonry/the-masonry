@@ -11,11 +11,11 @@ import { buttonVariants } from "~/components/ui/button";
 import { Skeleton } from "~/components/ui/skeleton";
 import { utapi } from "~/server/uploadthing";
 import { api } from "~/trpc/server";
+import SectionMentorships from "./section-mentorship";
 
 // Lazy load Client Section
 const SpotifyClientSection = dynamic(() => import("~/components/spotify"));
 const ClientCarousel = dynamic(() => import("~/app/client-carousel"));
-const SectionMentorships = dynamic(() => import("~/app/section-mentorship"));
 const SectionTooling = dynamic(() => import("~/app/section-tooling"));
 
 export default async function HomePage() {
@@ -159,7 +159,9 @@ function SpotifySuspense() {
 async function SectionImages() {
   const images = await utapi
     .listFiles()
-    .then((v) => v.files.map((img) => "https://dxgc3f8f0p.ufs.sh/f/" + img.key));
+    .then((v) =>
+      v.files.map((img) => "https://dxgc3f8f0p.ufs.sh/f/" + img.key),
+    );
 
   // First Half of images
   const setOne = images.slice(0, images.length / 2);
