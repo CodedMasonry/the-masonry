@@ -8,7 +8,7 @@ import { IconArrowRight } from "@tabler/icons-react";
 // Dublin green: #006853
 export default async function Page() {
   return (
-    <main className="flex flex-col">
+    <main className="mx-4 flex flex-col md:mx-8">
       <Navbar />
 
       <Header />
@@ -23,7 +23,7 @@ export default async function Page() {
 
 function Header() {
   return (
-    <div className="ml-4 mr-4 mt-16 flex flex-col md:ml-8">
+    <div className="mt-16 flex flex-col">
       <Image
         src="/icons/dcs.png"
         width={128}
