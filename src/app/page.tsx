@@ -36,7 +36,7 @@ export default async function HomePage() {
 
 function SectionHeader() {
   return (
-    <div className="relative ml-8 mr-4 mt-10 flex flex-col space-y-2 md:ml-36 md:mt-28">
+    <div className="relative ml-8 mr-4 mt-24 flex flex-col space-y-2 md:ml-36 md:mt-44">
       <h1 className="text-6xl font-extrabold text-primary drop-shadow-lg md:text-7xl">
         Hello, I&apos;m Brock.
       </h1>

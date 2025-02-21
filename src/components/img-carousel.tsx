@@ -33,6 +33,7 @@ export default function ImageCarousel({
           >
             <Link
               href={"/photos/" + key.split("/").pop()}
+              prefetch={false}
               className="cursor-default"
             >
               <Image

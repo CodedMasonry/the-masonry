@@ -19,7 +19,7 @@ export default async function Page() {
 
 function Header() {
   return (
-    <div className="ml-4 mr-4 mt-10 flex w-fit flex-col rounded-xl border-2 border-primary bg-muted p-4 md:ml-8">
+    <div className="ml-4 mr-4 mt-20 flex w-fit flex-col rounded-xl border-2 border-primary bg-muted p-4 md:ml-8">
       <h1 className="text-5xl font-bold text-primary">Personal Narrative</h1>
       <p className="mt-2 italic">Spring, 2025</p>
       <p className="mt-4 max-w-6xl text-lg">

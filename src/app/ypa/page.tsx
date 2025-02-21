@@ -8,7 +8,7 @@ import { IconArrowRight } from "@tabler/icons-react";
 // Dublin green: #006853
 export default async function Page() {
   return (
-    <main className="mx-4 flex flex-col md:mx-8">
+    <main className="flex flex-col">
       <Navbar />
 
       <Header />
@@ -23,7 +23,7 @@ export default async function Page() {
 
 function Header() {
   return (
-    <div className="mt-16 flex flex-col">
+    <div className="mx-8 mt-16 flex flex-col">
       <Image
         src="/icons/dcs.png"
         width={128}
@@ -51,7 +51,7 @@ function Header() {
 
 function About() {
   return (
-    <div className="ml-4 mr-4 mt-16 flex flex-col md:ml-8">
+    <div className="mx-8 mt-16 flex flex-col">
       <h2 className="text-3xl font-bold underline decoration-[#006853]">
         Who Am I?
       </h2>
@@ -72,7 +72,7 @@ function About() {
 
 function AboutNarrative() {
   return (
-    <div className="ml-4 mr-4 mt-16 flex flex-col md:ml-8">
+    <div className="mx-8 mt-16 flex flex-col">
       <h2 className="text-3xl font-bold underline decoration-[#006853]">
         If you want to know my history
       </h2>
@@ -91,7 +91,7 @@ function AboutNarrative() {
 
 function AboutYPA() {
   return (
-    <div className="ml-4 mr-4 mt-16 flex flex-col text-lg md:ml-8">
+    <div className="mx-8 mt-16 flex flex-col md:text-lg">
       <h2 className="text-3xl font-bold underline decoration-[#006853]">
         What Is YPA?
       </h2>
