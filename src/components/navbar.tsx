@@ -44,7 +44,7 @@ export function Navbar() {
           </Link>
         )}
       </nav>
-      <div className="ml-auto">
+      <div className="ml-auto mr-2">
         <ModeToggle />
       </div>
     </div>

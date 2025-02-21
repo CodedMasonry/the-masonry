@@ -3,7 +3,7 @@ import { Navbar } from "~/components/navbar";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
-import { IconArrowRight } from "@tabler/icons-react";
+import { IconArrowRight, IconExternalLink } from "@tabler/icons-react";
 
 // Dublin green: #006853
 export default async function Page() {
@@ -34,7 +34,7 @@ function Header() {
       <h1 className="text-5xl font-bold text-[#006853]">
         Young Professionals Academy
       </h1>
-      <div className="mt-2 grid max-w-4xl grid-cols-6">
+      <div className="mt-2 grid max-w-4xl grid-cols-2 md:grid-cols-6">
         <p className="italic">Spring, 2025</p>
         <p className="italic">Dublin City Schools</p>
       </div>
@@ -58,7 +58,7 @@ function About() {
       <p className="mt-2 max-w-4xl text-lg">
         To give you a rough idea, I created a branding board.
       </p>
-      <div className="relative aspect-video w-full">
+      <div className="group relative aspect-video w-full">
         <Image
           src="https://hz2lv8281m.ufs.sh/f/v97wqiBL7HaNf3u7v0Pq0gtkDfMGlmTpwK42cP76vrUxEWzL"
           alt="Branding Board covering details of who I am"

@@ -16,7 +16,7 @@ export default async function Page({
         <img
           src={url}
           alt=""
-          className="mx-auto my-4 flex aspect-video object-contain align-middle drop-shadow-lg"
+          className="mx-auto mb-4 mt-16 flex aspect-video object-contain align-middle drop-shadow-lg"
         />
       </div>
     </main>
