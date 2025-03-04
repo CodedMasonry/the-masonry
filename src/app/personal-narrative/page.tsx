@@ -1,16 +1,7 @@
-import Footer from "~/components/footer";
-import { Navbar } from "~/components/navbar";
-
 // Dublin green: #006853
 export default async function Page() {
   return (
-    <main className="flex flex-col">
-      <Navbar />
-
       <Header />
-
-      <Footer />
-    </main>
   );
 }
 

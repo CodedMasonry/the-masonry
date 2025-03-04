@@ -1,14 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Navbar } from "~/components/navbar";
 import { utapi } from "~/server/uploadthing";
 
 export default async function HomePage() {
   return (
-    <main className="flex flex-col">
-      <Navbar />
       <DisplayImages />
-    </main>
   );
 }
 

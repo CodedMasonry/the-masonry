@@ -4,33 +4,27 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import React, { Suspense } from "react";
-import { CycleText } from "~/components/cycle-text";
-import Footer from "~/components/footer";
-import { Navbar } from "~/components/navbar";
+import { CycleText } from "~/components/home/cycle-text";
 import { buttonVariants } from "~/components/ui/button";
 import { Skeleton } from "~/components/ui/skeleton";
 import { utapi } from "~/server/uploadthing";
 import { api } from "~/trpc/server";
-import SectionMentorships from "./section-mentorship";
+import SectionMentorships from "../components/home/section-mentorship";
 
 // Lazy load Client Section
-const SpotifyClientSection = dynamic(() => import("~/components/spotify"));
-const ClientCarousel = dynamic(() => import("~/app/client-carousel"));
-const SectionTooling = dynamic(() => import("~/app/section-tooling"));
+const SpotifyClientSection = dynamic(() => import("~/components/home/spotify"));
+const ClientCarousel = dynamic(
+  () => import("~/components/home/client-carousel"),
+);
 
 export default async function HomePage() {
   return (
-    <main className="flex flex-col">
-      <Navbar />
-
+    <>
       <SectionHeader />
       <SectionSpotify />
       <SectionImages />
       <SectionMentorships />
-      <SectionTooling />
-
-      <Footer />
-    </main>
+    </>
   );
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import ImageCarousel from "~/components/img-carousel";
+import ImageCarousel from "~/components/home/img-carousel";
 
 export default function ClientCarousel({
   setOne,
