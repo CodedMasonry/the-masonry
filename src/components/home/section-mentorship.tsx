@@ -12,7 +12,7 @@ export default function SectionMentorships() {
       <p className="mt-2 drop-shadow-lg md:text-lg">
         So I engage in opportunites that allow me to expand my knowledge.
       </p>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <GridItem
           href="/ypa"
           image="/icons/ypa.png"
