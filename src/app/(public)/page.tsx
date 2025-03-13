@@ -48,7 +48,7 @@ function SectionHeader() {
       </h2>
       <p className="mr-4 pb-4 pt-2 drop-shadow-lg md:max-w-3xl md:pt-4">
         Being a software developer, I wanted to write code, and I wanted to
-        convey who I am beyond just words, so I created a website.{" "}
+        convey who I am beyond just words, so I created a website.
       </p>
       <div className="-ml-2">
         <Link
