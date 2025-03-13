@@ -28,11 +28,33 @@ export const SpotifyAccessToken = unstable_cache(
   { revalidate: 1800, tags: ["spotify"] },
 );
 
+/*
+
+Schemas for re-used responses
+
+*/
+
+// A Spotify Arists
+const ArtistSchema = z.object({
+  external_urls: z.object({
+    spotify: z.string().url(),
+  }),
+  followers: z.object({
+    total: z.number(),
+  }),
+  genres: z.array(z.string()),
+  images: z.array(
+    z.object({
+      url: z.string().url(),
+    }),
+  ),
+  name: z.string(),
+});
+
+// A Spotify Track
 const TrackSchema = z.object({
   album: z.object({
-    images: z.array(
-      z.object({ url: z.string() }),
-    ),
+    images: z.array(z.object({ url: z.string() })),
     name: z.string(),
     release_date: z.string(),
   }),
@@ -47,37 +69,76 @@ const TrackSchema = z.object({
   name: z.string(),
 });
 
-const SpotifyPlaybackSchema = z.object({
-  device: z.object({
-    name: z.string(),
-    type: z.string(),
-  }),
-  is_playing: z.boolean(),
-  shuffle_state: z.boolean(),
-  repeat_state: z.enum(["off", "track", "context"]),
-  progress_ms: z.number(),
-  item: TrackSchema,
+/*
 
-  // Added when passed from RecentlyPlayed
-  is_previous: z.boolean(),
-}).partial({
-  device: true,
-  shuffle_state: true,
-  repeat_state: true,
-  is_previous: true,
-});
+Spotify API Response Schemas
 
+*/
+
+// Get Playback State API
+const SpotifyPlaybackSchema = z
+  .object({
+    device: z.object({
+      name: z.string(),
+      type: z.string(),
+    }),
+    is_playing: z.boolean(),
+    shuffle_state: z.boolean(),
+    repeat_state: z.enum(["off", "track", "context"]),
+    progress_ms: z.number(),
+    item: TrackSchema,
+
+    // Added when passed from RecentlyPlayed
+    is_previous: z.boolean(),
+  })
+  .partial({
+    device: true,
+    shuffle_state: true,
+    repeat_state: true,
+    is_previous: true,
+  });
+
+// Get Recently Played Tracks API
+// Used as intermediary before
 const SpotifyRecentlyPlayedSchema = z.object({
   items: z.array(
     z.object({
       track: TrackSchema,
-    })
+    }),
   ),
 });
 
+// Get User's Top Items - Artists
+const SpotifyTopArtistsSchema = z.object({
+  items: z.array(ArtistSchema),
+  total: z.number(),
+});
+
+// Get User's Top Items - Tracks
+const SpotifyTopTracksSchema = z.object({
+  items: z.array(TrackSchema),
+  total: z.number(),
+});
+
+/*
+
+Internal Type Inferencing
+
+*/
+
 export type PlaybackResponse = z.infer<typeof SpotifyPlaybackSchema>;
 
-/// Returns the current playback
+export type TopArtistsResponse = z.infer<typeof SpotifyTopArtistsSchema>;
+
+export type TopTracksResponse = z.infer<typeof SpotifyTopTracksSchema>;
+
+/*
+
+Functions that call Spotify API
+
+*/
+
+// Returns the current playback
 export async function GetPlayback() {
   try {
     const token = await SpotifyAccessToken();
@@ -99,7 +160,8 @@ export async function GetPlayback() {
     // Json parsed here
     const parsed = SpotifyPlaybackSchema.parse(json);
     // Only return year for release date (looks cleaner)
-    parsed.item.album.release_date = parsed.item.album.release_date.split('-')[0]!
+    parsed.item.album.release_date =
+      parsed.item.album.release_date.split("-")[0]!;
 
     return parsed;
   } catch (error) {
@@ -107,15 +169,18 @@ export async function GetPlayback() {
   }
 }
 
-/// Returns the most recently played song
+// Returns the most recently played song
 export async function GetRecentlyPlayed() {
   try {
     const token = await SpotifyAccessToken();
-    const response = await fetch("https://api.spotify.com/v1/me/player/recently-played?limit=1", {
-      headers: {
-        Authorization: "Bearer " + token,
+    const response = await fetch(
+      "https://api.spotify.com/v1/me/player/recently-played?limit=1",
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
       },
-    });
+    );
 
     if (!response.ok) {
       return null;
@@ -129,7 +194,8 @@ export async function GetRecentlyPlayed() {
     // Json parsed here
     const parsed = SpotifyRecentlyPlayedSchema.parse(json);
     // Only return year for release date (looks cleaner)
-    parsed.items[0]!.track.album.release_date = parsed.items[0]!.track.album.release_date.split('-')[0]!
+    parsed.items[0]!.track.album.release_date =
+      parsed.items[0]!.track.album.release_date.split("-")[0]!;
 
     // Convert Recently Played into Playback
     const converted = SpotifyPlaybackSchema.parse({
@@ -137,11 +203,71 @@ export async function GetRecentlyPlayed() {
       progress_ms: 0,
       item: parsed.items[0]!.track,
       is_previous: true,
-    })
+    });
 
     return converted;
   } catch (error) {
     console.log("Failed while getting playback: ", error);
+  }
+}
+
+export async function GetTopArtists() {
+  try {
+    const token = await SpotifyAccessToken();
+    const response = await fetch(
+      "https://api.spotify.com/v1/me/top/artists?limit=5",
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      },
+    );
+
+    if (!response.ok) {
+      return null;
+    }
+    if (response.status == 204) {
+      return null;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const json = await response.json();
+    // Json parsed here
+    const parsed = SpotifyTopArtistsSchema.parse(json);
+
+    return parsed;
+  } catch (error) {
+    console.log("Failed while getting statistics: ", error);
+  }
+}
+
+export async function GetTopTracks() {
+  try {
+    const token = await SpotifyAccessToken();
+    const response = await fetch(
+      "https://api.spotify.com/v1/me/top/tracks?limit=5",
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      },
+    );
+
+    if (!response.ok) {
+      return null;
+    }
+    if (response.status == 204) {
+      return null;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const json = await response.json();
+    // Json parsed here
+    const parsed = SpotifyTopTracksSchema.parse(json);
+
+    return parsed;
+  } catch (error) {
+    console.log("Failed while getting statistics: ", error);
   }
 }
 
@@ -151,7 +277,7 @@ Authentication Functions
 
 */
 
-/// Cryptographically secure types
+// Cryptographically secure types
 function generateRandomString(length: number): string {
   const chars =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -160,7 +286,7 @@ function generateRandomString(length: number): string {
   return Array.from(randomArray, (byte) => chars[byte % chars.length]).join("");
 }
 
-/// Handle authenticating user
+// Handle authenticating user
 function Authenticate() {
   const state = generateRandomString(16);
   const scope =
@@ -178,7 +304,7 @@ function Authenticate() {
   );
 }
 
-/// Function for exchanging code for token
+// Function for exchanging code for token
 export async function fetchSpotifyAccess(refreshToken: string) {
   // Data for request to spotify
   const headers = {

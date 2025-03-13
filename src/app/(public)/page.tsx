@@ -9,7 +9,7 @@ import { buttonVariants } from "~/components/ui/button";
 import { Skeleton } from "~/components/ui/skeleton";
 import { utapi } from "~/server/uploadthing";
 import { api } from "~/trpc/server";
-import SectionMentorships from "../components/home/section-mentorship";
+import SectionMentorships from "../../components/home/section-mentorship";
 
 // Lazy load Client Section
 const SpotifyClientSection = dynamic(() => import("~/components/home/spotify"));
@@ -78,17 +78,17 @@ function SectionHeader() {
           Photos
         </Link>
         <Link
-          href="#spotify"
+          href="/stats"
           className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
         >
           <Image
-            src="/icons/spotify_mark.png"
+            src="/icons/chart-pie-3.svg"
             alt=""
             width={28}
             height={28}
             className="dark:invert"
           />
-          Spotify
+          Statistics
         </Link>
         <Link
           href="https://github.com/CodedMasonry"
