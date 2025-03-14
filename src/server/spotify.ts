@@ -19,10 +19,10 @@ export const SpotifyAccessToken = unstable_cache(
 
     // If there isn't anyone authenticated, ask to authenticate
     if (refreshToken == null) {
-      Authenticate();
+      console.log("Authentication needed");
     }
 
-    return await fetchSpotifyAccess(refreshToken!);
+    return await getAccessToken(refreshToken!);
   },
   ["SpotifyAccessToken"],
   { revalidate: 1800, tags: ["spotify"] },
@@ -286,26 +286,78 @@ function generateRandomString(length: number): string {
   return Array.from(randomArray, (byte) => chars[byte % chars.length]).join("");
 }
 
-// Handle authenticating user
-function Authenticate() {
+// Handle authenticating spotify account
+export async function Authenticate() {
   const state = generateRandomString(16);
-  const scope =
-    "user-read-playback-state user-read-currently-playing user-modify-playback-state user-read-recently-played";
+  const scopeArray = [
+    "user-read-playback-state",
+    "user-read-currently-playing",
+    "user-modify-playback-state",
+    "user-read-recently-played",
+    "user-top-read",
+  ];
 
-  redirect(
+  const scope = scopeArray.join(" ");
+
+  const url =
     "https://accounts.spotify.com/authorize?" +
-      queryString.stringify({
-        response_type: "code",
-        client_id: env.SPOTIFY_CLIENT_ID,
-        scope: scope,
-        redirect_uri: env.SPOTIFY_REDIRECT_URL,
-        state: state,
-      }),
-  );
+    queryString.stringify({
+      response_type: "code",
+      client_id: env.SPOTIFY_CLIENT_ID,
+      scope: scope,
+      redirect_uri: env.SPOTIFY_REDIRECT_URL,
+      state: state,
+    });
+
+  redirect(url);
 }
 
-// Function for exchanging code for token
-export async function fetchSpotifyAccess(refreshToken: string) {
+// Exchange authorization for token, and save
+export async function updateRefreshToken(code: string) {
+  // Data for request to spotify
+  const headers = {
+    "content-type": "application/x-www-form-urlencoded",
+    Authorization:
+      "Basic " +
+      Buffer.from(
+        env.SPOTIFY_CLIENT_ID + ":" + env.SPOTIFY_CLIENT_SECRET,
+      ).toString("base64"),
+  };
+
+  const bodyParams = new URLSearchParams();
+  bodyParams.append("grant_type", "authorization_code");
+  bodyParams.append("code", code);
+  bodyParams.append("redirect_uri", env.SPOTIFY_REDIRECT_URL);
+
+  try {
+    const response = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST",
+      headers,
+      body: bodyParams.toString(),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP Error. Status: ${response.status}`);
+    }
+
+    // Always know what will be returned json
+    // So we are fine with unknown type
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const data = await response.json();
+
+    // Save refresh token
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    await redis.set<string>("SPOTIFY_REFRESH_TOKEN", data.refresh_token as string);
+
+    return;
+  } catch (error) {
+    console.log("Error: ", error);
+    throw error;
+  }
+}
+
+// Refresh spotify token for up to date token
+export async function getAccessToken(refreshToken: string) {
   // Data for request to spotify
   const headers = {
     "content-type": "application/x-www-form-urlencoded",

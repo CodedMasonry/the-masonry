@@ -1,4 +1,6 @@
-import { GetTopArtists, GetTopTracks } from "~/server/spotify";
+import Image from "next/image";
+import { Authenticate, GetTopArtists, GetTopTracks } from "~/server/spotify";
+import { api } from "~/trpc/server";
 
 export default function page() {
   return (
@@ -23,12 +25,26 @@ async function Header() {
 }
 
 async function SectionSpotify() {
-  const topArtists = (await GetTopArtists()) ?? null;
-  const topTracks = (await GetTopTracks()) ?? null;
+  const { topArtists, topTracks } = await api.spotify.getTopItems();
+
+  console.log(topArtists?.total);
 
   return (
     <div className="ml-8 mr-4 mt-28 flex flex-col md:ml-36 md:mt-32">
-      <h3 className="text-3xl">Hello</h3>
+      <h3 className="flex items-center align-middle text-4xl font-bold">
+        <Image
+          src="/icons/spotify_mark.png"
+          alt=""
+          className="mr-2 size-12"
+          width={48}
+          height={48}
+        />
+        Spotify
+      </h3>
+      <p className="mt-4 text-4xl">
+        I have listened <span>{topTracks?.total} unique tracks</span> across{" "}
+        <span>{topArtists?.total} different artists</span>.
+      </p>
     </div>
   );
 }
