@@ -39,9 +39,6 @@ const ArtistSchema = z.object({
   external_urls: z.object({
     spotify: z.string().url(),
   }),
-  followers: z.object({
-    total: z.number(),
-  }),
   genres: z.array(z.string()),
   images: z.array(
     z.object({
