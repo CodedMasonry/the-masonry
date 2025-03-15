@@ -19,6 +19,10 @@ async function Header() {
       <h2 className="my-2 text-3xl underline decoration-primary drop-shadow-lg">
         Because I like numbers
       </h2>
+      <p className="drop-shadow-lg md:max-w-3xl md:pt-4">
+        These numbers are either pulled from APIs or personal databases, and
+        update automatically.
+      </p>
     </div>
   );
 }
@@ -26,11 +30,9 @@ async function Header() {
 async function SectionSpotify() {
   const { topArtists, topTracks } = await api.spotify.getTopItems();
 
-  console.log(topArtists?.total);
-
   return (
     <div className="ml-8 mr-4 mt-28 flex flex-col md:ml-36 md:mt-32">
-      <h3 className="flex items-center align-middle text-4xl font-bold">
+      <h3 className="flex items-center align-middle text-4xl font-bold drop-shadow-lg">
         <Image
           src="/icons/spotify_mark.png"
           alt=""
@@ -40,10 +42,23 @@ async function SectionSpotify() {
         />
         Spotify
       </h3>
-      <p className="mt-4 text-4xl">
-        I have listened <span>{topTracks?.total} unique tracks</span> across{" "}
-        <span>{topArtists?.total} different artists</span>.
+      <p className="mt-4 inline items-center text-4xl drop-shadow-lg md:text-5xl">
+        I have listened to
+        <span className="mx-2 text-chart-1">
+          {topTracks?.total} unique tracks
+        </span>
+        from over
+        <span className="mx-2 text-chart-2">
+          {topArtists?.total} different artists
+        </span>
       </p>
+      <div>
+        <TopArtist></TopArtist>
+      </div>
     </div>
   );
+}
+
+function TopArtist() {
+  return <div></div>;
 }

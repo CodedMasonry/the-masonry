@@ -91,6 +91,19 @@ function SectionHeader() {
           Statistics
         </Link>
         <Link
+          href="https://www.linkedin.com/in/brockshaffer"
+          className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
+        >
+          <Image
+            src="/icons/linkedin.svg"
+            alt=""
+            width={28}
+            height={28}
+            className="dark:invert"
+          />
+          LinkedIn
+        </Link>
+        <Link
           href="https://github.com/CodedMasonry"
           className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
         >
