@@ -78,19 +78,6 @@ function SectionHeader() {
           Photos
         </Link>
         <Link
-          href="/stats"
-          className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
-        >
-          <Image
-            src="/icons/chart-pie-3.svg"
-            alt=""
-            width={28}
-            height={28}
-            className="dark:invert"
-          />
-          Statistics
-        </Link>
-        <Link
           href="https://www.linkedin.com/in/brockshaffer"
           className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
         >

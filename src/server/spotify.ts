@@ -261,6 +261,8 @@ export async function GetTopTracks() {
     const json = await response.json();
     // Json parsed here
     const parsed = SpotifyTopTracksSchema.parse(json);
+    // Only return year for release date (looks cleaner)
+    parsed.items.forEach(v => v.album.release_date = v.album.release_date.split("-")[0]!)
 
     return parsed;
   } catch (error) {

@@ -1,4 +1,4 @@
-import { IconExternalLink } from "@tabler/icons-react";
+import { IconExplicit, IconExternalLink } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import { api } from "~/trpc/server";
@@ -47,15 +47,15 @@ async function SectionSpotify() {
       </h3>
       <p className="mt-4 inline items-center text-3xl font-light drop-shadow-lg md:text-4xl">
         I have listened to
-        <span className="mx-2 text-primary">
+        <span className="mx-2 text-primary drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
           {topTracks?.total} unique tracks
         </span>
         from over
-        <span className="mx-2 text-primary">
+        <span className="mx-2 text-[#1ED760] drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
           {topArtists?.total} different artists
         </span>
       </p>
-      <h4 className="mt-4 text-3xl font-semibold underline decoration-[#1ED760]">
+      <h4 className="mt-8 text-3xl font-semibold underline decoration-[#1ED760] drop-shadow-lg">
         Favorite Artists
       </h4>
       <div className="mt-2 grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-5">
@@ -90,10 +90,10 @@ function TopArtist({
   return (
     <Link
       href={url}
-      className="group relative cursor-default rounded-xl ring-2 ring-transparent transition-all hover:ring-primary"
+      className="group relative cursor-default rounded-xl bg-secondary shadow-lg ring-2 ring-transparent transition-all hover:ring-primary"
     >
       <div className="relative aspect-square">
-        <p className="z-10 p-1 font-semibold text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+        <p className="absolute z-50 p-1 font-semibold text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
           #{pos + 1}
         </p>
         <Image
@@ -101,10 +101,10 @@ function TopArtist({
           alt=""
           fill
           unoptimized
-          className="absolute -z-10 rounded-t-xl"
+          className="absolute z-10 rounded-t-xl"
         />
       </div>
-      <div className="rounded-b-xl bg-secondary p-1">
+      <div className="rounded-b-xl p-1">
         <p className="font-semibold text-secondary-foreground drop-shadow-lg">
           {name}
         </p>
