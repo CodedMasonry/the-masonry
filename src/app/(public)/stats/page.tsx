@@ -2,7 +2,7 @@ import { IconExternalLink, IconMailbox } from "@tabler/icons-react";
 import { count } from "drizzle-orm/sql";
 import Image from "next/image";
 import Link from "next/link";
-import { ChartByState } from "~/components/stats/charts";
+import { ChartByState, ChartMostEmails } from "~/components/stats/charts";
 import { db } from "~/server/db";
 import { colleges } from "~/server/db/schema";
 import { api } from "~/trpc/server";
@@ -146,12 +146,16 @@ async function SectionColleges() {
         <IconMailbox className="mr-2 size-12 stroke-chart-1" />
         Colleges
       </h3>
-      <p className="my-2">
+      <p className="my-2 max-w-3xl">
         This dataset only includes emails from{" "}
         <span className="inline font-bold text-chart-1">.edu domains</span>. I
-        have recieved many more but filtering for them is incredibly tedious.
+        have recieved emails from countless others but filtering them is
+        annoying because there is no consistency between them.
       </p>
-      <ChartByState data={uniqueColleges} />
+      <div className="grid grid-cols-2 gap-4">
+        <ChartByState data={uniqueColleges} />
+        <ChartMostEmails data={uniqueEmails} />
+      </div>
     </div>
   );
 }

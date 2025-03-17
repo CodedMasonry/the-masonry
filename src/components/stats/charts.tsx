@@ -18,6 +18,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "~/components/ui/chart";
+import { Separator } from "../ui/separator";
 
 const chartConfig = {
   colleges: {
@@ -44,7 +45,7 @@ export function ChartByState({
   }, [chartData]);
 
   return (
-    <Card className="flex max-w-3xl flex-col bg-muted">
+    <Card className="flex flex-col border-0 border-muted-foreground bg-muted dark:border-2">
       <CardHeader className="items-center pb-0">
         <CardTitle>Colleges by State</CardTitle>
         <CardDescription>
@@ -101,6 +102,49 @@ export function ChartByState({
             </Pie>
           </PieChart>
         </ChartContainer>
+      </CardContent>
+    </Card>
+  );
+}
+
+export function ChartMostEmails({
+  data,
+}: {
+  data: {
+    name: string;
+    numEmails: number;
+  }[];
+}) {
+  const totalEmails = React.useMemo(() => {
+    return data.reduce((acc, curr) => acc + curr.numEmails, 0);
+  }, [data]);
+
+  const topFive = data
+    .sort((a, b) => b.numEmails - a.numEmails) // Sort in descending order
+    .slice(0, 5);
+
+  return (
+    <Card className="flex max-w-3xl flex-col border-0 border-muted-foreground bg-muted dark:border-2">
+      <CardHeader className="items-center pb-0">
+        <CardTitle>Most Emails</CardTitle>
+        <CardDescription>
+          I have recieved over{" "}
+          <span className="font-semibold text-chart-2">{totalEmails}</span>{" "}
+          emails from colleges since March, 2025
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="mt-6 flex-1 pb-0">
+        {topFive.map((key, index) => (
+          <div key={index}>
+            <p className="flex bg-muted p-1 text-sm transition-all hover:bg-background/90 md:text-base">
+              {key.name}
+              <span className={`ml-auto text-chart-${(index % 4) + 1}`}>
+                {key.numEmails}
+              </span>
+            </p>
+            {index != topFive.length - 1 ? <Separator /> : <></>}
+          </div>
+        ))}
       </CardContent>
     </Card>
   );
