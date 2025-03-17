@@ -113,7 +113,6 @@ const SpotifyTopArtistsSchema = z.object({
 
 // Get User's Top Items - Tracks
 const SpotifyTopTracksSchema = z.object({
-  items: z.array(TrackSchema),
   total: z.number(),
 });
 
@@ -238,7 +237,7 @@ export async function GetTopArtists() {
   }
 }
 
-export async function GetTopTracks() {
+export async function GetTotalTracks() {
   try {
     const token = await SpotifyAccessToken();
     const response = await fetch(
@@ -261,8 +260,6 @@ export async function GetTopTracks() {
     const json = await response.json();
     // Json parsed here
     const parsed = SpotifyTopTracksSchema.parse(json);
-    // Only return year for release date (looks cleaner)
-    parsed.items.forEach(v => v.album.release_date = v.album.release_date.split("-")[0]!)
 
     return parsed;
   } catch (error) {
@@ -346,7 +343,11 @@ export async function updateRefreshToken(code: string) {
 
     // Save refresh token
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    await redis.set<string>("SPOTIFY_REFRESH_TOKEN", data.refresh_token as string);
+    await redis.set<string>(
+      "SPOTIFY_REFRESH_TOKEN",
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      data.refresh_token as string,
+    );
 
     return;
   } catch (error) {

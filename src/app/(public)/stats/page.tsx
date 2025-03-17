@@ -1,6 +1,10 @@
-import { IconExplicit, IconExternalLink } from "@tabler/icons-react";
+import { IconExternalLink, IconMailbox } from "@tabler/icons-react";
+import { count } from "drizzle-orm/sql";
 import Image from "next/image";
 import Link from "next/link";
+import { ChartByState } from "~/components/stats/charts";
+import { db } from "~/server/db";
+import { colleges } from "~/server/db/schema";
 import { api } from "~/trpc/server";
 
 export default function page() {
@@ -8,6 +12,7 @@ export default function page() {
     <>
       <Header />
       <SectionSpotify />
+      <SectionColleges />
     </>
   );
 }
@@ -21,7 +26,7 @@ async function Header() {
       <h2 className="my-2 text-3xl underline decoration-primary drop-shadow-lg">
         Because I like numbers
       </h2>
-      <p className="drop-shadow-lg md:max-w-3xl md:pt-4">
+      <p className="pt-1 drop-shadow-lg md:max-w-3xl">
         These numbers are either pulled from APIs or personal databases, and
         update automatically.
       </p>
@@ -55,7 +60,7 @@ async function SectionSpotify() {
           {topArtists?.total} different artists
         </span>
       </p>
-      <h4 className="mt-8 text-3xl font-semibold underline decoration-[#1ED760] drop-shadow-lg">
+      <h4 className="mt-4 text-3xl font-semibold underline decoration-[#1ED760] drop-shadow-lg">
         Favorite Artists
       </h4>
       <div className="mt-2 grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-5">
@@ -114,5 +119,39 @@ function TopArtist({
       </div>
       <IconExternalLink className="absolute bottom-2 right-2 z-20 translate-y-2 stroke-primary opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100" />
     </Link>
+  );
+}
+
+async function SectionColleges() {
+  // States and the number of colleges from each
+  const uniqueColleges = await db
+    .select({
+      stateAbbr: colleges.stateAbbr,
+      referenceCount: count(),
+    })
+    .from(colleges)
+    .groupBy(colleges.stateAbbr);
+
+  // Total emails
+  const uniqueEmails = await db
+    .select({
+      name: colleges.name,
+      numEmails: colleges.numEmails,
+    })
+    .from(colleges);
+
+  return (
+    <div className="mx-8 mt-28 flex flex-col md:mx-36 md:mt-32">
+      <h3 className="flex items-center align-middle text-4xl font-bold drop-shadow-md">
+        <IconMailbox className="mr-2 size-12 stroke-chart-1" />
+        Colleges
+      </h3>
+      <p className="my-2">
+        This dataset only includes emails from{" "}
+        <span className="inline font-bold text-chart-1">.edu domains</span>. I
+        have recieved many more but filtering for them is incredibly tedious.
+      </p>
+      <ChartByState data={uniqueColleges} />
+    </div>
   );
 }

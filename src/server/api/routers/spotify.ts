@@ -4,7 +4,7 @@ import {
   GetPlayback,
   GetRecentlyPlayed,
   GetTopArtists,
-  GetTopTracks,
+  GetTotalTracks,
 } from "~/server/spotify";
 
 export const spotifyRouter = createTRPCRouter({
@@ -31,24 +31,24 @@ export const spotifyRouter = createTRPCRouter({
     return response;
   }),
 
-  // Gets top Artists & Tracks
+  // Gets top Artists & Total Tracks
   getTopItems: publicProcedure.query(async () => {
     let topArtists = null;
-    let topTracks = null;
+    let totalTracks = null;
     let attempts = 0;
 
-    while (topArtists == null && topTracks == null && attempts < 3) {
+    while (topArtists == null && totalTracks == null && attempts < 3) {
       // Try get current
       topArtists = (await GetTopArtists()) ?? null;
-      topTracks = (await GetTopTracks()) ?? null;
+      totalTracks  = (await GetTotalTracks()) ?? null;
 
       // Repeat at least 3 times if it fails to fetch data
       attempts++;
-      if (topArtists == null || topTracks == null) {
+      if (topArtists == null || totalTracks == null) {
         await setTimeout(100, null);
       }
     }
 
-    return { topArtists, topTracks };
+    return { topArtists, topTracks: totalTracks };
   }),
 });
