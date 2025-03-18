@@ -45,7 +45,7 @@ export function ChartByState({
   }, [chartData]);
 
   return (
-    <Card className="flex flex-col border-0 border-muted-foreground bg-muted dark:border-2">
+    <Card className="flex flex-col border-0 border-muted-foreground bg-muted shadow-lg dark:border-2">
       <CardHeader className="items-center pb-0">
         <CardTitle>Colleges by State</CardTitle>
         <CardDescription>
@@ -124,12 +124,12 @@ export function ChartMostEmails({
     .slice(0, 5);
 
   return (
-    <Card className="flex max-w-3xl flex-col border-0 border-muted-foreground bg-muted dark:border-2">
+    <Card className="flex max-w-3xl flex-col border-0 border-muted-foreground bg-muted shadow-lg dark:border-2">
       <CardHeader className="items-center pb-0">
         <CardTitle>Most Emails</CardTitle>
         <CardDescription>
           I have recieved over{" "}
-          <span className="font-semibold text-chart-2">{totalEmails}</span>{" "}
+          <span className="font-semibold text-chart-1">{totalEmails}</span>{" "}
           emails from colleges since March, 2025
         </CardDescription>
       </CardHeader>
@@ -142,7 +142,7 @@ export function ChartMostEmails({
                 {key.numEmails}
               </span>
             </p>
-            {index != topFive.length - 1 ? <Separator /> : <></>}
+            {index <= topFive.length ? <Separator /> : <></>}
           </div>
         ))}
       </CardContent>

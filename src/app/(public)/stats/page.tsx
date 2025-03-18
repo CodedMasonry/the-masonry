@@ -143,10 +143,10 @@ async function SectionColleges() {
   return (
     <div className="mx-8 mt-28 flex flex-col md:mx-36 md:mt-32">
       <h3 className="flex items-center align-middle text-4xl font-bold drop-shadow-md">
-        <IconMailbox className="mr-2 size-12 stroke-chart-1" />
+        <IconMailbox className="mr-2 size-12 stroke-chart-1 drop-shadow-lg" />
         Colleges
       </h3>
-      <p className="my-2 max-w-3xl">
+      <p className="my-2 max-w-3xl drop-shadow-md">
         This dataset only includes emails from{" "}
         <span className="inline font-bold text-chart-1">.edu domains</span>. I
         have recieved emails from countless others but filtering them is
