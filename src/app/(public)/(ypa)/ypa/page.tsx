@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "~/components/ui/button";
-import { IconArrowRight, IconChevronRight } from "@tabler/icons-react";
+import { IconChevronRight } from "@tabler/icons-react";
 
 // Dublin green: #006853
 export default async function Page() {
@@ -9,7 +8,7 @@ export default async function Page() {
     <>
       <Header />
       <About />
-      <AboutNarrative />
+      <MoreInfo />
       <AboutYPA />
     </>
   );
@@ -52,7 +51,7 @@ function About() {
       <p className="mt-2 max-w-4xl text-lg">
         To give you a rough idea, I created a branding board.
       </p>
-      <div className="group relative aspect-video w-full">
+      <div className="group relative aspect-video w-full lg:w-3/4">
         <Image
           src="https://hz2lv8281m.ufs.sh/f/v97wqiBL7HaNf3u7v0Pq0gtkDfMGlmTpwK42cP76vrUxEWzL"
           alt="Branding Board covering details of who I am"
@@ -64,7 +63,7 @@ function About() {
   );
 }
 
-function AboutNarrative() {
+function MoreInfo() {
   return (
     <div className="mx-8 mt-16 flex flex-col">
       <h2 className="text-3xl font-bold underline decoration-[#006853]">
