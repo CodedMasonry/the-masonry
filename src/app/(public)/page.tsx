@@ -9,7 +9,7 @@ import { buttonVariants } from "~/components/ui/button";
 import { Skeleton } from "~/components/ui/skeleton";
 import { utapi } from "~/server/uploadthing";
 import { api } from "~/trpc/server";
-import SectionMentorships from "../../components/home/section-mentorship";
+import SectionLearning from "../../components/home/section-learning";
 
 // Lazy load Client Section
 const SpotifyClientSection = dynamic(() => import("~/components/home/spotify"));
@@ -23,7 +23,7 @@ export default async function HomePage() {
       <SectionHeader />
       <SectionSpotify />
       <SectionImages />
-      <SectionMentorships />
+      <SectionLearning />
     </>
   );
 }

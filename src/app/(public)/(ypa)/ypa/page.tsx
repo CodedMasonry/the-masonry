@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
-import { IconArrowRight } from "@tabler/icons-react";
+import { IconArrowRight, IconChevronRight } from "@tabler/icons-react";
 
 // Dublin green: #006853
 export default async function Page() {
@@ -68,18 +68,59 @@ function AboutNarrative() {
   return (
     <div className="mx-8 mt-16 flex flex-col">
       <h2 className="text-3xl font-bold underline decoration-[#006853]">
-        If you want to know my history
+        Theres always more to know
       </h2>
-      <p className="mt-2 max-w-4xl text-lg">
-        I wrote a short narrative about what lead to where I am today.
-      </p>
-      <Link href="/personal-narrative" className="mt-2">
-        <Button size="lg" className="bg-[#006853] hover:bg-[#008158]">
-          Read The Narrative
-          <IconArrowRight />
-        </Button>
-      </Link>
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <GridItem
+          href="/ypa/personal-narrative"
+          image="/icons/ypa.png"
+          title="Personal Narrative"
+          subtitle="A page summary of how I got to where I am today."
+          invertDark={false}
+        />
+        <GridItem
+          href="/ypa/strengths"
+          image="/icons/chart-pie-4.svg"
+          title="CliftonStrengths"
+          subtitle="Results from a StrengthFinder assessment I took in 2025"
+          invertDark={true}
+        />
+      </div>
     </div>
+  );
+}
+
+function GridItem({
+  href,
+  image,
+  title,
+  subtitle,
+  invertDark,
+}: {
+  href: string;
+  image: string;
+  title: string;
+  subtitle: string;
+  invertDark: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className="mt-4 flex flex-row rounded-xl border-2 border-transparent p-4 drop-shadow-lg transition hover:-translate-y-2 hover:border-[#006853]"
+    >
+      <Image
+        src={image}
+        width={112}
+        height={112}
+        alt=""
+        className={`my-auto aspect-square size-24 md:size-28 ${invertDark && "dark:invert"}`}
+      />
+      <div className="ml-4 flex w-full flex-col items-start border-l-2 border-foreground pl-4 align-middle transition">
+        <h4 className="w-full text-2xl font-semibold md:text-3xl">{title}</h4>
+        <p className="md:text-lg">{subtitle}</p>
+        <IconChevronRight stroke={3} className="mb-1 mt-auto size-6 self-end" />
+      </div>
+    </Link>
   );
 }
 

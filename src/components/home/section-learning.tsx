@@ -3,7 +3,7 @@ import { IconChevronRight } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function SectionMentorships() {
+export default function SectionLearning() {
   return (
     <div className="mx-8 mt-28 flex flex-col md:mx-36 md:mt-36">
       <h3 className="mb-2 text-3xl font-medium underline decoration-primary drop-shadow-lg md:-ml-4 md:text-4xl">
@@ -53,8 +53,8 @@ function GridItem({
         alt=""
         className="my-auto aspect-square size-24 md:size-28"
       />
-      <div className="ml-4 flex flex-col items-start border-l-2 border-foreground pl-4 align-middle transition">
-        <h4 className="text-2xl font-semibold md:text-3xl">{title}</h4>
+      <div className="ml-4 flex w-full flex-col items-start border-l-2 border-foreground pl-4 align-middle transition">
+        <h4 className="w-full text-2xl font-semibold md:text-3xl">{title}</h4>
         <p className="md:text-lg">{subtitle}</p>
         <IconChevronRight stroke={3} className="mb-1 mt-auto size-6 self-end" />
       </div>
