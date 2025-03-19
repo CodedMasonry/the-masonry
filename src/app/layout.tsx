@@ -18,7 +18,7 @@ export default function RootLayout({
       className={`${GeistSans.variable}`}
       suppressHydrationWarning
     >
-      <body className="antialiased">{children}</body>
+      <body className="custombackground antialiased">{children}</body>
     </html>
   );
 }

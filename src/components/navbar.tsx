@@ -2,9 +2,22 @@
 
 import { usePathname } from "next/navigation";
 import { ModeToggle } from "./mode-toggle";
-import { Button } from "./ui/button";
-import { IconArrowLeft } from "@tabler/icons-react";
+import { Button, buttonVariants } from "./ui/button";
+import { IconArrowLeft, IconMenu2 } from "@tabler/icons-react";
 import Link from "next/link";
+import Image from "next/image";
+
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "~/components/ui/navigation-menu";
+import { NavRouting } from "./navbar-routing";
 
 function extractPathParts(path: string): {
   basePath: string;
@@ -35,16 +48,10 @@ export function Navbar() {
 
   return (
     <div className="absolute flex w-full items-center p-2">
-      <nav className="ml-4">
-        {path != "/" && (
-          <Link href={parts.basePath}>
-            <Button variant="ghost">
-              <IconArrowLeft /> {parts.capitalized}
-            </Button>
-          </Link>
-        )}
-      </nav>
-      <div className="ml-auto mr-2">
+      <div className="ml-4 flex">
+        <NavRouting />
+      </div>
+      <div className="ml-auto mr-2 flex">
         <ModeToggle />
       </div>
     </div>

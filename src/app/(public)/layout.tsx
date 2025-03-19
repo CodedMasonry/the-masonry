@@ -26,7 +26,9 @@ export default function RootLayout({
       <TRPCReactProvider>
         <Navbar />
 
-        <main className="flex min-h-svh flex-col">{children}</main>
+        <main className="custombackground flex min-h-svh flex-col">
+          {children}
+        </main>
 
         <Footer />
       </TRPCReactProvider>
