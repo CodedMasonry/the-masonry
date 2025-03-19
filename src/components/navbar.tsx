@@ -48,7 +48,7 @@ export function Navbar() {
 
   return (
     <div className="absolute flex w-full items-center p-2">
-      <div className="ml-4 flex">
+      <div className="ml-4">
         <NavRouting />
       </div>
       <div className="ml-auto mr-2 flex">
