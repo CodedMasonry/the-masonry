@@ -138,9 +138,7 @@ export function ChartMostEmails({
           <div key={index}>
             <p className="flex bg-muted p-1 text-sm transition-all hover:bg-background/90 md:text-base">
               {key.name}
-              <span className={`ml-auto text-chart-${(index % 4) + 1}`}>
-                {key.numEmails}
-              </span>
+              <span className={`ml-auto text-chart-1`}>{key.numEmails}</span>
             </p>
             {index <= topFive.length ? <Separator /> : <></>}
           </div>
