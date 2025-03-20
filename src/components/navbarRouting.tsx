@@ -15,54 +15,42 @@ import {
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
 import { IconExternalLink } from "@tabler/icons-react";
+import { useIsMobile } from "~/hooks/use-mobile";
 
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Resume",
-    href: "/resume",
-    description:
-      "My current resume where you can get an overview of my skills.",
-  },
-  {
-    title: "References",
-    href: "/references",
-    description:
-      "An up to date list of references who can attest to my abilities.",
-  },
-  {
-    title: "Young Professionals Academy",
-    href: "/ypa",
-    description: "An overview of the highschool mentorships I participated in",
-  },
-  {
-    title: "IT Department Mentorship",
-    href: "/docs/primitives/tabs",
-    description: "A mentorship opportunity I had within an IT Department.",
-  },
-];
+export function NavbarMenu({
+  components,
+}: {
+  components: {
+    title: string;
+    href: string;
+    description: string;
+  }[];
+}) {
+  const isMobile = useIsMobile();
 
-export function NavRouting() {
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        <NavigationMenuItem>
-          <Link href="/" passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              <Image
-                src="/favicon.svg"
-                alt="home"
-                width={32}
-                height={32}
-                className="mr-2 size-8"
-              />
-              Home
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
+        {!isMobile && (
+          <NavigationMenuItem>
+            <Link href="/" passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <Image
+                  src="/favicon.svg"
+                  alt="home"
+                  width={32}
+                  height={32}
+                  className="mr-2 size-8"
+                />
+                Home
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+        )}
         <NavigationMenuItem>
           <NavigationMenuTrigger>About</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+            <ul className="grid w-[300px] gap-3 p-6 md:w-[500px] lg:w-[600px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3 min-h-20">
                 <NavigationMenuLink asChild>
                   <Link
@@ -98,7 +86,7 @@ export function NavRouting() {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Professional</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+            <ul className="grid w-[300px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {components.map((component) => (
                 <ListItem
                   key={component.title}
@@ -111,13 +99,15 @@ export function NavRouting() {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/photos" passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Gallery
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
+        {!isMobile && (
+          <NavigationMenuItem>
+            <Link href="/photos" passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Gallery
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+        )}
       </NavigationMenuList>
     </NavigationMenu>
   );
