@@ -33,18 +33,19 @@ export function NavbarMenu({
       <NavigationMenuList>
         {!isMobile && (
           <NavigationMenuItem>
-            <Link href="/" passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                <Image
-                  src="/favicon.svg"
-                  alt="home"
-                  width={32}
-                  height={32}
-                  className="mr-2 size-8"
-                />
-                Home
-              </NavigationMenuLink>
-            </Link>
+            <NavigationMenuLink
+              href="/"
+              className={navigationMenuTriggerStyle()}
+            >
+              <Image
+                src="/favicon.svg"
+                alt="home"
+                width={32}
+                height={32}
+                className="mr-2 size-8"
+              />
+              Home
+            </NavigationMenuLink>
           </NavigationMenuItem>
         )}
         <NavigationMenuItem>
@@ -101,11 +102,12 @@ export function NavbarMenu({
         </NavigationMenuItem>
         {!isMobile && (
           <NavigationMenuItem>
-            <Link href="/photos" passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Gallery
-              </NavigationMenuLink>
-            </Link>
+            <NavigationMenuLink
+              href="/photos"
+              className={navigationMenuTriggerStyle()}
+            >
+              Gallery
+            </NavigationMenuLink>
           </NavigationMenuItem>
         )}
       </NavigationMenuList>
