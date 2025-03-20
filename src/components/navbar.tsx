@@ -23,7 +23,7 @@ const components: { title: string; href: string; description: string }[] = [
   },
   {
     title: "IT Department Mentorship",
-    href: "/docs/primitives/tabs",
+    href: "/fstlogistics",
     description: "A mentorship opportunity I had within an IT Department.",
   },
 ];
