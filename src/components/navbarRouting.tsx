@@ -31,23 +31,18 @@ export function NavbarMenu({
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        {!isMobile && (
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              href="/"
-              className={navigationMenuTriggerStyle()}
-            >
-              <Image
-                src="/favicon.svg"
-                alt="home"
-                width={32}
-                height={32}
-                className="mr-2 size-8"
-              />
-              Home
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-        )}
+        <NavigationMenuItem>
+          <NavigationMenuLink href="/" className={navigationMenuTriggerStyle()}>
+            <Image
+              src="/favicon.svg"
+              alt="home"
+              width={32}
+              height={32}
+              className={`size-8 ${!isMobile && "mr-2"}`}
+            />
+            {!isMobile && "Home"}
+          </NavigationMenuLink>
+        </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuTrigger>About</NavigationMenuTrigger>
           <NavigationMenuContent>
