@@ -14,7 +14,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
-import { IconExternalLink } from "@tabler/icons-react";
+import { IconExternalLink, IconStarFilled } from "@tabler/icons-react";
 import { useIsMobile } from "~/hooks/use-mobile";
 
 export function NavbarMenu({
@@ -23,6 +23,7 @@ export function NavbarMenu({
   components: {
     title: string;
     href: string;
+    star: boolean;
     description: string;
   }[];
 }) {
@@ -88,6 +89,7 @@ export function NavbarMenu({
                   key={component.title}
                   title={component.title}
                   href={component.href}
+                  star={component.star}
                 >
                   {component.description}
                 </ListItem>
@@ -112,8 +114,8 @@ export function NavbarMenu({
 
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<"a"> & { star?: boolean }
+>(({ className, title, star = false, children, ...props }, ref) => {
   return (
     <li>
       <NavigationMenuLink asChild>
@@ -125,7 +127,12 @@ const ListItem = React.forwardRef<
           )}
           {...props}
         >
-          <div className="text-sm font-medium leading-none">{title}</div>
+          <div className="text-sm font-medium leading-none">
+            {title}
+            {star && (
+              <IconStarFilled className="ml-1 inline size-3 fill-yellow-400" />
+            )}
+          </div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>
