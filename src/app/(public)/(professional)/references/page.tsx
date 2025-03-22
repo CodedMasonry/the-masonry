@@ -44,7 +44,7 @@ function Header() {
         communication skills that I improved upon during that mentorship.
       </Reference>
       <Reference
-        name="Brandon Young"
+        name="Braedon Young"
         company="Dublin City Schools"
         phone=""
         email="young_braedon@dublinschools.net"
