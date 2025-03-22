@@ -31,7 +31,7 @@ function Header() {
         <p className="italic">Spring, 2025</p>
         <p className="italic">Dublin City Schools</p>
       </div>
-      <p className="mt-2 max-w-4xl bg-muted/30 text-lg">
+      <p className="mt-2 max-w-4xl bg-muted/30">
         During my junior year in highschool I tried taking a program called IT
         Academy. I decided halfway through the semester to drop the class
         because I knew the contents of the class, and decided to pick up Young
@@ -80,7 +80,7 @@ function MoreInfo() {
         <GridItem
           href="/ypa/strengths"
           image="/icons/chart-pie-4.svg"
-          title="CliftonStrengths"
+          title="Clifton Strengths"
           subtitle="Results from a StrengthFinder assessment I took in 2025"
           invertDark={true}
         />
@@ -125,7 +125,7 @@ function GridItem({
 
 function AboutYPA() {
   return (
-    <div className="mt-16 flex flex-col bg-muted/30 px-8 md:text-lg">
+    <div className="mt-16 flex flex-col bg-muted/30 px-8">
       <h2 className="text-3xl font-bold underline decoration-[#006853]">
         What Is YPA?
       </h2>
