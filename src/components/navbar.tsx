@@ -35,6 +35,12 @@ const components: {
     star: false,
     description: "A mentorship opportunity I had within an IT Department.",
   },
+  {
+    title: "Strength Finder",
+    href: "/ypa/strengths",
+    star: false,
+    description: "My top 5 strengths according Clifton Strengths",
+  },
 ];
 
 export function Navbar() {
