@@ -34,14 +34,14 @@ export default function ImageCarousel({
             <Link
               href={"/photos/" + key.split("/").pop()}
               prefetch={false}
-              className="cursor-default"
+              className="block aspect-video cursor-default"
             >
               <Image
                 src={key}
-                alt=""
+                alt={`Image ${index}`}
                 fill
                 loading="lazy"
-                className="aspect-video rounded-lg border-2 border-transparent transition-all group-hover:border-primary"
+                className="aspect-video rounded-lg border-2 border-transparent object-cover transition-all group-hover:border-primary"
               />
             </Link>
             <IconExternalLink className="absolute bottom-2 right-2 z-20 translate-y-2 stroke-primary opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100" />

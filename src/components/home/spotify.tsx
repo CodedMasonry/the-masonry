@@ -102,7 +102,7 @@ function CurrentlyPlaying({
           // There is assumed to always be 2 thumbnails, each with a link.
           // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
           src={data.item.album.images[1]?.url!}
-          alt=""
+          alt={"Open spotify link to " + data.item.name}
           fill
           loading="eager"
           unoptimized

@@ -50,10 +50,10 @@ function SectionHeader() {
         Being a software developer, I wanted to write code, and I wanted to
         convey who I am beyond just words, so I created a website.
       </p>
-      <div className="-ml-2">
+      <div className="-ml-2 drop-shadow-md">
         <Link
           href="/resume"
-          className={`m-2 drop-shadow-md ${buttonVariants({ variant: "default", size: "lg" })}`}
+          className={`m-2 ${buttonVariants({ variant: "default", size: "lg" })}`}
         >
           <Image
             src="/icons/paper.svg"
@@ -66,7 +66,7 @@ function SectionHeader() {
         </Link>
         <Link
           href="/photos"
-          className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
+          className={`m-2 ${buttonVariants({ variant: "ghost", size: "lg" })}`}
         >
           <Image
             src="/icons/photo.svg"
@@ -79,7 +79,7 @@ function SectionHeader() {
         </Link>
         <Link
           href="https://www.linkedin.com/in/brockshaffer"
-          className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
+          className={`m-2 ${buttonVariants({ variant: "ghost", size: "lg" })}`}
         >
           <Image
             src="/icons/linkedin.svg"
@@ -92,7 +92,7 @@ function SectionHeader() {
         </Link>
         <Link
           href="https://github.com/CodedMasonry"
-          className={`m-2 drop-shadow-md ${buttonVariants({ variant: "ghost", size: "lg" })}`}
+          className={`m-2 ${buttonVariants({ variant: "ghost", size: "lg" })}`}
         >
           <Image
             src="/icons/github.svg"

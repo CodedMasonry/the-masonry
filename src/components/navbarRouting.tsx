@@ -36,7 +36,7 @@ export function NavbarMenu({
           <NavigationMenuLink href="/" className={navigationMenuTriggerStyle()}>
             <Image
               src="/favicon.svg"
-              alt="home"
+              alt=""
               width={32}
               height={32}
               className={`size-8 ${!isMobile && "mr-2"}`}
