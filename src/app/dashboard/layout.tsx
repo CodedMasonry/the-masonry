@@ -4,8 +4,6 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { ThemeProvider } from "~/components/theme-provider";
-import { Navbar } from "~/components/navbar";
-import Footer from "~/components/footer";
 
 export const metadata: Metadata = {
   title: "Brock Shaffer",
@@ -23,13 +21,9 @@ export default function RootLayout({
       disableTransitionOnChange
     >
       <TRPCReactProvider>
-        <Navbar />
-
         <main className="custombackground flex min-h-svh flex-col">
           {children}
         </main>
-
-        <Footer />
       </TRPCReactProvider>
     </ThemeProvider>
   );
