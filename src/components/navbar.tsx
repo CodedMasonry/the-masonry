@@ -1,53 +1,28 @@
 "use client";
 
+import { useIsMobile } from "~/hooks/use-mobile";
 import { ModeToggle } from "./mode-toggle";
 import { NavbarMenu } from "./navbarRouting";
-
-const components: {
-  title: string;
-  href: string;
-  star: boolean;
-  description: string;
-}[] = [
-  {
-    title: "Resume",
-    href: "/resume",
-    star: true,
-    description:
-      "My current resume where you can get an overview of my skills.",
-  },
-  {
-    title: "References",
-    href: "/references",
-    star: true,
-    description:
-      "An up to date list of references who can attest to my abilities.",
-  },
-  {
-    title: "Young Professionals Academy",
-    href: "/ypa",
-    star: false,
-    description: "An overview of the highschool mentorships I participated in",
-  },
-  {
-    title: "IT Department Mentorship",
-    href: "/fstlogistics",
-    star: false,
-    description: "A mentorship opportunity I had within an IT Department.",
-  },
-  {
-    title: "Strength Finder",
-    href: "/ypa/strengths",
-    star: false,
-    description: "My top 5 strengths according Clifton Strengths",
-  },
-];
+import { useSidebar } from "./ui/sidebar";
+import { Button } from "./ui/button";
+import { type Icon, IconMenu2 } from "@tabler/icons-react";
+import React from "react";
+import { ProfessionalSection } from "~/lib/routing";
 
 export function Navbar() {
+  const isMobile = useIsMobile();
+  const { toggleSidebar } = useSidebar();
+
   return (
     <div className="absolute flex w-full items-center p-2">
       <div className="ml-4">
-        <NavbarMenu components={components} />
+        {isMobile ? (
+          <Button variant="ghost" size="icon" onClick={toggleSidebar}>
+            <IconMenu2 />
+          </Button>
+        ) : (
+          <NavbarMenu components={ProfessionalSection} />
+        )}
       </div>
       <div className="ml-auto mr-2 flex">
         <ModeToggle />

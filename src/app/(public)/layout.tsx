@@ -6,6 +6,9 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { ThemeProvider } from "~/components/theme-provider";
 import { Navbar } from "~/components/navbar";
 import Footer from "~/components/footer";
+import { MobileSidebar } from "~/components/mobile-sidebar";
+import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
+import { ProfessionalSection } from "~/lib/routing";
 
 export const metadata: Metadata = {
   title: "Brock Shaffer",
@@ -23,13 +26,18 @@ export default function RootLayout({
       disableTransitionOnChange
     >
       <TRPCReactProvider>
-        <Navbar />
+        <SidebarProvider>
+          <MobileSidebar professionalItems={ProfessionalSection} />
+          <SidebarInset>
+            <Navbar />
 
-        <main className="custombackground flex min-h-svh flex-col">
-          {children}
-        </main>
+            <main className="custombackground flex min-h-svh flex-col">
+              {children}
+            </main>
 
-        <Footer />
+            <Footer />
+          </SidebarInset>
+        </SidebarProvider>
       </TRPCReactProvider>
     </ThemeProvider>
   );
