@@ -1,4 +1,6 @@
-"use server";
+// The home page doesn't need to be SSR, but needs to be revalidated often
+// to allow prefetch to re-run
+export const revalidate = 300; // seconds
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
