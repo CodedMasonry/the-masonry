@@ -10,7 +10,7 @@ export function ModeToggle() {
 	const { setTheme, theme } = useTheme();
 
 	function flipTheme() {
-		if (theme == "light") {
+		if (theme === "light") {
 			setTheme("dark");
 		} else {
 			setTheme("light");
