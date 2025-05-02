@@ -35,7 +35,7 @@ export function NavbarMenu({
         <NavigationMenuItem>
           <NavigationMenuLink
             href="/"
-            className={`bg-transparent ${navigationMenuTriggerStyle()}`}
+            className={`cursor-default bg-transparent ${navigationMenuTriggerStyle()}`}
           >
             <Image
               src="/favicon.svg"
@@ -108,7 +108,7 @@ export function NavbarMenu({
           <NavigationMenuItem>
             <NavigationMenuLink
               href="/photos"
-              className={`bg-transparent ${navigationMenuTriggerStyle()}`}
+              className={`cursor-default bg-transparent ${navigationMenuTriggerStyle()}`}
             >
               Gallery
             </NavigationMenuLink>
