@@ -122,7 +122,7 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            "group relative block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none ring-2 ring-transparent transition-all hover:ring-primary focus:text-accent-foreground focus:ring-primary",
+            "group relative block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-hidden ring-2 ring-transparent transition-all hover:ring-primary focus:text-accent-foreground focus:ring-primary",
             className,
           )}
           {...props}

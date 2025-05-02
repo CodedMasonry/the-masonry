@@ -6,8 +6,6 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { ThemeProvider } from "~/components/theme-provider";
 import { Navbar } from "~/components/navbar";
 import Footer from "~/components/footer";
-import { MobileSidebar } from "~/components/mobile-sidebar";
-import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
 import { ProfessionalSection } from "~/lib/routing";
 
 export const metadata: Metadata = {
@@ -26,18 +24,13 @@ export default function RootLayout({
       disableTransitionOnChange
     >
       <TRPCReactProvider>
-        <SidebarProvider>
-          <MobileSidebar professionalItems={ProfessionalSection} />
-          <SidebarInset>
-            <Navbar />
+        <Navbar />
 
-            <main className="custombackground flex min-h-svh flex-col">
-              {children}
-            </main>
+        <main className="custombackground flex min-h-svh flex-col">
+          {children}
+        </main>
 
-            <Footer />
-          </SidebarInset>
-        </SidebarProvider>
+        <Footer />
       </TRPCReactProvider>
     </ThemeProvider>
   );
