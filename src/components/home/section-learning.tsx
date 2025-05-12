@@ -20,9 +20,15 @@ export default function SectionLearning() {
 					subtitle="Dublin City Schools"
 				/>
 				<GridItem
+					href="/outcomes"
+					image="/icons/outcomes.png"
+					title="Software Engineering Internship"
+					subtitle="Outcomes"
+				/>
+				<GridItem
 					href="/fstlogistics"
 					image="/icons/fst.jpeg"
-					title="IT Department Mentorship"
+					title="IT Department Internship"
 					subtitle="FST Logistics"
 				/>
 			</div>
