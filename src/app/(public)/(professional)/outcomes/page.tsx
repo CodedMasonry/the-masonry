@@ -20,7 +20,7 @@ function Header() {
       <Link href="https://fstlogistics.com/" className="w-fit hover:underline">
         <h2 className="text-2xl">Outcomes</h2>
       </Link>
-      <p className="">Mentored with Marcus Larger</p>
+      <p className="">Mentored with Marcus Larger & Justin Holderby</p>
       <p className="font-light italic">April 15 - May 9, 2025</p>
     </div>
   );
@@ -29,7 +29,7 @@ function Header() {
 function Body() {
   return (
     <>
-      <div className="mx-8 mt-8 flex flex-col md:flex-row"></div>
+      <div className="mx-8 mt-8 flex flex-col md:flex-row">_</div>
     </>
   );
 }
