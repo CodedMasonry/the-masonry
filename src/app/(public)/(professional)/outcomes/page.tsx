@@ -42,7 +42,34 @@ function Body() {
           that, I got insight into the business side of software, and the role
           of leadership.
         </p>
-        <div className="relative my-4 aspect-video w-2xl">
+        <p className="max-w-5xl my-2">
+          I’ve already spent years writing code, and my mentors were aware of
+          that, so the focus during this internship was to gain insight into the
+          parts of software engineering I’m not privy to unless I am in the
+          industry. It’s one thing to write code by yourself, or with a small
+          team, and another with a team of other engineers, spanning multiple
+          teams. I can’t include everything, so I will focus on the biggest
+          take-aways.
+        </p>
+        <h3 className="text-2xl font-semibold">Code At Scale</h3>
+        <p className="max-w-5xl my-2">
+          Speaking with the team at Outcomes, they gave me a high overview of
+          the systems at the company. Everything is designed to be load balanced
+          and highly available. It’s designed for a completely different purpose
+          than a personal project. I was quoted that of the active codebases,
+          there are over 50 million lines of code. It gave me an idea for why
+          there are always so many engineers for one company. Working in a
+          corporate environment is much different than personal (of course).
+        </p>
+
+        <h3 className="text-2xl font-semibold">AGILE Development</h3>
+        <p className="max-w-5xl my-2">
+          Outcomes is a for profit company, and so they have become incredibly
+          efficient with their time. My mentor went into incredible detail about
+          AGILE for development, and I found it intriguing. He drew a diagram,
+          so I did my best to recreate it.
+        </p>
+        <div className="relative my-2 aspect-video w-2xl">
           <Image
             src="/images/agile.png"
             alt="Diagram of agile"
@@ -50,7 +77,6 @@ function Body() {
             fill
           />
         </div>
-        <p className="max-w-6xl"></p>
       </div>
     </>
   );

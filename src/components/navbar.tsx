@@ -4,7 +4,7 @@ import React from "react";
 import { ModeToggle } from "./mode-toggle";
 import { NavbarMenu } from "./navbarRouting";
 
-export type ProfessionalItem = {
+type ProfessionalItem = {
   title: string;
   href: string;
   star: boolean;
@@ -13,7 +13,7 @@ export type ProfessionalItem = {
 };
 
 // Professional section on Public page
-export const ProfessionalSection: ProfessionalItem[] = [
+const ProfessionalSection: ProfessionalItem[] = [
   {
     title: "Resume",
     href: "/resume",
