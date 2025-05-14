@@ -30,7 +30,7 @@ function Body() {
   return (
     <>
       <div className="mx-8 mt-8 flex flex-col">
-        <p className="max-w-6xl">
+        <p className="max-w-5xl">
           My high school has a program called the Young Professionals Academy
           (YPA). The program gives students opportunities to partake in two
           internships. For my second, I spent 4-weeks with Outcomes. They are a
@@ -42,7 +42,7 @@ function Body() {
           that, I got insight into the business side of software, and the role
           of leadership.
         </p>
-        <div className="relative my-2 aspect-video w-2xl">
+        <div className="relative my-4 aspect-video w-2xl">
           <Image
             src="/images/agile.png"
             alt="Diagram of agile"
@@ -50,6 +50,7 @@ function Body() {
             fill
           />
         </div>
+        <p className="max-w-6xl"></p>
       </div>
     </>
   );
