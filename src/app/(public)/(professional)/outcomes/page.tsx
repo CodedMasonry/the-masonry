@@ -1,3 +1,4 @@
+import { IconExternalLink } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
@@ -17,8 +18,12 @@ function Header() {
       <h1 className="font-semibold text-4xl underline decoration-primary">
         Software Engineering Internship
       </h1>
-      <Link href="https://fstlogistics.com/" className="w-fit hover:underline">
+      <Link
+        href="https://outcomes.com/"
+        className="flex w-fit items-center hover:text-primary"
+      >
         <h2 className="text-2xl">Outcomes</h2>
+        <IconExternalLink className="ml-2" />
       </Link>
       <p className="">Mentored with Marcus Larger, Justin Holderby</p>
       <p className="font-light italic">April 15 - May 9, 2025</p>
