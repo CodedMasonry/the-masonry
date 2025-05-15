@@ -74,7 +74,7 @@ function GridItem({
         <p className="md:text-lg">{subtitle}</p>
         {external ? (
           <IconExternalLink
-            stroke={3}
+            stroke={2}
             className="mt-auto mb-1 size-6 self-end group-hover:stroke-primary transition"
           />
         ) : (
