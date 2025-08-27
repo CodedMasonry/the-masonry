@@ -27,7 +27,7 @@ export default function SectionLearning() {
           subtitle="Outcomes"
         />
         <GridItem
-          href="https://1014.brockshaffer.dev/"
+          href="https://www.dublinroboticsboosters.org/"
           image="/icons/team1014.jpeg"
           title="Robotics Team"
           subtitle="Team 1014, Bad Robots"
