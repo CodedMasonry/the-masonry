@@ -2,7 +2,7 @@ import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
-import Header from "../components/Header";
+import { Header } from "../components/header";
 
 import appCss from "../styles.css?url";
 
@@ -37,7 +37,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="text-foreground custombackground">
         <Header />
         {children}
         <TanStackDevtools
