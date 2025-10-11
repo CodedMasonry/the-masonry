@@ -9,7 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ResumeRouteImport } from './routes/resume'
+import { Route as ReferencesRouteImport } from './routes/references'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExperiencesYpaRouteImport } from './routes/experiences/ypa'
+import { Route as ExperiencesOutcomesRouteImport } from './routes/experiences/outcomes'
+import { Route as ExperiencesFstlogisticsRouteImport } from './routes/experiences/fstlogistics'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
 import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
@@ -18,9 +23,34 @@ import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr
 import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
 import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ssr.data-only'
 
+const ResumeRoute = ResumeRouteImport.update({
+  id: '/resume',
+  path: '/resume',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReferencesRoute = ReferencesRouteImport.update({
+  id: '/references',
+  path: '/references',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExperiencesYpaRoute = ExperiencesYpaRouteImport.update({
+  id: '/experiences/ypa',
+  path: '/experiences/ypa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExperiencesOutcomesRoute = ExperiencesOutcomesRouteImport.update({
+  id: '/experiences/outcomes',
+  path: '/experiences/outcomes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExperiencesFstlogisticsRoute = ExperiencesFstlogisticsRouteImport.update({
+  id: '/experiences/fstlogistics',
+  path: '/experiences/fstlogistics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
@@ -61,6 +91,11 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/references': typeof ReferencesRoute
+  '/resume': typeof ResumeRoute
+  '/experiences/fstlogistics': typeof ExperiencesFstlogisticsRoute
+  '/experiences/outcomes': typeof ExperiencesOutcomesRoute
+  '/experiences/ypa': typeof ExperiencesYpaRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -71,6 +106,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/references': typeof ReferencesRoute
+  '/resume': typeof ResumeRoute
+  '/experiences/fstlogistics': typeof ExperiencesFstlogisticsRoute
+  '/experiences/outcomes': typeof ExperiencesOutcomesRoute
+  '/experiences/ypa': typeof ExperiencesYpaRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -82,6 +122,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/references': typeof ReferencesRoute
+  '/resume': typeof ResumeRoute
+  '/experiences/fstlogistics': typeof ExperiencesFstlogisticsRoute
+  '/experiences/outcomes': typeof ExperiencesOutcomesRoute
+  '/experiences/ypa': typeof ExperiencesYpaRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -94,6 +139,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/references'
+    | '/resume'
+    | '/experiences/fstlogistics'
+    | '/experiences/outcomes'
+    | '/experiences/ypa'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -104,6 +154,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/references'
+    | '/resume'
+    | '/experiences/fstlogistics'
+    | '/experiences/outcomes'
+    | '/experiences/ypa'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -114,6 +169,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/references'
+    | '/resume'
+    | '/experiences/fstlogistics'
+    | '/experiences/outcomes'
+    | '/experiences/ypa'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -125,6 +185,11 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ReferencesRoute: typeof ReferencesRoute
+  ResumeRoute: typeof ResumeRoute
+  ExperiencesFstlogisticsRoute: typeof ExperiencesFstlogisticsRoute
+  ExperiencesOutcomesRoute: typeof ExperiencesOutcomesRoute
+  ExperiencesYpaRoute: typeof ExperiencesYpaRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
   DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
   DemoStartServerFuncsRoute: typeof DemoStartServerFuncsRoute
@@ -136,11 +201,46 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/resume': {
+      id: '/resume'
+      path: '/resume'
+      fullPath: '/resume'
+      preLoaderRoute: typeof ResumeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/references': {
+      id: '/references'
+      path: '/references'
+      fullPath: '/references'
+      preLoaderRoute: typeof ReferencesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/experiences/ypa': {
+      id: '/experiences/ypa'
+      path: '/experiences/ypa'
+      fullPath: '/experiences/ypa'
+      preLoaderRoute: typeof ExperiencesYpaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/experiences/outcomes': {
+      id: '/experiences/outcomes'
+      path: '/experiences/outcomes'
+      fullPath: '/experiences/outcomes'
+      preLoaderRoute: typeof ExperiencesOutcomesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/experiences/fstlogistics': {
+      id: '/experiences/fstlogistics'
+      path: '/experiences/fstlogistics'
+      fullPath: '/experiences/fstlogistics'
+      preLoaderRoute: typeof ExperiencesFstlogisticsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/start/server-funcs': {
@@ -197,6 +297,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ReferencesRoute: ReferencesRoute,
+  ResumeRoute: ResumeRoute,
+  ExperiencesFstlogisticsRoute: ExperiencesFstlogisticsRoute,
+  ExperiencesOutcomesRoute: ExperiencesOutcomesRoute,
+  ExperiencesYpaRoute: ExperiencesYpaRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,
   DemoStartApiRequestRoute: DemoStartApiRequestRoute,
   DemoStartServerFuncsRoute: DemoStartServerFuncsRoute,

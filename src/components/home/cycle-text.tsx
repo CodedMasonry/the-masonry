@@ -27,7 +27,7 @@ export function CycleText({ options }: { options: Array<string> }) {
             y: 25,
             filter: ["blur(0px)", "blur(5px)", "blur(10px)"],
           }}
-          transition={{ duration: 0.5, times: [0, 0.5, 1] }}
+          transition={{ duration: 0.5, times: [0, 0.5, 1], ease: "backInOut" }}
           className="absolute top-0 left-0 underline decoration-primary"
         >
           {options[index]}

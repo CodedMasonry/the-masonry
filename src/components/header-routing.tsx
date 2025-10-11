@@ -12,16 +12,14 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { ExternalLink, Star } from "lucide-react";
+import { NavItem } from "./header";
 
 export function HeaderMenu({
-  components,
+  personal,
+  professional,
 }: {
-  components: {
-    title: string;
-    href: string;
-    star: boolean;
-    description: string;
-  }[];
+  personal: NavItem[];
+  professional: NavItem[];
 }) {
   const isMobile = useIsMobile();
 
@@ -67,15 +65,16 @@ export function HeaderMenu({
                   </a>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/photos" title="Photography">
-                I love photography, so you can see the gallery here.
-              </ListItem>
-              <ListItem href="/stats" title="Statistics">
-                A lot of numbers, all in one place, because why not.
-              </ListItem>
-              <ListItem href="https://github.com/CodedMasonry" title="Projects">
-                Nothing here yet, so this just goes to my Github.
-              </ListItem>
+              {personal.map((component) => (
+                <ListItem
+                  key={component.title}
+                  title={component.title}
+                  href={component.href}
+                  star={component.star}
+                >
+                  {component.description}
+                </ListItem>
+              ))}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
@@ -85,7 +84,7 @@ export function HeaderMenu({
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[300px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              {components.map((component) => (
+              {professional.map((component) => (
                 <ListItem
                   key={component.title}
                   title={component.title}
