@@ -57,7 +57,7 @@ export function HeaderMenu({
                   >
                     <img
                       src="https://dxgc3f8f0p.ufs.sh/f/ou6rUxl7TzS4HQy0MizViDM9beH6tU8kSOrjF4s3clZCXVqK"
-                      alt="Background Image"
+                      alt=""
                       className="absolute inset-0 h-full w-full rounded-md object-cover"
                     />
                     <div className="z-10 mt-auto ml-2 font-medium text-lg text-white drop-shadow-md">
