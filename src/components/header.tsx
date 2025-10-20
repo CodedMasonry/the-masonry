@@ -18,16 +18,16 @@ const PersonalSection: NavItem[] = [
     description: "I love photography, so you can see the gallery here.",
   },
   {
-    title: "Statistics",
-    href: "/stats",
-    star: false,
-    description: "A lot of numbers, all in one place, because why not.",
-  },
-  {
     title: "Projects",
     href: "https://github.com/CodedMasonry",
     star: false,
     description: "Nothing here yet, so this just goes to my Github.",
+  },
+  {
+    title: "Blog",
+    href: "/",
+    star: false,
+    description: "Nothing here yet, this will end up being a blog soon.",
   },
 ];
 
@@ -65,11 +65,17 @@ const ProfessionalSection: NavItem[] = [
     star: false,
     description: "An internship I had with an IT Department.",
   },
+  {
+    title: "Team Bad Robots",
+    href: "https://www.dublinroboticsboosters.org/",
+    star: false,
+    description: "The FRC team I'm currently a part of in high school.",
+  },
 ];
 
 export function Header() {
   return (
-    <div className="flex w-full items-center p-4">
+    <div className="absolute flex w-full items-center p-4 z-20">
       <div className="ml-4">
         <HeaderMenu
           personal={PersonalSection}

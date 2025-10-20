@@ -7,8 +7,8 @@ export const Route = createFileRoute("/resume")({
 
 function RouteComponent() {
   return (
-    <div className="flex flex-col">
-      <div className="mx-auto px-8 md:px-4 my-4 aspect-auto">
+    <div className="flex flex-col bg-muted">
+      <div className="mx-auto px-8 md:px-4 mb-6 pt-24 aspect-auto">
         <img src="/resume.png" alt="Resume" className="drop-shadow-lg" />
       </div>
       <a

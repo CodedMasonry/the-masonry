@@ -16,7 +16,7 @@ function RouteComponent() {
 
 function Header() {
   return (
-    <div className="mx-8 mt-16 flex flex-col">
+    <div className="mx-8 pt-24 flex flex-col">
       <img
         src="/icons/dcs.png"
         alt="Dublin City School's Logo"

@@ -39,9 +39,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="text-foreground custombackground">
+      <body className="text-foreground">
         <Header />
-        {children}
+        <main>{children}</main>
         <TanStackDevtools
           config={{
             position: "bottom-right",

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 import {
   NavigationMenu,
@@ -10,9 +10,9 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
 import { ExternalLink, Star } from "lucide-react";
 import { NavItem } from "./header";
+import { Link } from "@tanstack/react-router";
 
 export function HeaderMenu({
   personal,
@@ -28,17 +28,19 @@ export function HeaderMenu({
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink
-            href="/"
+            asChild
             className={`flex flex-row items-center cursor-default ${navigationMenuTriggerStyle()} bg-trasparent`}
           >
-            <img
-              src="/favicon.svg"
-              alt=""
-              width={32}
-              height={32}
-              className={`size-6 ${!isMobile && "mr-2"}`}
-            />
-            {!isMobile && "Home"}
+            <Link to="/">
+              <img
+                src="/favicon.svg"
+                alt=""
+                width={32}
+                height={32}
+                className={`size-6 ${!isMobile && "mr-2"}`}
+              />
+              {!isMobile && "Home"}
+            </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
@@ -49,9 +51,9 @@ export function HeaderMenu({
             <ul className="grid w-[300px] gap-3 p-6 md:w-[500px] lg:w-[600px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3 min-h-20">
                 <NavigationMenuLink asChild>
-                  <a
+                  <Link
                     className="group relative flex h-full w-full flex-col rounded-md ring-2 ring-transparent transition duration-150 hover:ring-primary"
-                    href="/"
+                    to="/"
                   >
                     <img
                       src="https://dxgc3f8f0p.ufs.sh/f/ou6rUxl7TzS4HQy0MizViDM9beH6tU8kSOrjF4s3clZCXVqK"
@@ -62,14 +64,14 @@ export function HeaderMenu({
                       Home
                     </div>
                     <ExternalLink className="absolute right-2 bottom-2 z-20 translate-y-2 stroke-primary opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100" />
-                  </a>
+                  </Link>
                 </NavigationMenuLink>
               </li>
               {personal.map((component) => (
                 <ListItem
                   key={component.title}
                   title={component.title}
-                  href={component.href}
+                  to={component.href}
                   star={component.star}
                 >
                   {component.description}
@@ -88,7 +90,7 @@ export function HeaderMenu({
                 <ListItem
                   key={component.title}
                   title={component.title}
-                  href={component.href}
+                  to={component.href}
                   star={component.star}
                 >
                   {component.description}
@@ -100,10 +102,10 @@ export function HeaderMenu({
         {!isMobile && (
           <NavigationMenuItem>
             <NavigationMenuLink
-              href="/photos"
+              asChild
               className={`cursor-default ${navigationMenuTriggerStyle()} bg-trasparent`}
             >
-              Gallery
+              <Link to="/photos">Gallery</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
         )}
@@ -112,20 +114,23 @@ export function HeaderMenu({
   );
 }
 
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a"> & { star?: boolean }
->(({ className, title, star = false, children, ...props }, ref) => {
+const ListItem = ({
+  title,
+  to,
+  star = false,
+  children,
+}: {
+  title: string;
+  to: string;
+  star?: boolean;
+  children: React.ReactNode;
+}) => {
   return (
     <li>
       <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "group relative block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-hidden ring-2 ring-transparent transition-all hover:ring-primary focus:text-accent-foreground focus:ring-primary",
-            className,
-          )}
-          {...props}
+        <Link
+          to={to}
+          className="group relative block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-hidden ring-2 ring-transparent transition-all hover:ring-primary focus:text-accent-foreground focus:ring-primary"
         >
           <div className="font-medium text-sm leading-none">
             {title}
@@ -137,9 +142,8 @@ const ListItem = React.forwardRef<
             {children}
           </p>
           <ExternalLink className="absolute right-2 bottom-2 z-20 translate-y-2 stroke-primary opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100" />
-        </a>
+        </Link>
       </NavigationMenuLink>
     </li>
   );
-});
-ListItem.displayName = "ListItem";
+};

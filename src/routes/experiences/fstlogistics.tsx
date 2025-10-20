@@ -7,7 +7,7 @@ export const Route = createFileRoute("/experiences/fstlogistics")({
 
 function RouteComponent() {
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-screen pt-8">
       <Header />
       <Body />
     </div>
@@ -15,7 +15,7 @@ function RouteComponent() {
 }
 function Header() {
   return (
-    <div className="mx-8 mt-16 flex flex-col space-y-1">
+    <div className="mx-8 mt-20 flex flex-col space-y-1">
       <h1 className="font-semibold text-4xl underline decoration-primary">
         IT Department Internship
       </h1>

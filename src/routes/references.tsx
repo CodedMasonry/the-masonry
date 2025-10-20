@@ -6,10 +6,8 @@ export const Route = createFileRoute("/references")({
 
 function RouteComponent() {
   return (
-    <div className="mx-8 mt-16 flex max-w-4xl flex-col bg-muted/30">
-      <h1 className="font-bold text-5xl text-primary drop-shadow-lg">
-        Brock Shaffer
-      </h1>
+    <div className="mx-8 pt-24 flex max-w-4xl flex-col">
+      <h1 className="font-bold text-5xl text-primary">Brock Shaffer</h1>
       <p className="font-light text-sm">
         contact@brockshaffer.dev (614) 595-6689
       </p>
