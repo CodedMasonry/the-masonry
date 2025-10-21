@@ -1,0 +1,86 @@
+---
+import { CycleText } from "@/components/home/cycle-text";
+import { Button } from "@/components/ui/button";
+import SectionHighSchool from "@/components/home/highschool";
+import Main from "@/layouts/main.astro";
+import PaperIcon from "@/assets/icons/paper.svg";
+import PhotoIcon from "@/assets/icons/photo.svg";
+import LinkedInIcon from "@/assets/icons/linkedin.svg";
+import GithubIcon from "@/assets/icons/github.svg";
+---
+
+<Main title="Brock Shaffer">
+    <div class="pt-24 mr-4 ml-8 flex flex-col space-y-2 md:pt-44 md:ml-36">
+        <h1
+            class="font-extrabold text-6xl text-primary drop-shadow-lg md:text-7xl"
+        >
+            Hello, I&apos;m Brock.
+        </h1>
+        <h2 class="relative my-2 text-4xl">
+            <CycleText
+                client:load
+                options={[
+                    "Software Developer",
+                    "DevOps Engineer",
+                    "UI Designer",
+                    "Photographer",
+                    "Drone Pilot",
+                    "Video Editor",
+                ]}
+            />
+        </h2>
+        <p class="mr-4 pt-2 pb-4 drop-shadow-lg md:max-w-3xl md:pt-4">
+            Being a software developer, I wanted to write code, and I wanted to
+            convey who I am beyond just words, so I created a website.
+        </p>
+        <div class="flex flex-row gap-4 -ml-2 drop-shadow-md">
+            <a href="/resume">
+                <Button size="xl">
+                    <PaperIcon stroke="white" class="size-7" />
+                    Resume
+                </Button>
+            </a>
+
+            <a href="/photos">
+                <Button size="xl" variant="ghost">
+                    <PhotoIcon class="size-7" />
+                    Photos
+                </Button>
+            </a>
+
+            <a href="https://www.linkedin.com/in/brockshaffer">
+                <Button size="xl" variant="ghost">
+                    <LinkedInIcon class="size-7" />
+                    LinkedIn
+                </Button>
+            </a>
+
+            <a href="https://github.com/CodedMasonry">
+                <Button size="xl" variant="ghost">
+                    <GithubIcon class="size-7" />
+                    Github
+                </Button>
+            </a>
+        </div>
+    </div>
+    <div class="mx-8 mt-28 flex flex-col md:mx-36 md:mt-36">
+        <h3
+            class="mb-2 text-3xl underline decoration-primary drop-shadow-lg md:text-4xl"
+        >
+            Explore my photography
+        </h3>
+        <p>e</p>
+    </div>
+    <div class="mx-8 mt-28 flex flex-col md:mx-36 md:mt-36">
+        <h3
+            class="mb-2 text-3xl underline decoration-primary drop-shadow-lg md:text-4xl"
+        >
+            Rocking to the metal
+        </h3>
+        <div class="flex flex-row gap-4">
+            <div>List</div>
+            <div>Descriptions</div>
+        </div>
+    </div>
+    <SectionHighSchool />
+</Main>

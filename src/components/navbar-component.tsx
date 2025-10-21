@@ -1,5 +1,3 @@
-import React from "react";
-
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,10 +9,9 @@ import {
 } from "@/components/ui/navigation-menu";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ExternalLink, Star } from "lucide-react";
-import { NavItem } from "./header";
-import { Link } from "@tanstack/react-router";
+import { type NavItem } from "./navbar";
 
-export function HeaderMenu({
+export function NavBarMenu({
   personal,
   professional,
 }: {
@@ -31,7 +28,7 @@ export function HeaderMenu({
             asChild
             className={`flex flex-row items-center cursor-default ${navigationMenuTriggerStyle()} bg-trasparent`}
           >
-            <Link to="/">
+            <a href="/">
               <img
                 src="/favicon.svg"
                 alt=""
@@ -40,7 +37,7 @@ export function HeaderMenu({
                 className={`size-6 ${!isMobile && "mr-2"}`}
               />
               {!isMobile && "Home"}
-            </Link>
+            </a>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
@@ -51,9 +48,9 @@ export function HeaderMenu({
             <ul className="grid w-[300px] gap-3 p-6 md:w-[500px] lg:w-[600px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3 min-h-20">
                 <NavigationMenuLink asChild>
-                  <Link
+                  <a
                     className="group relative flex h-full w-full flex-col rounded-md ring-2 ring-transparent transition duration-150 hover:ring-primary"
-                    to="/"
+                    href="/"
                   >
                     <img
                       src="https://dxgc3f8f0p.ufs.sh/f/ou6rUxl7TzS4HQy0MizViDM9beH6tU8kSOrjF4s3clZCXVqK"
@@ -64,14 +61,14 @@ export function HeaderMenu({
                       Home
                     </div>
                     <ExternalLink className="absolute right-2 bottom-2 z-20 translate-y-2 stroke-primary opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100" />
-                  </Link>
+                  </a>
                 </NavigationMenuLink>
               </li>
               {personal.map((component) => (
                 <ListItem
                   key={component.title}
                   title={component.title}
-                  to={component.href}
+                  href={component.href}
                   star={component.star}
                 >
                   {component.description}
@@ -90,7 +87,7 @@ export function HeaderMenu({
                 <ListItem
                   key={component.title}
                   title={component.title}
-                  to={component.href}
+                  href={component.href}
                   star={component.star}
                 >
                   {component.description}
@@ -105,7 +102,7 @@ export function HeaderMenu({
               asChild
               className={`cursor-default ${navigationMenuTriggerStyle()} bg-trasparent`}
             >
-              <Link to="/photos">Gallery</Link>
+              <a href="/photos">Gallery</a>
             </NavigationMenuLink>
           </NavigationMenuItem>
         )}
@@ -116,20 +113,20 @@ export function HeaderMenu({
 
 const ListItem = ({
   title,
-  to,
+  href,
   star = false,
   children,
 }: {
   title: string;
-  to: string;
+  href: string;
   star?: boolean;
   children: React.ReactNode;
 }) => {
   return (
     <li>
       <NavigationMenuLink asChild>
-        <Link
-          to={to}
+        <a
+          href={href}
           className="group relative block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-hidden ring-2 ring-transparent transition-all hover:ring-primary focus:text-accent-foreground focus:ring-primary"
         >
           <div className="font-medium text-sm leading-none">
@@ -142,7 +139,7 @@ const ListItem = ({
             {children}
           </p>
           <ExternalLink className="absolute right-2 bottom-2 z-20 translate-y-2 stroke-primary opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100" />
-        </Link>
+        </a>
       </NavigationMenuLink>
     </li>
   );

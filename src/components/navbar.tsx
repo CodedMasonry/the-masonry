@@ -1,5 +1,5 @@
 import type React from "react";
-import { HeaderMenu } from "./header-routing";
+import { NavBarMenu } from "./navbar-component";
 
 export type NavItem = {
   title: string;
@@ -73,11 +73,11 @@ const ProfessionalSection: NavItem[] = [
   },
 ];
 
-export function Header() {
+export function NavBar() {
   return (
     <div className="absolute flex w-full items-center p-4 z-20">
       <div className="ml-4">
-        <HeaderMenu
+        <NavBarMenu
           personal={PersonalSection}
           professional={ProfessionalSection}
         />
