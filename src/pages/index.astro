@@ -1,15 +1,22 @@
 ---
+// Components
 import { CycleText } from "@/components/home/cycle-text";
 import { Button } from "@/components/ui/button";
-import SectionHighSchool from "@/components/home/highschool";
-import Main from "@/layouts/main.astro";
+import HighSchoolGridItem from "@/components/home/HighSchoolGridItem.astro";
 
+// Icons
 import PaperIcon from "@/assets/icons/paper.svg";
 import PhotoIcon from "@/assets/icons/photo.svg";
 import LinkedInIcon from "@/assets/icons/linkedin.svg";
 import GithubIcon from "@/assets/icons/github.svg";
 import HeroImage from "@/assets/hero.jpg";
+import YPAImage from "@/assets/icons/ypa.png";
+import OutcomesImage from "@/assets/icons/outcomes.png";
+import RoboticsTeamImage from "@/assets/icons/team1014.jpeg";
+import FSTImage from "@/assets/icons/fst.jpeg";
 
+// Other imports
+import Main from "@/layouts/main.astro";
 import { Image } from "astro:assets";
 ---
 
@@ -18,9 +25,10 @@ import { Image } from "astro:assets";
         <Image
             src={HeroImage}
             alt="Hero background"
-            format="webp"
-            fit="cover"
-            class="absolute inset-0 h-full w-full object-cover brightness-60"
+            priority
+            layout="full-width"
+            class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700 ease-in-out"
+            onload="this.classList.remove('opacity-0'); this.classList.add('opacity-100')"
             style="mask-image: linear-gradient(to bottom, black 70%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);"
         />
     </section>
@@ -28,11 +36,13 @@ import { Image } from "astro:assets";
         class="absolute inset-0 pt-24 mr-4 ml-8 flex flex-col space-y-2 md:pt-44 md:ml-36"
     >
         <h1
-            class="font-extrabold text-6xl text-primary outline-text md:text-7xl"
+            class="font-extrabold text-6xl text-primary drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] md:text-7xl"
         >
             Hello, I&apos;m Brock.
         </h1>
-        <h2 class="relative my-2 text-4xl">
+        <h2
+            class="relative mt-2 text-4xl drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
+        >
             <CycleText
                 client:load
                 options={[
@@ -45,60 +55,71 @@ import { Image } from "astro:assets";
                 ]}
             />
         </h2>
-        <p
-            class="mr-4 pt-2 pb-4 font-semibold outline-text text-lg md:max-w-3xl md:pt-4"
-        >
-            Being a software developer, I wanted to write code, and I wanted to
-            convey who I am beyond just words, so I created a website.
-        </p>
-        <div class="flex flex-row gap-4 -ml-2 drop-shadow-md">
-            <a href="/resume">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 w-fit mt-4">
+            <a href="/resume" class="drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
                 <Button size="hero">
                     <PaperIcon stroke="white" class="size-7" />
                     Resume
                 </Button>
             </a>
 
-            <a href="/photos">
+            <a href="/photos" class="drop-shadow-[0_3px_2px_rgba(0,0,0,1)]">
                 <Button size="hero" variant="ghost">
-                    <PhotoIcon class="size-7" />
-                    <p class="outline-text">Photos</p>
+                    <PhotoIcon class="size-7" />Photos
                 </Button>
             </a>
 
-            <a href="https://www.linkedin.com/in/brockshaffer">
+            <a
+                href="https://www.linkedin.com/in/brockshaffer"
+                class="drop-shadow-[0_3px_2px_rgba(0,0,0,1)]"
+            >
                 <Button size="hero" variant="ghost">
-                    <LinkedInIcon class="size-7" />
-                    <p class="outline-text">LinkedIn</p>
+                    <LinkedInIcon class="size-7" />LinkedIn
                 </Button>
             </a>
 
-            <a href="https://github.com/CodedMasonry">
+            <a
+                href="https://github.com/CodedMasonry"
+                class="drop-shadow-[0_3px_2px_rgba(0,0,0,1)]"
+            >
                 <Button size="hero" variant="ghost">
-                    <GithubIcon class="size-7" />
-                    <p class="outline-text">Github</p>
+                    <GithubIcon class="size-7" />Github
                 </Button>
             </a>
         </div>
     </div>
-</Main>
-<div class="mx-8 mt-28 flex flex-col md:mx-36 md:mt-36">
-    <h3
-        class="mb-2 text-3xl underline decoration-primary drop-shadow-lg md:text-4xl"
-    >
-        Explore my photography
-    </h3>
-    <p>e</p>
-</div>
-<div class="mx-8 mt-28 flex flex-col md:mx-36 md:mt-36">
-    <h3
-        class="mb-2 text-3xl underline decoration-primary drop-shadow-lg md:text-4xl"
-    >
-        Rocking to the metal
-    </h3>
-    <div class="flex flex-row gap-4">
-        <div>List</div>
-        <div>Descriptions</div>
+    <div class="mx-8 mt-28 flex flex-col md:mx-36 md:mt-36">
+        <h3
+            class="mb-2 text-3xl underline decoration-primary drop-shadow-lg md:text-4xl"
+        >
+            What I've done in High School
+        </h3>
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
+            <HighSchoolGridItem
+                href="/experiences/ypa"
+                image={YPAImage}
+                title="Young Professional Academy"
+                subtitle="Dublin City Schools"
+            />
+            <HighSchoolGridItem
+                href="/experiences/outcomes"
+                image={OutcomesImage}
+                title="Software Engineering Internship"
+                subtitle="Outcomes"
+            />
+            <HighSchoolGridItem
+                href="https://www.dublinroboticsboosters.org/"
+                image={RoboticsTeamImage}
+                title="Robotics Team"
+                subtitle="Team 1014, Bad Robots"
+                external
+            />
+            <HighSchoolGridItem
+                href="/experiences/fstlogistics"
+                image={FSTImage}
+                title="IT Department Internship"
+                subtitle="FST Logistics"
+            />
+        </div>
     </div>
-</div>
-<SectionHighSchool />
+</Main>

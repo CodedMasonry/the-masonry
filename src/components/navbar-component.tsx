@@ -32,9 +32,9 @@ export function NavBarMenu({
               <img
                 src="/favicon.svg"
                 alt=""
-                width={32}
-                height={32}
-                className={`size-6 ${!isMobile && "mr-2"}`}
+                width={24}
+                height={24}
+                className={`${!isMobile && "mr-2"}`}
               />
               {!isMobile && "Home"}
             </a>
@@ -57,7 +57,7 @@ export function NavBarMenu({
                       alt=""
                       className="absolute inset-0 h-full w-full rounded-md object-cover"
                     />
-                    <div className="z-10 mt-auto ml-2 font-medium text-lg text-white drop-shadow-md">
+                    <div className="z-10 mt-auto ml-2 font-medium text-lg text-white drop-shadow-[0_3px_2px_rgba(0,0,0,1)]">
                       Home
                     </div>
                     <ExternalLink className="absolute right-2 bottom-2 z-20 translate-y-2 stroke-primary opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100" />

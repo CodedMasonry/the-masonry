@@ -1,5 +1,7 @@
 ---
 import Main from "@/layouts/main.astro";
+import { Image } from "astro:assets";
+import NotFoundImage from "@/assets/illustrations/notfound.svg";
 ---
 
 <Main title="Not Found">
@@ -7,11 +9,7 @@ import Main from "@/layouts/main.astro";
         <div
             class="m-auto p-8 items-center justify-center text-center relative"
         >
-            <img
-                src="/illustrations/notfound.svg"
-                alt=""
-                class="size-64 md:size-96 mx-auto"
-            />
+            <NotFoundImage class="size-64 md:size-96 mx-auto" />
             <h1 class="text-2xl md:text-4xl text-primary font-bold">
                 404 Not Found
             </h1>
