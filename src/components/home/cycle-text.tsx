@@ -28,7 +28,7 @@ export function CycleText({ options }: { options: Array<string> }) {
             filter: ["blur(0px)", "blur(5px)", "blur(10px)"],
           }}
           transition={{ duration: 0.5, times: [0, 0.5, 1], ease: "backInOut" }}
-          className="absolute top-0 left-0 underline decoration-primary"
+          className="absolute top-0 left-0 underline decoration-primary outline-text font-bold"
         >
           {options[index]}
         </motion.div>
