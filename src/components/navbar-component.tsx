@@ -7,19 +7,25 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { ExternalLink, Star } from "lucide-react";
-import { type NavItem } from "./navbar";
+
+export type NavItem = {
+  title: string;
+  href: string;
+  star: boolean;
+  description: string;
+  icon?: any;
+};
 
 export function NavBarMenu({
   personal,
   professional,
+  heroImageSrc,
 }: {
   personal: NavItem[];
   professional: NavItem[];
+  heroImageSrc?: string;
 }) {
-  const isMobile = useIsMobile();
-
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -34,9 +40,9 @@ export function NavBarMenu({
                 alt=""
                 width={24}
                 height={24}
-                className={`${!isMobile && "mr-2"}`}
+                className="md:mr-2"
               />
-              {!isMobile && "Home"}
+              <span className="hidden md:inline">Home</span>
             </a>
           </NavigationMenuLink>
         </NavigationMenuItem>
@@ -53,9 +59,13 @@ export function NavBarMenu({
                     href="/"
                   >
                     <img
-                      src="https://dxgc3f8f0p.ufs.sh/f/ou6rUxl7TzS4HQy0MizViDM9beH6tU8kSOrjF4s3clZCXVqK"
+                      src={heroImageSrc}
                       alt=""
-                      className="absolute inset-0 h-full w-full rounded-md object-cover"
+                      className="absolute inset-0 h-full w-full rounded-md object-cover opacity-0 transition-opacity duration-500 ease-in-out"
+                      onLoad={(e) => {
+                        e.currentTarget.classList.remove("opacity-0");
+                        e.currentTarget.classList.add("opacity-100");
+                      }}
                     />
                     <div className="z-10 mt-auto ml-2 font-medium text-lg text-white drop-shadow-[0_3px_2px_rgba(0,0,0,1)]">
                       Home
@@ -96,16 +106,14 @@ export function NavBarMenu({
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
-        {!isMobile && (
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={`cursor-default ${navigationMenuTriggerStyle()} bg-trasparent`}
-            >
-              <a href="/photos">Gallery</a>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-        )}
+        <NavigationMenuItem className="hidden md:block">
+          <NavigationMenuLink
+            asChild
+            className={`cursor-default ${navigationMenuTriggerStyle()} bg-trasparent`}
+          >
+            <a href="/photos">Gallery</a>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
