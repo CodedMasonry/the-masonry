@@ -27,7 +27,7 @@ export function NavBarMenu({
   heroImageSrc?: string;
 }) {
   return (
-    <NavigationMenu>
+    <NavigationMenu className="bg-background/30 rounded-lg py-1 px-2">
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink
