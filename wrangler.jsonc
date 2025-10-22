@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "the-masonry",
+  "main": "./dist/_worker.js/index.js",
+  // Update to today's date (yyyy-mm-dd)
+  "compatibility_date": "2025-10-22",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist",
+  },
+  "observability": {
+    "enabled": true,
+  },
+}
