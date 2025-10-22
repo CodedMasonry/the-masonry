@@ -61,7 +61,7 @@ export function NavBarMenu({
                     <img
                       src={heroImageSrc}
                       alt=""
-                      className="absolute inset-0 h-full w-full rounded-md object-cover opacity-0 transition-opacity duration-500 ease-in-out"
+                      className="absolute inset-0 h-full w-full rounded-md object-cover opacity-0 transition-opacity duration-300 ease-in-out"
                       onLoad={(e) => {
                         e.currentTarget.classList.remove("opacity-0");
                         e.currentTarget.classList.add("opacity-100");
