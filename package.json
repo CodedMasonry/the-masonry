@@ -5,8 +5,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "wrangler dev ./dist",
-    "astro": "astro"
+    "preview": "astro preview",
+    "astro": "astro",
+    "upload": "pnpx astro build && pnpx wrangler deploy"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.10",
