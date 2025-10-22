@@ -56,36 +56,42 @@ import { Image } from "astro:assets";
             />
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 w-fit mt-4">
-            <a href="/resume" class="cursor-default drop-shadow-lg">
+            <a href="/resume" class="cursor-default">
                 <Button size="hero">
                     <PaperIcon stroke="white" class="size-7" />
                     Resume
                 </Button>
             </a>
 
-            <a
-                href="/photos"
-                class="cursor-default text-white drop-shadow-[0_3px_2px_rgba(0,0,0,1)]"
-            >
-                <Button size="hero" variant="ghost">
+            <a href="/photos" class="cursor-default">
+                <Button
+                    size="hero"
+                    variant="ghost"
+                    className="bg-background/40 md:bg-background/20"
+                >
                     <PhotoIcon class="size-7" />Photos
                 </Button>
             </a>
 
             <a
                 href="https://www.linkedin.com/in/brockshaffer"
-                class="cursor-default text-white drop-shadow-[0_3px_2px_rgba(0,0,0,1)]"
+                class="cursor-default"
             >
-                <Button size="hero" variant="ghost">
+                <Button
+                    size="hero"
+                    variant="ghost"
+                    className="bg-background/40 md:bg-background/20"
+                >
                     <LinkedInIcon class="size-7" />LinkedIn
                 </Button>
             </a>
 
-            <a
-                href="https://github.com/CodedMasonry"
-                class="cursor-default text-white drop-shadow-[0_3px_2px_rgba(0,0,0,1)]"
-            >
-                <Button size="hero" variant="ghost">
+            <a href="https://github.com/CodedMasonry" class="cursor-default">
+                <Button
+                    size="hero"
+                    variant="ghost"
+                    className="bg-background/40 md:bg-background/20"
+                >
                     <GithubIcon class="size-7" />Github
                 </Button>
             </a>
