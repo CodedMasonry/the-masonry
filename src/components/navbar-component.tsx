@@ -55,7 +55,7 @@ export function NavBarMenu({
               <li className="row-span-3 min-h-20">
                 <NavigationMenuLink asChild>
                   <a
-                    className="group relative flex h-full w-full flex-col rounded-md ring-2 ring-transparent transition duration-150 hover:ring-primary"
+                    className="group relative flex h-full w-full flex-col rounded-md ring-2 ring-transparent transition duration-300 hover:ring-primary"
                     href="/"
                   >
                     <img
