@@ -1,5 +1,4 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "the-masonry",
   "main": "./dist/_worker.js/index.js",
   // Update to today's date (yyyy-mm-dd)
@@ -12,4 +11,10 @@
   "observability": {
     "enabled": true,
   },
+  "routes": [
+    {
+      "pattern": "dev.brockshaffer.dev",
+      "custom_domain": true,
+    },
+  ],
 }

@@ -6,8 +6,6 @@ import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import cloudflare from "@astrojs/cloudflare";
 
-const isDev = process.env.NODE_ENV === "development";
-
 // https://astro.build/config
 export default defineConfig({
   vite: {
@@ -19,6 +17,6 @@ export default defineConfig({
 
   integrations: [react()],
   adapter: cloudflare({
-    imageService: isDev ? "compile" : "cloudflare",
+    imageService: "cloudflare",
   }),
 });
