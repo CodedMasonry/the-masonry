@@ -25,7 +25,6 @@ export default defineConfig({
       },
     }),
   ],
-  output: "server",
   adapter: cloudflare({
     imageService: "cloudflare",
   }),
