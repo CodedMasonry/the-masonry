@@ -1,18 +1,29 @@
 ---
 import Favicon from "public/favicon.svg";
 import { Button } from "./ui/button";
+import {
+    SignedIn,
+    SignedOut,
+    SignInButton,
+    SignOutButton,
+} from "@clerk/astro/components";
 ---
 
-<footer
-    class="flex flex row w-full p-4 bg-secondary/50 text-secondary-foreground"
->
+<footer class="flex row w-full p-4 bg-secondary/50 text-secondary-foreground">
     <div class="flex flex-row items-center align-middle">
         <Favicon width={20} height={20} class="mr-2" />
         <p class="text-primary font-bold text-sm">contact@brockshaffer.dev</p>
     </div>
     <div class="ml-auto hidden md:block">
-        <Button variant="ghost" size="sm">
-            <a href="/dashboard">Dashboard</a>
-        </Button>
+        <SignedIn>
+            <SignOutButton asChild>
+                <Button variant="ghost" size="sm">Logout</Button>
+            </SignOutButton>
+        </SignedIn>
+        <SignedOut>
+            <SignInButton forceRedirectUrl="/dashboard" asChild>
+                <Button variant="ghost" size="sm"> Dashboard </Button>
+            </SignInButton>
+        </SignedOut>
     </div>
 </footer>
