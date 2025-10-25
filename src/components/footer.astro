@@ -16,13 +16,13 @@ import {
     </div>
     <div class="ml-auto hidden md:block">
         <SignedIn>
-            <SignOutButton asChild>
-                <Button variant="ghost" size="sm">Logout</Button>
-            </SignOutButton>
+            <a href="/dashboard" class="cursor-default">
+                <Button variant="ghost" size="sm">Dashboard</Button>
+            </a>
         </SignedIn>
         <SignedOut>
             <SignInButton forceRedirectUrl="/dashboard" asChild>
-                <Button variant="ghost" size="sm"> Dashboard </Button>
+                <Button variant="ghost" size="sm">Dashboard</Button>
             </SignInButton>
         </SignedOut>
     </div>
