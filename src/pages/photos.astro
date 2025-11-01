@@ -1,0 +1,26 @@
+---
+import Main from "@/layouts/main.astro";
+import { getCollection } from "astro:content";
+import { CldImage } from "astro-cloudinary";
+
+const photos = await getCollection("photos");
+---
+
+<Main title="Brock Shaffer - Photo Gallery">
+    <div class="flex min-h-svh">
+        <div class="grid grid-cols-4 gap-4">
+            {
+                photos.map((photo) => (
+                    <div class="">
+                        <CldImage
+                            src={photo.data.public_id}
+                            height={photo.data.height}
+                            width={photo.data.width}
+                            alt={photo.data.display_name}
+                        />
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</Main>
