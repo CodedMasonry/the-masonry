@@ -5,6 +5,7 @@ export const collections = {
   photos: defineCollection({
     loader: cldAssetsLoader({
       folder: "TheMasonry",
+      limit: 1000,
     }),
     schema: z
       .object({

@@ -7,20 +7,74 @@ const photos = await getCollection("photos");
 ---
 
 <Main title="Brock Shaffer - Photo Gallery">
-    <div class="flex min-h-svh">
-        <div class="grid grid-cols-4 gap-4">
+    <div class="flex flex-col mx-4 lg:mx-8">
+        <div class="flex flex-col mt-24 mb-16">
+            <h1 class="text-4xl font-extrabold underline">The Gallery</h1>
+            <p class="mt-2 text-muted-foreground">
+                It's the small details that matter most.
+            </p>
+        </div>
+        <div
+            class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-8"
+        >
             {
-                photos.map((photo) => (
-                    <div class="">
+                photos.map((photo, index) => (
+                    <div class="aspect-video overflow-hidden rounded-lg transition ring-transparent ring-2 hover:ring-primary">
                         <CldImage
+                            class="w-full h-full object-cover opacity-0 transition-opacity duration-700 ease-in-out sequential-fade"
                             src={photo.data.public_id}
-                            height={photo.data.height}
-                            width={photo.data.width}
+                            crop="fill"
+                            gravity="auto"
+                            format="auto"
+                            quality="auto"
+                            loading="lazy"
                             alt={photo.data.display_name}
+                            widths={[360, 768, 1024, 1280]}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                            data-index={index}
                         />
                     </div>
                 ))
             }
         </div>
     </div>
+
+    <!-- Sequential fade-in script -->
+    <script is:inline>
+        document.addEventListener("DOMContentLoaded", () => {
+            const images = Array.from(
+                document.querySelectorAll(".sequential-fade"),
+            );
+
+            // Hide all images initially
+            images.forEach((img) => {
+                img.style.visibility = "hidden";
+            });
+
+            // Function to fade in images one by one
+            const fadeNext = (i) => {
+                if (i >= images.length) return;
+                const img = images[i];
+
+                const showImage = () => {
+                    img.style.visibility = "visible";
+                    img.classList.remove("opacity-0");
+                    img.classList.add("opacity-100");
+
+                    // Wait a short time before fading in the next image
+                    setTimeout(() => fadeNext(i + 1), 150);
+                };
+
+                if (img.complete) {
+                    // Already loaded from cache
+                    showImage();
+                } else {
+                    img.addEventListener("load", showImage);
+                }
+            };
+
+            // Start with the first image
+            fadeNext(0);
+        });
+    </script>
 </Main>
