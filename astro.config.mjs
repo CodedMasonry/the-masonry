@@ -16,6 +16,10 @@ export default defineConfig({
   image: {
     domains: ["dxgc3f8f0p.ufs.sh"],
   },
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: "tap",
+  },
 
   integrations: [
     react(),

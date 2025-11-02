@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import { CldImage } from "astro-cloudinary";
+import PhotoRouting from "@/layouts/photoRouting.astro";
+
+export async function getStaticPaths() {
+    const photos = await getCollection("photos");
+    return photos.map((photo) => ({
+        params: { public_id: photo.data.public_id },
+        props: { photo },
+    }));
+}
+
+const { photo } = Astro.props;
+---
+
+<PhotoRouting title={`${photo.data.display_name} - Brock Shaffer`}>
+    <div class="flex flex-col items-center justify-center min-h-screen p-4">
+        <CldImage
+            class="max-w-full max-h-screen object-contain"
+            src={photo.data.public_id}
+            format="auto"
+            quality="auto"
+            alt={photo.data.display_name}
+            width={1920}
+            height={1080}
+            transition:name={`photo-${photo.data.public_id}`}
+            transition:animate="fade"
+        />
+        <a
+            href="/photos"
+            class="text-foreground mt-8 cursor-default rounded-lg px-4 py-2 border-2 border-transparent transition duration-300 hover:border-foreground"
+        >
+            ← Back to Gallery
+        </a>
+    </div>
+</PhotoRouting>
