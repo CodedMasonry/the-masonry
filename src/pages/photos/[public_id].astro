@@ -2,6 +2,8 @@
 import { getCollection } from "astro:content";
 import { CldImage } from "astro-cloudinary";
 import PhotoRouting from "@/layouts/photoRouting.astro";
+import { Button } from "@/components/ui/button";
+import PhotoActions from "@/components/PhotoActions";
 
 export async function getStaticPaths() {
     const photos = await getCollection("photos");
@@ -10,28 +12,51 @@ export async function getStaticPaths() {
         props: { photo },
     }));
 }
-
 const { photo } = Astro.props;
 ---
 
-<PhotoRouting title={`${photo.data.display_name} - Brock Shaffer`}>
-    <div class="flex flex-col items-center justify-center min-h-screen p-4">
-        <CldImage
-            class="max-w-full max-h-screen object-contain"
-            src={photo.data.public_id}
-            format="auto"
-            quality="auto"
-            alt={photo.data.display_name}
-            width={1920}
-            height={1080}
-            transition:name={`photo-${photo.data.public_id}`}
-            transition:animate="fade"
-        />
+<PhotoRouting title=`${photo.data.display_name} - Brock Shaffer` }>
+    <div class="flex flex-col">
         <a
             href="/photos"
-            class="text-foreground mt-8 cursor-default rounded-lg px-4 py-2 border-2 border-transparent transition duration-300 hover:border-foreground"
+            data-astro-prefetch="hover"
+            class="z-20 cursor-default mt-4 ml-auto mr-4"
         >
-            ← Back to Gallery
+            <Button variant="ghost"> ← Back to Gallery </Button>
         </a>
+        <div class="flex flex-col xl:flex-row px-4 pt-8 xl:pt-16">
+            <div>
+                <CldImage
+                    class="object-fill"
+                    src={photo.data.public_id}
+                    format="jpg"
+                    quality="auto"
+                    alt={photo.data.display_name}
+                    width={1920}
+                    height={1080}
+                    transition:name=`photo-${photo.data.public_id}`
+                    }
+                    transition:animate="fade"
+                />
+            </div>
+            <div class="flex flex-col p-4">
+                <h1 class="text-3xl font-bold">
+                    {
+                        photo.data.title === undefined
+                            ? "Untitled"
+                            : photo.data.title
+                    }
+                </h1>
+                <h2 class="text-muted-foreground">
+                    Photographed by Brock Shaffer
+                </h2>
+                {
+                    photo.data.alt !== undefined && (
+                        <p class="mt-8">{photo.data.alt}</p>
+                    )
+                }
+                <PhotoActions client:load url={photo.data.url} />
+            </div>
+        </div>
     </div>
 </PhotoRouting>
