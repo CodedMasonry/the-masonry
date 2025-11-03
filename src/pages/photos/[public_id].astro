@@ -1,7 +1,7 @@
 ---
+import "@/styles/global.css";
 import { getCollection } from "astro:content";
 import { CldImage } from "astro-cloudinary";
-import PhotoRouting from "@/layouts/photoRouting.astro";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import PhotoActions from "@/components/PhotoActions";
@@ -16,6 +16,8 @@ import {
     User,
     CalendarFold,
 } from "lucide-react";
+import { ClientRouter } from "astro:transitions";
+import Footer from "@/components/footer.astro";
 
 // Cloudinary configuration
 cloudinary.config({
@@ -95,63 +97,81 @@ const metadataItems = [
 ];
 ---
 
-<PhotoRouting title={`${photo.data.display_name} - Brock Shaffer`}>
-    <div class="flex flex-col">
-        <a
-            href="/photos"
-            data-astro-prefetch="hover"
-            class="z-20 cursor-default mt-4 ml-auto mr-4"
-        >
-            <Button variant="ghost"> ← Back to Gallery </Button>
-        </a>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <title>{`${photo.data.display_name} - Brock Shaffer`}</title>
+        <ClientRouter />
+    </head>
+    <body>
+        <main class="flex flex-col min-h-screen">
+            <a
+                href="/photos"
+                data-astro-prefetch="hover"
+                class="z-20 cursor-default mx-10 my-4"
+            >
+                <Button variant="ghost"> ← Back to Gallery </Button>
+            </a>
+            <div class="flex flex-col">
+                <div
+                    class="flex flex-col xl:flex-row px-4 pt-8 xl:pl-10 xl:pt-16"
+                >
+                    <div class="w-full aspect-video">
+                        <CldImage
+                            class="w-full h-full object-cover"
+                            src={photo.data.public_id}
+                            format="auto"
+                            quality="auto:sensitive"
+                            alt={photo.data.display_name}
+                            width={1920}
+                            height={1080}
+                            transition:name={`photo-${photo.data.public_id}`}
+                            transition:animate="fade"
+                        />
+                    </div>
 
-        <div class="flex flex-col xl:flex-row px-4 pt-8 xl:pl-10 xl:pt-16">
-            <div class="w-full aspect-video">
-                <CldImage
-                    class="w-full h-full object-cover"
-                    src={photo.data.public_id}
-                    format="auto"
-                    quality="auto:sensitive"
-                    alt={photo.data.display_name}
-                    width={1920}
-                    height={1080}
-                    transition:name={`photo-${photo.data.public_id}`}
-                    transition:animate="fade"
-                />
+                    <div class="flex flex-col p-4">
+                        <h1 class="text-3xl font-bold">
+                            {photo.data.title ?? "Untitled"}
+                        </h1>
+                        <h2
+                            class="flex items-center text-muted-foreground mt-2 gap-2"
+                        >
+                            <User className="size-4" />
+                            Photographed by Brock Shaffer
+                        </h2>
+                        <h3
+                            class="flex items-center text-muted-foreground gap-2"
+                        >
+                            <CalendarFold className="size-4" />
+                            {formattedDate ? `${formattedDate}` : ""}
+                        </h3>
+                        <PhotoActions client:load url={photo.data.url} />
+
+                        <Separator className="my-6" />
+                        {
+                            metadata && (
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
+                                    {metadataItems.map((item) =>
+                                        metadata[item.key] ? (
+                                            <p class="flex items-center gap-2">
+                                                <item.icon className="size-4" />
+                                                <span>
+                                                    {item.label}:{" "}
+                                                    {metadata[item.key]}
+                                                </span>
+                                            </p>
+                                        ) : null,
+                                    )}
+                                </div>
+                            )
+                        }
+                    </div>
+                </div>
             </div>
-
-            <div class="flex flex-col p-4">
-                <h1 class="text-3xl font-bold">
-                    {photo.data.title ?? "Untitled"}
-                </h1>
-                <h2 class="flex items-center text-muted-foreground mt-2 gap-2">
-                    <User className="size-4" />
-                    Photographed by Brock Shaffer
-                </h2>
-                <h3 class="flex items-center text-muted-foreground gap-2">
-                    <CalendarFold className="size-4" />
-                    {formattedDate ? `${formattedDate}` : ""}
-                </h3>
-                <PhotoActions client:load url={photo.data.url} />
-
-                <Separator className="my-6" />
-                {
-                    metadata && (
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
-                            {metadataItems.map((item) =>
-                                metadata[item.key] ? (
-                                    <p class="flex items-center gap-2">
-                                        <item.icon className="size-4" />
-                                        <span>
-                                            {item.label}: {metadata[item.key]}
-                                        </span>
-                                    </p>
-                                ) : null,
-                            )}
-                        </div>
-                    )
-                }
-            </div>
-        </div>
-    </div>
-</PhotoRouting>
+        </main>
+        <Footer />
+    </body>
+</html>
