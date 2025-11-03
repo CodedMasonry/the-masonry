@@ -38,7 +38,7 @@ export default function PhotoActions({ url }: PhotoActionsProps) {
   };
 
   return (
-    <div className="flex flex-row mt-8 gap-4">
+    <div className="flex flex-row gap-4 mt-6">
       <Button onClick={handleDownload} className="items-center">
         <Download className="size-5" /> Download Full Resolution
       </Button>
