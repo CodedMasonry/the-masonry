@@ -3,7 +3,6 @@ import "@/styles/global.css";
 import { getCollection } from "astro:content";
 import { CldImage } from "astro-cloudinary";
 import Footer from "@/components/footer.astro";
-import { ClientRouter } from "astro:transitions";
 import PublicNavbar from "@/components/public-navbar.astro";
 const photos = await getCollection("photos");
 ---
@@ -14,7 +13,6 @@ const photos = await getCollection("photos");
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <title>Brock Shaffer - Photo Gallery</title>
-        <ClientRouter />
     </head>
     <body>
         <PublicNavbar />
@@ -53,8 +51,6 @@ const photos = await getCollection("photos");
                                     widths={[360, 768, 1024, 1280]}
                                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                                     data-index={index}
-                                    transition:name={`photo-${photo.data.public_id}`}
-                                    transition:animate="fade"
                                 />
                             </a>
                         ))

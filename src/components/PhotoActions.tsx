@@ -40,7 +40,7 @@ export default function PhotoActions({ url }: PhotoActionsProps) {
   return (
     <div className="flex flex-row gap-4 mt-6">
       <Button onClick={handleDownload} className="items-center">
-        <Download className="size-5" /> Download Full Resolution
+        <Download className="size-5" /> Download Original
       </Button>
       <Button onClick={handleCopy} variant="ghost" className="items-center">
         {copied ? <Check className="size-5" /> : <Link className="size-5" />}
