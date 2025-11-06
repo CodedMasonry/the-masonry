@@ -24,7 +24,7 @@ export function NavBarMenu({
 }: {
   personal: NavItem[];
   professional: NavItem[];
-  heroImageSrc?: string;
+  heroImageSrc: string;
 }) {
   return (
     <NavigationMenu className="bg-background/30 rounded-lg py-1 px-2">

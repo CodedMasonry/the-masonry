@@ -67,13 +67,13 @@ const ProfessionalSection: NavItem[] = [
     },
 ];
 
-// Optimize the hero image
-const optimizedHero = await getImage({
-    src: "https://dxgc3f8f0p.ufs.sh/f/ou6rUxl7TzS4HQy0MizViDM9beH6tU8kSOrjF4s3clZCXVqK",
-    width: 600,
-    height: 400,
-    format: "webp",
-});
+const getCloudinaryUrl = (publicId: string, width: number = 600) => {
+    const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
+    return `https://res.cloudinary.com/${cloudName}/image/upload/w_${width},f_auto,q_auto,c_fill,g_auto/${publicId}`;
+};
+
+//the hero image
+const HeroSrc = getCloudinaryUrl("DJI_20240801201214_0045_D_vtzl3w");
 ---
 
 <div class="absolute flex w-full items-center p-4 z-20">
@@ -81,7 +81,7 @@ const optimizedHero = await getImage({
         <NavBarMenu
             personal={PersonalSection}
             professional={ProfessionalSection}
-            heroImageSrc={optimizedHero.src}
+            heroImageSrc={HeroSrc}
             client:load
         />
     </div>

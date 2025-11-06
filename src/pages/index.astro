@@ -9,7 +9,6 @@ import PaperIcon from "@/assets/icons/paper.svg";
 import PhotoIcon from "@/assets/icons/photo.svg";
 import LinkedInIcon from "@/assets/icons/linkedin.svg";
 import GithubIcon from "@/assets/icons/github.svg";
-import HeroImage from "@/assets/hero.jpg";
 import YPAImage from "@/assets/icons/ypa.png";
 import OutcomesImage from "@/assets/icons/outcomes.png";
 import RoboticsTeamImage from "@/assets/icons/team1014.jpeg";
@@ -17,20 +16,31 @@ import FSTImage from "@/assets/icons/fst.jpeg";
 
 // Other imports
 import Main from "@/layouts/main.astro";
-import { Image } from "astro:assets";
+import { CldImage } from "astro-cloudinary";
 ---
 
 <Main title="Brock Shaffer">
     <section class="relative h-[90vh] w-full">
-        <Image
-            src={HeroImage}
-            alt="Hero background"
-            priority
-            layout="full-width"
-            class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700 ease-in-out"
-            onload="this.classList.remove('opacity-0'); this.classList.add('opacity-100')"
+        <div
+            class="absolute inset-0 h-full w-full"
             style="mask-image: linear-gradient(to bottom, black 70%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);"
-        />
+        >
+            <CldImage
+                src="b13_mqeygi"
+                alt="Hero background"
+                format="auto"
+                dpr="auto"
+                quality="auto"
+                placeholder="blur"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+                widths={[640, 768, 1024, 1280, 1536, 1920]}
+                sizes="100vw"
+                class="h-full w-full opacity-0 transition-opacity duration-700 ease-in-out"
+                onload="this.classList.remove('opacity-0'); this.classList.add('opacity-100')"
+            />
+        </div>
     </section>
     <div
         class="absolute inset-0 pt-24 mr-4 ml-8 flex flex-col space-y-2 md:pt-44 md:ml-36"
