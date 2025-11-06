@@ -159,7 +159,11 @@ const metadataItems = [
                                     : `Uploaded ${formattedDate}`
                             }
                         </h3>
-                        <PhotoActions client:load url={photo.data.url} />
+                        <PhotoActions
+                            client:load
+                            publicId={photo.data.public_id}
+                            format={photo.data.format}
+                        />
 
                         <Separator className="my-6" />
                         {

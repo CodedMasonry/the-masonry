@@ -1,35 +1,63 @@
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 import { Download, Link, Check } from "lucide-react";
 import { useState } from "react";
 
 interface PhotoActionsProps {
-  url: string;
+  publicId: string;
+  format?: string; // original format (optional)
 }
 
-export default function PhotoActions({ url }: PhotoActionsProps) {
+export default function PhotoActions({ publicId, format }: PhotoActionsProps) {
   const [copied, setCopied] = useState(false);
+  const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
 
-  const handleDownload = async () => {
-    try {
-      const response = await fetch(url);
-      const blob = await response.blob();
-      const blobUrl = window.URL.createObjectURL(blob);
+  if (!publicId) return null;
 
-      const a = document.createElement("a");
-      a.href = blobUrl;
-      a.download = url.split("/").pop() || "photo.jpg";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(blobUrl);
-    } catch (error) {
-      console.error("Download failed:", error);
+  // Build full-resolution download URL
+  const buildDownloadUrl = (targetFormat?: string) => {
+    if (targetFormat && targetFormat !== "original") {
+      return `https://res.cloudinary.com/${cloudName}/image/upload/fl_attachment,f_${targetFormat}/${publicId}`;
     }
+    return `https://res.cloudinary.com/${cloudName}/image/upload/fl_attachment/${publicId}`;
+  };
+
+  // Define friendly labels
+  const formatLabels: Record<string, string> = {
+    jpg: "JPEG (Most Compatible)",
+    png: "PNG (Lossless)",
+    webp: "WEBP (High Efficiency)",
+    original: `Original (${format?.toUpperCase() ?? "Master"})`,
+  };
+
+  // Define safe formats
+  const safeFormats = ["jpg", "png", "webp"];
+  const dropdownOptions = [...safeFormats];
+
+  // Include original if it’s not a standard safe format
+  if (format && !safeFormats.includes(format.toLowerCase())) {
+    dropdownOptions.push("original");
+  }
+
+  const triggerDownload = (formatChoice: string) => {
+    const url = buildDownloadUrl(formatChoice);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   };
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(url);
+      const publicViewUrl = `https://res.cloudinary.com/${cloudName}/image/upload/${publicId}`;
+      await navigator.clipboard.writeText(publicViewUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
@@ -39,9 +67,21 @@ export default function PhotoActions({ url }: PhotoActionsProps) {
 
   return (
     <div className="flex flex-row gap-4 mt-6">
-      <Button onClick={handleDownload} className="items-center">
-        <Download className="size-5" /> Download Original
-      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button className="items-center">
+            <Download className="size-5" /> Download
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start">
+          {dropdownOptions.map((opt) => (
+            <DropdownMenuItem key={opt} onClick={() => triggerDownload(opt)}>
+              {formatLabels[opt] ?? opt.toUpperCase()}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
       <Button onClick={handleCopy} variant="ghost" className="items-center">
         {copied ? <Check className="size-5" /> : <Link className="size-5" />}
         {copied ? "Copied!" : "Copy Link"}
