@@ -108,18 +108,16 @@ const metadataItems = [
         <title>{`${photo.data.display_name} - Brock Shaffer`}</title>
     </head>
     <body>
-        <main class="flex flex-col min-h-screen">
+        <main class="flex flex-col">
             <a
                 href="/photos"
                 data-astro-prefetch="hover"
-                class="z-20 cursor-default mx-10 my-4"
+                class="z-20 cursor-default ml-4 xl:ml-8 mt-4"
             >
                 <Button variant="ghost"> ← Back to Gallery </Button>
             </a>
             <div class="flex flex-col">
-                <div
-                    class="flex flex-col xl:flex-row px-4 pt-8 xl:px-10 xl:pt-16"
-                >
+                <div class="flex flex-col xl:flex-row px-4 py-4 xl:px-8">
                     <div class="w-full aspect-video">
                         <CldImage
                             class="w-full h-full object-cover rounded-lg"
@@ -147,7 +145,7 @@ const metadataItems = [
                             class="flex items-center text-muted-foreground mt-2 gap-2"
                         >
                             <User className="size-4" />
-                            Photographed by Brock Shaffer
+                            Photo by Brock Shaffer
                         </h2>
                         <h3
                             class="flex items-center text-muted-foreground gap-2"
