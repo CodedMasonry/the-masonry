@@ -116,72 +116,68 @@ const metadataItems = [
             >
                 <Button variant="ghost"> ← Back to Gallery </Button>
             </a>
-            <div class="flex flex-col">
-                <div class="flex flex-col xl:flex-row px-4 py-4 xl:px-8">
-                    <div class="w-full aspect-video">
-                        <CldImage
-                            class="w-full h-full object-cover rounded-lg"
-                            src={photo.data.public_id}
-                            crop="fill"
-                            gravity="auto"
-                            format="auto"
-                            dpr="auto"
-                            quality="auto"
-                            placeholder="blur"
-                            loading="eager"
-                            fetchpriority="high"
-                            decoding="async"
-                            widths={[480, 768, 1024, 1600, 1920]}
-                            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 80vw, 60vw"
-                            alt={photo.data.display_name}
-                        />
-                    </div>
+            <div class="grid xl:grid-cols-5 gap-4 md:px-4 py-4 xl:px-8">
+                <div class="xl:col-span-4 aspect-video">
+                    <CldImage
+                        class="w-full h-full md:rounded-lg"
+                        src={photo.data.public_id}
+                        crop="fill"
+                        gravity="auto"
+                        format="auto"
+                        dpr="auto"
+                        quality="auto"
+                        placeholder="blur"
+                        loading="eager"
+                        fetchpriority="high"
+                        decoding="async"
+                        widths={[480, 768, 1024, 1600, 1920]}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1280px) 80vw, 60vw"
+                        alt={photo.data.display_name}
+                    />
+                </div>
 
-                    <div class="flex flex-col p-4">
-                        <h1 class="text-3xl font-bold">
-                            {photo.data.title ?? "Untitled"}
-                        </h1>
-                        <h2
-                            class="flex items-center text-muted-foreground mt-2 gap-2"
-                        >
-                            <User className="size-4" />
-                            Photo by Brock Shaffer
-                        </h2>
-                        <h3
-                            class="flex items-center text-muted-foreground gap-2"
-                        >
-                            <CalendarFold className="size-4" />
-                            {
-                                metadata?.CreateDate !== undefined
-                                    ? `Created ${formattedDate}`
-                                    : `Uploaded ${formattedDate}`
-                            }
-                        </h3>
-                        <PhotoActions
-                            client:load
-                            publicId={photo.data.public_id}
-                            format={photo.data.format}
-                        />
-
-                        <Separator className="my-6" />
+                <div class="flex flex-col p-4">
+                    <h1 class="text-3xl font-bold">
+                        {photo.data.title ?? "Untitled"}
+                    </h1>
+                    <h2
+                        class="flex items-center text-muted-foreground mt-2 gap-2"
+                    >
+                        <User className="size-4" />
+                        Photo by Brock Shaffer
+                    </h2>
+                    <h3 class="flex items-center text-muted-foreground gap-2">
+                        <CalendarFold className="size-4" />
                         {
-                            metadata && (
-                                <div class="grid grid-cols-1 gap-4 text-sm text-muted-foreground">
-                                    {metadataItems.map((item) =>
-                                        metadata[item.key] ? (
-                                            <p class="flex items-center gap-2">
-                                                <item.icon className="size-4" />
-                                                <span>
-                                                    {item.label}:{" "}
-                                                    {metadata[item.key]}
-                                                </span>
-                                            </p>
-                                        ) : null,
-                                    )}
-                                </div>
-                            )
+                            metadata?.CreateDate !== undefined
+                                ? `Created ${formattedDate}`
+                                : `Uploaded ${formattedDate}`
                         }
-                    </div>
+                    </h3>
+                    <PhotoActions
+                        client:load
+                        publicId={photo.data.public_id}
+                        format={photo.data.format}
+                    />
+
+                    <Separator className="my-6" />
+                    {
+                        metadata && (
+                            <div class="grid grid-cols-1 gap-4 text-sm text-muted-foreground">
+                                {metadataItems.map((item) =>
+                                    metadata[item.key] ? (
+                                        <p class="flex items-center gap-2">
+                                            <item.icon className="size-4" />
+                                            <span>
+                                                {item.label}:{" "}
+                                                {metadata[item.key]}
+                                            </span>
+                                        </p>
+                                    ) : null,
+                                )}
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         </main>
