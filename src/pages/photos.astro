@@ -12,6 +12,7 @@ const photos = await getCollection("photos");
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
         <title>Brock Shaffer - Photo Gallery</title>
     </head>
     <body>
@@ -37,20 +38,22 @@ const photos = await getCollection("photos");
                                 data-astro-prefetch="hover"
                             >
                                 <CldImage
-                                    class="w-full h-full object-cover"
+                                    class="w-full h-full"
                                     src={photo.data.public_id}
                                     crop="fill"
                                     gravity="auto"
                                     format="auto"
+                                    dpr="auto"
                                     quality="auto"
-                                    loading={index < 8 ? "eager" : "lazy"}
+                                    placeholder="blur"
+                                    decoding="async"
+                                    loading={index < 4 ? "eager" : "lazy"}
                                     fetchpriority={
-                                        index < 4 ? "high" : undefined
+                                        index === 0 ? "high" : "auto"
                                     }
-                                    alt={photo.data.display_name}
                                     widths={[360, 768, 1024, 1280]}
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                                    data-index={index}
+                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
+                                    alt={photo.data.display_name}
                                 />
                             </a>
                         ))

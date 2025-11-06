@@ -147,8 +147,8 @@ const metadataItems = [
                             <CalendarFold className="size-4" />
                             {
                                 metadata?.CreateDate !== undefined
-                                    ? `${formattedDate}`
-                                    : `Posted ${formattedDate}`
+                                    ? `Created ${formattedDate}`
+                                    : `Uploaded ${formattedDate}`
                             }
                         </h3>
                         <PhotoActions client:load url={photo.data.url} />
