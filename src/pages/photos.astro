@@ -40,18 +40,12 @@ const photos = await getCollection("photos");
                                 <CldImage
                                     class="w-full h-full"
                                     src={photo.data.public_id}
-                                    crop="fill"
-                                    gravity="auto"
                                     format="auto"
                                     dpr="auto"
                                     quality="auto"
-                                    placeholder="blur"
                                     decoding="async"
                                     loading={index < 4 ? "eager" : "lazy"}
-                                    fetchpriority={
-                                        index === 0 ? "high" : "auto"
-                                    }
-                                    widths={[360, 768, 1024, 1280]}
+                                    fetchpriority={index === 0 ? "high" : "low"}
                                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
                                     alt={photo.data.display_name}
                                 />
