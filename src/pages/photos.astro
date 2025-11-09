@@ -5,15 +5,34 @@ import { CldImage } from "astro-cloudinary";
 import Footer from "@/components/footer.astro";
 import PublicNavbar from "@/components/public-navbar.astro";
 const photos = await getCollection("photos");
+
+// Define how many photos are "above the fold" for the initial stagger animation
+const ABOVE_THE_FOLD_COUNT = 9;
+const staggeredPhotos = photos.slice(0, ABOVE_THE_FOLD_COUNT);
+const scrollTriggeredPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
 ---
 
 <html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            http-equiv="Cache-Control"
+            content="no-cache, no-store, must-revalidate"
+        />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
         <title>Brock Shaffer - Photo Gallery</title>
+        <script
+            is:inline
+            src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"
+        ></script>
+        <script
+            is:inline
+            src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"
+        ></script>
     </head>
     <body>
         <PublicNavbar />
@@ -27,25 +46,46 @@ const photos = await getCollection("photos");
                         It's the small details that matter most.
                     </p>
                 </div>
-                <div
-                    class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-8"
-                >
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 pb-8">
                     {
-                        photos.map((photo, index) => (
+                        staggeredPhotos.map((photo, index) => (
                             <a
                                 href={`/photos/${photo.data.public_id}`}
-                                class="aspect-video overflow-hidden rounded-lg cursor-default transition ring-transparent ring-2 hover:ring-primary block"
+                                class="aspect-video cursor-default photo-stagger opacity-0"
                                 data-astro-prefetch="hover"
                             >
                                 <CldImage
-                                    class="w-full h-full"
+                                    class="w-full h-full rounded-lg"
                                     src={photo.data.public_id}
                                     format="auto"
                                     dpr="auto"
                                     quality="auto"
-                                    decoding="async"
                                     loading={index < 4 ? "eager" : "lazy"}
                                     fetchpriority={index === 0 ? "high" : "low"}
+                                    decoding="async"
+                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
+                                    alt={photo.data.display_name}
+                                />
+                            </a>
+                        ))
+                    }
+
+                    {
+                        scrollTriggeredPhotos.map((photo, index) => (
+                            <a
+                                href={`/photos/${photo.data.public_id}`}
+                                class="aspect-video cursor-default photo-scroll opacity-0"
+                                data-astro-prefetch="hover"
+                            >
+                                <CldImage
+                                    class="w-full h-full rounded-lg"
+                                    src={photo.data.public_id}
+                                    format="auto"
+                                    dpr="auto"
+                                    quality="auto"
+                                    loading="lazy"
+                                    fetchpriority="low"
+                                    decoding="async"
                                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
                                     alt={photo.data.display_name}
                                 />
@@ -56,5 +96,59 @@ const photos = await getCollection("photos");
             </div>
             <Footer />
         </main>
+        <script is:inline>
+            (function () {
+                gsap.registerPlugin(ScrollTrigger);
+
+                gsap.set(".photo-stagger, .photo-scroll", {
+                    opacity: 0,
+                    y: 50,
+                    scale: 0.95,
+                });
+
+                gsap.utils.toArray(".photo-scroll").forEach((element) => {
+                    const image = element.querySelector("img");
+                    const createScrollTrigger = () => {
+                        gsap.to(element, {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 0.8,
+                            ease: "power2.out",
+                            scrollTrigger: {
+                                trigger: element,
+                                start: "top bottom",
+                                toggleActions: "play none none none",
+                            },
+                        });
+                    };
+
+                    // If the image is already loaded (might happen if it was cached)
+                    if (image.complete) {
+                        createScrollTrigger();
+                    } else {
+                        // Wait for the specific image to load before creating the ScrollTrigger
+                        image.addEventListener("load", () => {
+                            createScrollTrigger();
+                            ScrollTrigger.refresh();
+                        });
+                    }
+                });
+
+                // 3. Trigger initial stagger and GLOBAL REFRESH on page load.
+                window.addEventListener("load", () => {
+                    gsap.to(".photo-stagger", {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.6,
+                        stagger: 0.1,
+                        ease: "power2.out",
+                    });
+
+                    ScrollTrigger.refresh();
+                });
+            })();
+        </script>
     </body>
 </html>
