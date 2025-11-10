@@ -8,7 +8,7 @@ import { ArrowRight } from "lucide-react";
 const photos = await getCollection("photos");
 
 // Define how many photos are "above the fold" for the initial stagger animation
-const ABOVE_THE_FOLD_COUNT = 9;
+const ABOVE_THE_FOLD_COUNT = 6;
 const staggeredPhotos = photos.slice(0, ABOVE_THE_FOLD_COUNT);
 const OtherPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
 ---
@@ -47,14 +47,15 @@ const OtherPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
                             <a
                                 href={`/photos/${photo.data.public_id}`}
                                 class="aspect-video cursor-default photo-stagger photo-card opacity-0 relative overflow-hidden group rounded-lg"
-                                data-astro-prefetch="hover"
+                                data-astro-prefetch="tap"
                             >
                                 <CldImage
                                     class="w-full h-full rounded-lg photo-image"
                                     src={photo.data.public_id}
                                     format="auto"
                                     dpr="auto"
-                                    quality="auto"
+                                    width="600"
+                                    quality="auto:low"
                                     loading={index < 4 ? "eager" : "lazy"}
                                     fetchpriority={index === 0 ? "high" : "low"}
                                     decoding="async"
@@ -74,7 +75,7 @@ const OtherPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
                             <a
                                 href={`/photos/${photo.data.public_id}`}
                                 class="aspect-video cursor-default photo-scroll photo-card relative overflow-hidden group rounded-lg"
-                                data-astro-prefetch="hover"
+                                data-astro-prefetch="tap"
                             >
                                 <CldImage
                                     class="w-full h-full rounded-lg photo-image"
