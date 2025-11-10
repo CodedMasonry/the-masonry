@@ -8,9 +8,9 @@ import { ArrowRight } from "lucide-react";
 const photos = await getCollection("photos");
 
 // Define how many photos are "above the fold" for the initial stagger animation
-const ABOVE_THE_FOLD_COUNT = 6;
+const ABOVE_THE_FOLD_COUNT = 9;
 const staggeredPhotos = photos.slice(0, ABOVE_THE_FOLD_COUNT);
-const scrollTriggeredPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
+const OtherPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
 ---
 
 <html lang="en">
@@ -32,7 +32,7 @@ const scrollTriggeredPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
     <body>
         <PublicNavbar />
         <main class="min-h-screen">
-            <div class="flex flex-col mb-8 mx-4 lg:mx-8">
+            <div class="flex flex-col mb-16 mx-4 lg:mx-8">
                 <div class="flex flex-col mt-24 mb-16">
                     <h1 class="text-4xl font-extrabold underline">
                         The Gallery
@@ -41,7 +41,7 @@ const scrollTriggeredPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
                         It's the small details that matter most.
                     </p>
                 </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 pb-8">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {
                         staggeredPhotos.map((photo, index) => (
                             <a
@@ -67,12 +67,13 @@ const scrollTriggeredPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
                             </a>
                         ))
                     }
-
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-16">
                     {
-                        scrollTriggeredPhotos.map((photo, index) => (
+                        OtherPhotos.map((photo, index) => (
                             <a
                                 href={`/photos/${photo.data.public_id}`}
-                                class="aspect-video cursor-default photo-scroll photo-card opacity-0 relative overflow-hidden group rounded-lg"
+                                class="aspect-video cursor-default photo-scroll photo-card relative overflow-hidden group rounded-lg"
                                 data-astro-prefetch="hover"
                             >
                                 <CldImage
@@ -103,7 +104,7 @@ const scrollTriggeredPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
                 gsap.registerPlugin(ScrollTrigger);
 
                 // Initial state
-                gsap.set(".photo-stagger, .photo-scroll", {
+                gsap.set(".photo-stagger", {
                     y: 50,
                     scale: 0.95,
                 });
@@ -111,34 +112,6 @@ const scrollTriggeredPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
                     opacity: 0,
                     xPercent: 10,
                     yPercent: 10,
-                });
-
-                // ScrollTrigger logic
-                gsap.utils.toArray(".photo-scroll").forEach((element) => {
-                    const image = element.querySelector("img");
-                    const createScrollTrigger = () => {
-                        gsap.to(element, {
-                            opacity: 1,
-                            yPercent: 0,
-                            scale: 1,
-                            duration: 0.8,
-                            ease: "power2.out",
-                            scrollTrigger: {
-                                trigger: element,
-                                start: "top bottom",
-                                toggleActions: "play none none none",
-                            },
-                        });
-                    };
-
-                    if (image.complete) {
-                        createScrollTrigger();
-                    } else {
-                        image.addEventListener("load", () => {
-                            createScrollTrigger();
-                            ScrollTrigger.refresh();
-                        });
-                    }
                 });
 
                 // Initial Stagger on load
