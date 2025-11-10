@@ -37,15 +37,14 @@ const photos = await getCollection("photos");
                             <a
                                 id={photo.data.public_id}
                                 href={`/photos/${photo.data.public_id}`}
-                                class="aspect-video cursor-default photo-card relative overflow-hidden group rounded-lg"
+                                class="cursor-default aspect-video photo-card relative overflow-hidden group rounded-lg"
                                 data-astro-prefetch="tap"
                             >
                                 <CldImage
-                                    class="w-full h-full rounded-lg photo-image"
+                                    class="w-full h-full rounded-lg photo-image object-cover"
                                     src={photo.data.public_id}
                                     format="auto"
                                     dpr="auto"
-                                    width={600}
                                     quality="auto:low"
                                     loading="lazy"
                                     fetchpriority="low"
