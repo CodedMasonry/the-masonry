@@ -17,10 +17,4 @@
       "custom_domain": true,
     },
   ],
-  "vars": {
-    "PUBLIC_CLERK_SIGN_IN_URL": "/sign-in",
-    "PUBLIC_CLERK_SIGN_UP_URL": "/sign-up",
-    "PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL": "/dashboard",
-    "PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL": "/dashboard",
-  },
 }

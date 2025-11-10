@@ -5,8 +5,6 @@ import { defineConfig } from "astro/config";
 
 import react from "@astrojs/react";
 import cloudflare from "@astrojs/cloudflare";
-import clerk from "@clerk/astro";
-import { shadcn } from "@clerk/themes";
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,14 +19,7 @@ export default defineConfig({
     defaultStrategy: "tap",
   },
 
-  integrations: [
-    react(),
-    clerk({
-      appearance: {
-        theme: shadcn,
-      },
-    }),
-  ],
+  integrations: [react()],
   adapter: cloudflare({
     imageService: "cloudflare",
   }),
