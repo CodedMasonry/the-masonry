@@ -5,12 +5,9 @@ import { CldImage } from "astro-cloudinary";
 import Footer from "@/components/footer.astro";
 import PublicNavbar from "@/components/public-navbar.astro";
 import { ArrowRight } from "lucide-react";
-const photos = await getCollection("photos");
 
-// Define how many photos are "above the fold" for the initial stagger animation
-const ABOVE_THE_FOLD_COUNT = 6;
-const staggeredPhotos = photos.slice(0, ABOVE_THE_FOLD_COUNT);
-const OtherPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
+// Load all photos into a single array
+const photos = await getCollection("photos");
 ---
 
 <html lang="en">
@@ -20,6 +17,7 @@ const OtherPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
         <title>Brock Shaffer - Photo Gallery</title>
+
         <script
             is:inline
             src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"
@@ -32,21 +30,14 @@ const OtherPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
     <body>
         <PublicNavbar />
         <main class="min-h-screen">
-            <div class="flex flex-col mb-16 mx-4 lg:mx-8">
-                <div class="flex flex-col mt-24 mb-16">
-                    <h1 class="text-4xl font-extrabold underline">
-                        The Gallery
-                    </h1>
-                    <p class="mt-2 text-muted-foreground">
-                        It's the small details that matter most.
-                    </p>
-                </div>
+            <div class="flex flex-col pb-12 pt-16 mx-4 lg:mx-8">
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {
-                        staggeredPhotos.map((photo, index) => (
+                        photos.map((photo) => (
                             <a
+                                id={photo.data.public_id}
                                 href={`/photos/${photo.data.public_id}`}
-                                class="aspect-video cursor-default photo-stagger photo-card opacity-0 relative overflow-hidden group rounded-lg"
+                                class="aspect-video cursor-default photo-card relative overflow-hidden group rounded-lg"
                                 data-astro-prefetch="tap"
                             >
                                 <CldImage
@@ -54,35 +45,8 @@ const OtherPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
                                     src={photo.data.public_id}
                                     format="auto"
                                     dpr="auto"
-                                    width="600"
+                                    width={600}
                                     quality="auto:low"
-                                    loading={index < 4 ? "eager" : "lazy"}
-                                    fetchpriority={index === 0 ? "high" : "low"}
-                                    decoding="async"
-                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
-                                    alt={photo.data.display_name}
-                                />
-                                <div class="arrow-overlay absolute bottom-4 right-4 p-2 bg-white/70 backdrop-blur-sm rounded-full shadow-lg">
-                                    <ArrowRight className="h-6 w-6 text-black" />
-                                </div>
-                            </a>
-                        ))
-                    }
-                </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-16">
-                    {
-                        OtherPhotos.map((photo, index) => (
-                            <a
-                                href={`/photos/${photo.data.public_id}`}
-                                class="aspect-video cursor-default photo-scroll photo-card relative overflow-hidden group rounded-lg"
-                                data-astro-prefetch="tap"
-                            >
-                                <CldImage
-                                    class="w-full h-full rounded-lg photo-image"
-                                    src={photo.data.public_id}
-                                    format="auto"
-                                    dpr="auto"
-                                    quality="auto"
                                     loading="lazy"
                                     fetchpriority="low"
                                     decoding="async"
@@ -103,11 +67,12 @@ const OtherPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
         <script is:inline>
             (function () {
                 gsap.registerPlugin(ScrollTrigger);
+                const cards = gsap.utils.toArray(".photo-card");
 
-                // Initial state
-                gsap.set(".photo-stagger", {
+                gsap.set(cards, {
+                    opacity: 0,
                     y: 50,
-                    scale: 0.95,
+                    scale: 0.98,
                 });
                 gsap.set(".arrow-overlay", {
                     opacity: 0,
@@ -115,48 +80,53 @@ const OtherPhotos = photos.slice(ABOVE_THE_FOLD_COUNT);
                     yPercent: 10,
                 });
 
-                // Initial Stagger on load
-                window.addEventListener("load", () => {
-                    gsap.to(".photo-stagger", {
-                        opacity: 1,
-                        yPercent: 0,
-                        scale: 1,
-                        duration: 0.6,
-                        stagger: 0.1,
-                        ease: "power2.out",
+                cards.forEach((card, index) => {
+                    ScrollTrigger.create({
+                        trigger: card,
+                        start: "top bottom-=100",
+                        onEnter: () => {
+                            gsap.to(card, {
+                                opacity: 1,
+                                y: 0,
+                                scale: 1,
+                                duration: 0.6,
+                                ease: "power2.out",
+                            });
+                        },
+                        once: true,
                     });
-                    ScrollTrigger.refresh();
                 });
 
-                // Hover Animation Logic
-                const photoCards = gsap.utils.toArray(".photo-card");
-                photoCards.forEach((card) => {
-                    const image = card.querySelector(".photo-image");
-                    const arrow = card.querySelector(".arrow-overlay");
+                // Optimized Hover Logic (Desktop Only)
+                gsap.matchMedia().add("(min-width: 769px)", () => {
+                    cards.forEach((card) => {
+                        const image = card.querySelector(".photo-image");
+                        const arrow = card.querySelector(".arrow-overlay");
 
-                    const hoverTimeline = gsap.timeline({
-                        paused: true,
-                        defaults: { duration: 0.3, ease: "power2.out" },
+                        const hoverTimeline = gsap.timeline({
+                            paused: true,
+                            defaults: { duration: 0.3, ease: "power2.out" },
+                        });
+
+                        hoverTimeline
+                            .to(
+                                image,
+                                { scale: 1.05, z: 0.01, force3D: true },
+                                0,
+                            )
+                            .to(
+                                arrow,
+                                { opacity: 1, xPercent: 0, yPercent: 0 },
+                                0,
+                            );
+
+                        card.addEventListener("mouseenter", () =>
+                            hoverTimeline.timeScale(1).play(),
+                        );
+                        card.addEventListener("mouseleave", () =>
+                            hoverTimeline.timeScale(2).reverse(),
+                        );
                     });
-
-                    hoverTimeline
-                        .to(
-                            image,
-                            {
-                                scale: 1.05,
-                                z: 0.01,
-                                force3D: true,
-                            },
-                            0,
-                        )
-                        .to(arrow, { opacity: 1, xPercent: 0, yPercent: 0 }, 0);
-
-                    card.addEventListener("mouseenter", () =>
-                        hoverTimeline.timeScale(1).play(),
-                    );
-                    card.addEventListener("mouseleave", () =>
-                        hoverTimeline.timeScale(2).reverse(),
-                    );
                 });
             })();
         </script>
