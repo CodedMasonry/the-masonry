@@ -106,20 +106,31 @@ const metadataItems = [
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
         <title>{`${photo.data.display_name} - Brock Shaffer`}</title>
+
+        <script
+            is:inline
+            src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"
+        ></script>
     </head>
     <body>
-        <main class="flex flex-col">
+        <main class="flex flex-col min-h-screen">
             <a
                 href="/photos"
                 data-astro-prefetch="hover"
-                class="z-20 cursor-default ml-4 xl:ml-8 mt-4"
+                class="z-20 cursor-default ml-2 xl:ml-8 mt-4 mb-4 md:mb-0"
             >
                 <Button variant="ghost"> ← Back to Gallery </Button>
             </a>
-            <div class="grid xl:grid-cols-5 gap-4 md:px-4 md:py-4 xl:px-8">
-                <div class="xl:col-span-4 aspect-video overflow-hidden">
+
+            <div
+                class="grid xl:grid-cols-5 gap-4 md:px-4 md:py-4 xl:px-8 pb-[88px] md:pb-4"
+            >
+                <div
+                    id="photo-card-main"
+                    class="xl:col-span-4 aspect-video overflow-hidden opacity-0"
+                >
                     <CldImage
-                        class="w-full h-full md:rounded-lg"
+                        class="photo-image w-full h-full md:rounded-lg"
                         src={photo.data.public_id}
                         format="auto"
                         dpr="auto"
@@ -135,50 +146,99 @@ const metadataItems = [
                 </div>
 
                 <div class="flex flex-col p-4">
-                    <h1 class="text-3xl font-bold">
-                        {photo.data.title ?? "Untitled"}
-                    </h1>
-                    <h2
-                        class="flex items-center text-muted-foreground mt-2 gap-2"
-                    >
-                        <User className="size-4" />
-                        Photo by Brock Shaffer
-                    </h2>
-                    <h3 class="flex items-center text-muted-foreground gap-2">
-                        <CalendarFold className="size-4" />
-                        {
-                            metadata?.CreateDate !== undefined
-                                ? `Created ${formattedDate}`
-                                : `Uploaded ${formattedDate}`
-                        }
-                    </h3>
-                    <PhotoActions
-                        client:load
-                        publicId={photo.data.public_id}
-                        format={photo.data.format}
-                    />
+                    <div>
+                        <h1 class="text-3xl font-bold">
+                            {photo.data.title ?? "Untitled"}
+                        </h1>
+                        <h2
+                            class="flex items-center text-muted-foreground mt-2 gap-2"
+                        >
+                            <User className="size-4" />
+                            Photo by Brock Shaffer
+                        </h2>
+                        <h3
+                            class="flex items-center text-muted-foreground gap-2"
+                        >
+                            <CalendarFold className="size-4" />
+                            {
+                                metadata?.CreateDate !== undefined
+                                    ? `Created ${formattedDate}`
+                                    : `Uploaded ${formattedDate}`
+                            }
+                        </h3>
+                    </div>
 
-                    <Separator className="my-6" />
-                    {
-                        metadata && (
-                            <div class="grid grid-cols-1 gap-4 text-sm text-muted-foreground">
-                                {metadataItems.map((item) =>
-                                    metadata[item.key] ? (
-                                        <p class="flex items-center gap-2">
-                                            <item.icon className="size-4" />
-                                            <span>
-                                                {item.label}:{" "}
-                                                {metadata[item.key]}
-                                            </span>
-                                        </p>
-                                    ) : null,
-                                )}
-                            </div>
-                        )
-                    }
+                    <div class="hidden md:block">
+                        <PhotoActions
+                            client:load
+                            publicId={photo.data.public_id}
+                            format={photo.data.format}
+                        />
+                    </div>
+
+                    <div class="mt-auto md:mt-0">
+                        <Separator className="my-6" />
+                        {
+                            metadata && (
+                                <div class="grid grid-cols-1 gap-4 text-sm text-muted-foreground">
+                                    {metadataItems.map((item) =>
+                                        metadata[item.key] ? (
+                                            <p class="flex items-center gap-2">
+                                                <item.icon className="size-4" />
+                                                <span>
+                                                    {item.label}:{" "}
+                                                    {metadata[item.key]}
+                                                </span>
+                                            </p>
+                                        ) : null,
+                                    )}
+                                </div>
+                            )
+                        }
+                    </div>
                 </div>
             </div>
         </main>
+
+        <div
+            class="fixed inset-x-0 bottom-4 z-40 bg-background p-4 shadow-2xl md:hidden"
+        >
+            <PhotoActions
+                client:load
+                publicId={photo.data.public_id}
+                format={photo.data.format}
+            />
+        </div>
+
+        <script is:inline>
+            (function () {
+                const photoCard = document.getElementById("photo-card-main");
+                const image = photoCard?.querySelector(".photo-image");
+
+                if (image) {
+                    // Set initial state for animation
+                    gsap.set("#photo-card-main", {
+                        scale: 0.98,
+                    });
+
+                    const runAnimation = () => {
+                        gsap.to("#photo-card-main", {
+                            opacity: 1,
+                            scale: 1,
+                            duration: 0.6,
+                            ease: "power2.out",
+                        });
+                    };
+
+                    image.onload = runAnimation;
+
+                    if (image.complete && image.naturalHeight !== 0) {
+                        runAnimation();
+                    }
+                }
+            })();
+        </script>
+
         <Footer />
     </body>
 </html>
