@@ -121,16 +121,14 @@ const metadataItems = [
                     <CldImage
                         class="w-full h-full md:rounded-lg"
                         src={photo.data.public_id}
-                        crop="fill"
-                        gravity="auto"
                         format="auto"
                         dpr="auto"
-                        quality="auto"
-                        placeholder="blur"
+                        quality="auto:sensitive"
                         loading="eager"
                         fetchpriority="high"
                         decoding="async"
-                        widths={[480, 768, 1024, 1600, 1920]}
+                        width={1920}
+                        height={1080}
                         sizes="(max-width: 640px) 100vw, (max-width: 1280px) 80vw, 60vw"
                         alt={photo.data.display_name}
                     />
