@@ -127,7 +127,7 @@ const metadataItems = [
             >
                 <div
                     id="photo-card-main"
-                    class="xl:col-span-4 aspect-video overflow-hidden opacity-0"
+                    class="xl:col-span-4 aspect-video overflow-hidden relative opacity-0"
                 >
                     <CldImage
                         class="photo-image w-full h-full md:rounded-lg"
@@ -191,18 +191,50 @@ const metadataItems = [
             </div>
         </main>
 
+        <div
+            id="loading-bar-container"
+            class="fixed bottom-0 left-0 right-0 h-1 bg-muted z-50"
+        >
+            <div id="loading-bar" class="h-full bg-primary w-0"></div>
+        </div>
+
         <script is:inline>
             (function () {
                 const photoCard = document.getElementById("photo-card-main");
                 const image = photoCard?.querySelector(".photo-image");
+                const loadingBarContainer = document.getElementById(
+                    "loading-bar-container",
+                );
+                const loadingBar = document.getElementById("loading-bar");
 
-                if (image) {
+                if (image && loadingBar && loadingBarContainer) {
                     // Set initial state for animation
                     gsap.set("#photo-card-main", {
                         scale: 0.98,
                     });
 
+                    // Loading animation
+                    gsap.to(loadingBar, {
+                        width: "100%",
+                        duration: 5,
+                        ease: "linear",
+                        repeat: -1,
+                        yoyo: true,
+                    });
+
                     const runAnimation = () => {
+                        // Image load is complete, so hide the loading bar first
+                        gsap.killTweensOf(loadingBar); // Stop the infinite progress animation
+                        gsap.to(loadingBarContainer, {
+                            opacity: 0,
+                            duration: 0.3,
+                            onComplete: () => {
+                                // Once faded out, remove it from the flow
+                                loadingBarContainer.style.display = "none";
+                            },
+                        });
+
+                        // Run photo card animation
                         gsap.to("#photo-card-main", {
                             opacity: 1,
                             scale: 1,

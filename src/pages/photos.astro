@@ -95,7 +95,7 @@ const photos = await getCollection("photos");
                     });
                 });
 
-                // Optimized Hover Logic (Desktop Only)
+                // Hover Logic (Desktop Only)
                 gsap.matchMedia().add("(min-width: 769px)", () => {
                     cards.forEach((card) => {
                         const image = card.querySelector(".photo-image");
