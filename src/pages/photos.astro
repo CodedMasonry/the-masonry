@@ -88,6 +88,7 @@ const photos = await getCollection("photos");
                                 y: 0,
                                 scale: 1,
                                 duration: 0.6,
+                                force3D: true,
                                 ease: "power2.out",
                             });
                         },
@@ -114,7 +115,12 @@ const photos = await getCollection("photos");
                             )
                             .to(
                                 arrow,
-                                { opacity: 1, xPercent: 0, yPercent: 0 },
+                                {
+                                    opacity: 1,
+                                    xPercent: 0,
+                                    yPercent: 0,
+                                    force3D: true,
+                                },
                                 0,
                             );
 
