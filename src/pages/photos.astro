@@ -36,7 +36,7 @@ const photos = await getCollection("photos");
                             <a
                                 id={photo.data.public_id}
                                 href={`/photos/${photo.data.public_id}`}
-                                class="cursor-default aspect-video photo-card relative overflow-hidden group rounded-lg"
+                                class="photo-card opacity-0 translate-y-12 scale-95 cursor-default aspect-video relative overflow-hidden group rounded-lg"
                                 data-astro-prefetch="tap"
                             >
                                 <CldImage
@@ -51,7 +51,7 @@ const photos = await getCollection("photos");
                                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
                                     alt={photo.data.display_name}
                                 />
-                                <div class="arrow-overlay absolute bottom-4 right-4 p-2 bg-white/70 backdrop-blur-sm rounded-full shadow-lg">
+                                <div class="arrow-overlay opacity-0 absolute bottom-4 right-4 p-2 bg-white/70 backdrop-blur-sm rounded-full shadow-lg">
                                     <ArrowRight className="h-6 w-6 text-black" />
                                 </div>
                             </a>
@@ -66,13 +66,7 @@ const photos = await getCollection("photos");
                 gsap.registerPlugin(ScrollTrigger);
                 const cards = gsap.utils.toArray(".photo-card");
 
-                gsap.set(cards, {
-                    opacity: 0,
-                    y: 50,
-                    scale: 0.98,
-                });
                 gsap.set(".arrow-overlay", {
-                    opacity: 0,
                     xPercent: 15,
                     yPercent: 15,
                 });
