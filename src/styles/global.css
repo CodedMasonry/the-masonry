@@ -4,6 +4,7 @@
 body {
     scroll-behavior: smooth;
     font-family:
+        "Antonio",
         "Roboto",
         -apple-system,
         BlinkMacSystemFont,
@@ -14,6 +15,7 @@ body {
         "Fira Sans",
         "Helvetica Neue",
         sans-serif;
+    font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
