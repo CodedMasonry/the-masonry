@@ -1,32 +1,16 @@
 ---
-// Components
-import { CycleText } from "@/components/home/cycle-text";
-import { Button } from "@/components/ui/button";
-import HighSchoolGridItem from "@/components/home/HighSchoolGridItem.astro";
-
-// Icons
-import PaperIcon from "@/assets/icons/paper.svg";
-import PhotoIcon from "@/assets/icons/photo.svg";
-import LinkedInIcon from "@/assets/icons/linkedin.svg";
-import GithubIcon from "@/assets/icons/github.svg";
-import YPAImage from "@/assets/icons/ypa.png";
-import OutcomesImage from "@/assets/icons/outcomes.png";
-import RoboticsTeamImage from "@/assets/icons/team1014.jpeg";
-import FSTImage from "@/assets/icons/fst.jpeg";
-
-// Other imports
-import Main from "@/layouts/main.astro";
+import Animated from "@/layouts/animated.astro";
 import { CldImage } from "astro-cloudinary";
+
+// We only need one image, as we'll reveal it
+const heroImage = "damA2_09_20_25_rkfd0k";
 ---
 
-<Main title="Brock Shaffer">
-    <section class="relative h-[90vh] w-full">
-        <div
-            class="absolute inset-0 h-full w-full"
-            style="mask-image: linear-gradient(to bottom, black 70%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);"
-        >
+<Animated title="Brock Shaffer">
+    <section class="relative h-[90vh] w-full overflow-hidden">
+        <div class="absolute inset-0 z-0 h-full w-full hero-image-mask">
             <CldImage
-                src="damA2_09_20_25_rkfd0k"
+                src={heroImage}
                 alt="Hero background"
                 format="auto"
                 quality="auto"
@@ -36,18 +20,62 @@ import { CldImage } from "astro-cloudinary";
                 loading="eager"
                 fetchpriority="high"
                 decoding="async"
-                class="h-full w-full z-0 object-cover"
+                class="h-full w-full object-cover"
             />
         </div>
-    </section>
-    <div
-        class="absolute inset-0 w-full h-[90vh] flex flex-col items-center justify-center space-y-4"
-    >
-        <h1
-            class="font-extrabold text-6xl text-primary drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] md:text-7xl text-center"
+
+        <div class="absolute inset-0 z-10 flex">
+            <div class="reveal-block h-full w-[20%] bg-background"></div>
+            <div class="reveal-block h-full w-[20%] bg-background"></div>
+            <div class="reveal-block h-full w-[20%] bg-background"></div>
+            <div class="reveal-block h-full w-[20%] bg-background"></div>
+            <div class="reveal-block h-full w-[20%] bg-background"></div>
+        </div>
+
+        <div
+            class="absolute inset-0 z-20 flex w-full h-full flex-col items-center justify-center space-y-4"
         >
-            Hello, I&apos;m Brock.
-        </h1>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 w-fit mt-4"></div>
-    </div>
-</Main>
+            <h1
+                class="hero-title opacity-0 translate-y-8 font-extrabold text-6xl text-primary drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] md:text-7xl text-center"
+            >
+                Hello, I&apos;m Brock.
+            </h1>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 w-fit mt-4"></div>
+        </div>
+    </section>
+</Animated>
+
+<style>
+    .hero-image-mask {
+        mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            black 70%,
+            transparent 100%
+        );
+    }
+</style>
+
+<script is:inline>
+    (function () {
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Animate the 5 "falling blocks"
+            gsap.to(".reveal-block", {
+                yPercent: 100,
+                duration: 1.2,
+                stagger: 0.1,
+                ease: "power3.out",
+                delay: 0.5,
+            });
+
+            // 2. Animate the title in *after* the blocks start moving
+            gsap.to(".hero-title", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out",
+                delay: 0.9,
+            });
+        });
+    })();
+</script>
