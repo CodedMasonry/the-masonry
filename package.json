@@ -13,7 +13,6 @@
     "@astrojs/cloudflare": "^12.6.10",
     "@astrojs/mdx": "^4.3.9",
     "@astrojs/react": "^4.4.1",
-    "@clerk/astro": "^2.14.2",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-navigation-menu": "^1.2.14",
     "@radix-ui/react-separator": "^1.1.7",
