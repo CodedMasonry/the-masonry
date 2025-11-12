@@ -41,66 +41,13 @@ import { CldImage } from "astro-cloudinary";
         </div>
     </section>
     <div
-        class="absolute inset-0 pt-24 mr-4 ml-8 flex flex-col space-y-2 md:pt-44 md:ml-36"
+        class="absolute inset-0 w-full h-[90vh] flex flex-col items-center justify-center space-y-4"
     >
         <h1
-            class="font-extrabold text-6xl text-primary drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] md:text-7xl"
+            class="font-extrabold text-6xl text-primary drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] md:text-7xl text-center"
         >
             Hello, I&apos;m Brock.
         </h1>
-        <h2
-            class="relative mt-2 text-4xl text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
-        >
-            <CycleText
-                client:load
-                options={[
-                    "Software Developer",
-                    "Photographer",
-                    "UI Designer",
-                    "Drone Pilot",
-                ]}
-            />
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 w-fit mt-4">
-            <a href="/resume" class="cursor-default">
-                <Button size="hero">
-                    <PaperIcon stroke="white" class="size-7" />
-                    Resume
-                </Button>
-            </a>
-
-            <a href="/photos" class="cursor-default">
-                <Button
-                    size="hero"
-                    variant="ghost"
-                    className="bg-background/40 md:bg-background/20"
-                >
-                    <PhotoIcon class="size-7" />Photos
-                </Button>
-            </a>
-
-            <a
-                href="https://www.linkedin.com/in/brockshaffer"
-                class="cursor-default"
-            >
-                <Button
-                    size="hero"
-                    variant="ghost"
-                    className="bg-background/40 md:bg-background/20"
-                >
-                    <LinkedInIcon class="size-7" />LinkedIn
-                </Button>
-            </a>
-
-            <a href="https://github.com/CodedMasonry" class="cursor-default">
-                <Button
-                    size="hero"
-                    variant="ghost"
-                    className="bg-background/40 md:bg-background/20"
-                >
-                    <GithubIcon class="size-7" />Github
-                </Button>
-            </a>
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 w-fit mt-4"></div>
     </div>
 </Main>
