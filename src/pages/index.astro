@@ -3,12 +3,12 @@ import Animated from "@/layouts/animated.astro";
 import { CldImage } from "astro-cloudinary";
 
 // We only need one image, as we'll reveal it
-const heroImage = "damA2_09_20_25_rkfd0k";
+const heroImage = "sp6_fw0os3";
 ---
 
 <Animated title="Brock Shaffer">
     <section class="relative h-[90vh] w-full overflow-hidden">
-        <div class="absolute inset-0 z-0 h-full w-full hero-image-mask">
+        <div class="absolute inset-0 z-0 h-full w-full">
             <CldImage
                 src={heroImage}
                 alt="Hero background"
@@ -20,7 +20,7 @@ const heroImage = "damA2_09_20_25_rkfd0k";
                 loading="eager"
                 fetchpriority="high"
                 decoding="async"
-                class="h-full w-full object-cover"
+                class="h-full w-full object-cover brightness-90"
             />
         </div>
 
@@ -32,13 +32,11 @@ const heroImage = "damA2_09_20_25_rkfd0k";
             <div class="reveal-block h-full w-[20%] bg-background"></div>
         </div>
 
-        <div
-            class="absolute inset-0 z-20 flex w-full h-full flex-col items-center justify-center space-y-4"
-        >
+        <div class="absolute bottom-16 left-8 z-20 flex">
             <h1
-                class="hero-title opacity-0 translate-y-8 font-bold text-6xl text-primary drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] md:text-7xl text-center"
+                class="hero-title opacity-0 -translate-y-32 text-7xl lg:text-9xl text-foreground drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] md:text-7xl text-center"
             >
-                Hello, I&apos;m Brock.
+                BROCK SHAFFER
             </h1>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 w-fit mt-4"></div>
         </div>
@@ -54,11 +52,14 @@ const heroImage = "damA2_09_20_25_rkfd0k";
             transparent 100%
         );
     }
-</style>
 
-<style>
     .hero-title {
-        font-family: "Antonio";
+        font-family: "Antonio", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 700;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 </style>
 
@@ -80,7 +81,7 @@ const heroImage = "damA2_09_20_25_rkfd0k";
                 y: 0,
                 duration: 1,
                 ease: "power3.out",
-                delay: 0.9,
+                delay: 1,
             });
         });
     })();

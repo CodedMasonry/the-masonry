@@ -11,9 +11,6 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  image: {
-    domains: ["dxgc3f8f0p.ufs.sh"],
-  },
   prefetch: {
     prefetchAll: true,
     defaultStrategy: "tap",
