@@ -1,6 +1,6 @@
 ---
 import "@/styles/global.css";
-import { LoaderCircle } from "lucide-react";
+import { DownloadCloud, LoaderCircle } from "lucide-react";
 
 // We only need one image, as we'll reveal it
 const heroImage = "DJI_20251108110602_0075_D_j0ie3e";
@@ -31,29 +31,33 @@ const heroImage = "DJI_20251108110602_0075_D_j0ie3e";
 
     <body>
         <main class="min-h-screen relative">
-            <section
-                class="flex flex-col w-full h-full loading-title text-center"
+            <div
+                class="loading-screen fixed inset-0 z-40 flex flex-col w-full h-full text-center"
             >
-                <div class="flex flex-col mx-auto items-center">
-                    <p
-                        class="pl-12 mt-96 font-bold text-7xl text-center tracking-[3rem]"
-                    >
-                        LOADING
-                    </p>
+                <div class="flex flex-col mx-auto my-auto items-center">
+                    <DownloadCloud className="loading-icon" size={32} />
+                    <div class="loading-bar h-1 bg-muted w-12 rounded mt-2">
+                    </div>
                 </div>
-            </section>
+            </div>
         </main>
     </body>
 </html>
 
 <style>
     .loading-title {
-        font-family: "Antonio";
+        font-family: "Kanit";
     }
 </style>
 
 <script is:inline>
     document.addEventListener("DOMContentLoaded", () => {
-        gsap.to();
+        gsap.to(".loading-bar", {
+            duration: 1,
+            backgroundColor: "var(--foreground)",
+            ease: "power3.out",
+            repeat: -1,
+            yoyo: true,
+        });
     });
 </script>
