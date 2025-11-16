@@ -1,9 +1,10 @@
 ---
 import "@/styles/global.css";
+import { CldImage } from "astro-cloudinary";
 import { DownloadCloud, LoaderCircle } from "lucide-react";
 
 // We only need one image, as we'll reveal it
-const heroImage = "DJI_20251108110602_0075_D_j0ie3e";
+const heroImage = "damA2_09_20_25_rkfd0k";
 ---
 
 <html lang="en">
@@ -31,22 +32,64 @@ const heroImage = "DJI_20251108110602_0075_D_j0ie3e";
 
     <body>
         <main class="min-h-screen relative">
-            <div
-                class="loading-screen fixed inset-0 z-40 flex flex-col w-full h-full text-center"
-            >
-                <div class="flex flex-col mx-auto my-auto items-center">
-                    <DownloadCloud className="loading-icon" size={32} />
-                    <div class="loading-bar h-1 bg-muted w-12 rounded mt-2">
+            <section class="relative h-[90vh] w-full overflow-hidden">
+                <div class="absolute inset-0 z-0 h-full w-full hero-image-mask">
+                    <CldImage
+                        src={heroImage}
+                        alt="Hero background"
+                        format="auto"
+                        quality="auto"
+                        width={8064}
+                        height={4536}
+                        sizes="100vw"
+                        loading="eager"
+                        fetchpriority="high"
+                        decoding="async"
+                        class="h-full w-full object-cover"
+                        class="h-full w-full object-cover brightness-90"
+                    />
+                </div>
+                <div
+                    class="absolute inset-0 z-20 flex w-full h-full flex-col items-center justify-center space-y-4"
+                >
+                    <h1
+                        class="hero-title font-bold text-7xl md:text-9xl text-foreground drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] text-center"
+                    >
+                        Brock Shaffer
+                    </h1>
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-4 gap-4 w-fit mt-4"
+                    >
                     </div>
                 </div>
-            </div>
+            </section>
         </main>
+
+        <div
+            class="loading-screen fixed inset-0 z-40 flex flex-col w-full h-full text-center items-center bg-background"
+        >
+            <div
+                class="flex flex-col my-auto items-center w-24 overflow-hidden"
+            >
+                <DownloadCloud className="loading-icon mt-4" size={32} />
+                <div class="loading-bar h-1 bg-muted w-12 rounded mt-2"></div>
+            </div>
+        </div>
     </body>
 </html>
 
 <style>
     .loading-title {
         font-family: "Kanit";
+    }
+
+    .hero-image-mask {
+        mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            black 70%,
+            transparent 100%
+        );
     }
 </style>
 
@@ -58,5 +101,27 @@ const heroImage = "DJI_20251108110602_0075_D_j0ie3e";
         repeat: -1,
         yoyo: true,
     });
-    document.addEventListener("DOMContentLoaded", () => {});
+
+    // Initial setup
+    document.addEventListener("DOMContentLoaded", () => {
+        load_pulse.kill();
+        let tl = gsap.timeline();
+
+        tl.to(".loading-bar", {
+            duration: 0.75,
+            backgroundColor: "var(--foreground)",
+            scaleX: 1.5,
+            ease: "power3.out",
+        });
+        tl.to(".loading-icon", {
+            duration: 0.75,
+            yPercent: 150,
+            ease: "back.in(1.7)",
+        });
+        tl.to(".loading-screen", {
+            duration: 1,
+            autoAlpha: 0,
+            ease: "power3.out",
+        });
+    });
 </script>
