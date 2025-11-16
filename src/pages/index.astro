@@ -51,13 +51,12 @@ const heroImage = "DJI_20251108110602_0075_D_j0ie3e";
 </style>
 
 <script is:inline>
-    document.addEventListener("DOMContentLoaded", () => {
-        gsap.to(".loading-bar", {
-            duration: 1,
-            backgroundColor: "var(--foreground)",
-            ease: "power3.out",
-            repeat: -1,
-            yoyo: true,
-        });
+    let load_pulse = gsap.to(".loading-bar", {
+        duration: 1,
+        backgroundColor: "var(--foreground)",
+        ease: "power3.out",
+        repeat: -1,
+        yoyo: true,
     });
+    document.addEventListener("DOMContentLoaded", () => {});
 </script>
