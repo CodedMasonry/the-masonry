@@ -1,0 +1,21 @@
+---
+import { ContactSheetCreator } from "@/components/scripts/contact-sheet-generator";
+import Main from "@/layouts/main.astro";
+---
+
+<Main title="Contact Sheet Maker">
+    <main class="min-h-screen bg-background text-foreground">
+        <div class="container mx-auto px-4 py-12 max-w-4xl">
+            <div class="mb-12 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 text-balance">
+                    Contact Sheet Creator
+                </h1>
+                <p class="text-lg text-muted-foreground text-balance">
+                    Generate a beautiful 4×3 contact sheet from up to 12 images
+                </p>
+            </div>
+
+            <ContactSheetCreator client:load />
+        </div>
+    </main>
+</Main>
