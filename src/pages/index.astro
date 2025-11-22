@@ -1,20 +1,34 @@
 ---
 import "@/styles/global.css";
+import PublicNavbar from "@/components/Navbar.astro";
+import GridBackground from "@/components/GridBackground.astro";
 import { CldImage } from "astro-cloudinary";
-import { DownloadCloud, LoaderCircle } from "lucide-react";
+import {
+    DownloadCloud,
+    Camera,
+    Code2,
+    ArrowRight,
+    Aperture,
+} from "lucide-react";
+import Drone from "@/assets/icons/drone.svg";
 
-// We only need one image, as we'll reveal it
-const heroImage = "damA2_09_20_25_rkfd0k";
+// Button Styles - minimalist and technical
+const btnBase =
+    "group relative inline-flex h-11 items-center justify-center gap-2 overflow-hidden rounded-md border px-8 text-sm font-medium transition-all duration-300 hover:ring-1 hover:ring-ring";
+const btnPrimary = `${btnBase} border-primary/50 bg-primary/10 text-primary hover:bg-primary/20 hover:border-primary`;
+const btnSecondary = `${btnBase} border-border bg-background/50 text-muted-foreground hover:bg-accent hover:text-foreground`;
+
+const heroImage = "sp6_ogh3om"; // Your cloudinary ID
 ---
 
-<html lang="en">
+<html lang="en" class="dark">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap"
             rel="stylesheet"
         />
 
@@ -24,104 +38,231 @@ const heroImage = "damA2_09_20_25_rkfd0k";
             is:inline
             src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"
         ></script>
-        <script
-            is:inline
-            src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/TextPlugin.min.js"
-        ></script>
     </head>
 
-    <body>
-        <main class="min-h-screen relative">
-            <section class="relative h-[90vh] w-full overflow-hidden">
-                <div class="absolute inset-0 z-0 h-full w-full hero-image-mask">
-                    <CldImage
-                        src={heroImage}
-                        alt="Hero background"
-                        format="auto"
-                        quality="auto"
-                        width={8064}
-                        height={4536}
-                        sizes="100vw"
-                        loading="eager"
-                        fetchpriority="high"
-                        decoding="async"
-                        class="h-full w-full object-cover"
-                        class="h-full w-full object-cover brightness-90"
-                    />
-                </div>
+    <body
+        class="bg-background text-foreground overflow-x-hidden selection:bg-primary/30 selection:text-primary-foreground"
+    >
+        <main class="min-h-screen relative flex flex-col items-center">
+            <!--Critical Components-->
+            <GridBackground />
+            <PublicNavbar />
+
+            <!--Hero Section-->
+            <section
+                class="relative z-10 flex min-h-[90vh] w-full flex-col items-center justify-center pt-24 pb-12 px-4 md:px-6 max-w-[1400px] mx-auto"
+            >
                 <div
-                    class="absolute inset-0 z-20 flex w-full h-full flex-col items-center justify-center space-y-4"
+                    class="text-center space-y-6 mb-12 animate-in fade-in slide-in-from-bottom-8 duration-1000"
                 >
-                    <h1
-                        class="hero-title font-bold text-7xl md:text-9xl text-foreground drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] text-center"
-                    >
-                        Brock Shaffer
-                    </h1>
                     <div
-                        class="grid grid-cols-1 md:grid-cols-4 gap-4 w-fit mt-4"
+                        class="flex items-center justify-center gap-4 text-xs md:text-sm font-mono text-muted-foreground tracking-widest uppercase opacity-80"
                     >
+                        <span class="flex items-center align-middle gap-1"
+                            ><Code2 size={20} /> Developer</span
+                        >
+                        <span class="text-border">|</span>
+                        <span class="flex items-center align-middle gap-1"
+                            ><Drone size={20} /> Drone Pilot</span
+                        >
+                        <span class="text-border">|</span>
+                        <span class="flex items-center align-middle gap-1"
+                            ><Camera size={20} /> Photographer</span
+                        >
+                    </div>
+
+                    <h1
+                        class="text-6xl md:text-8xl font-bold tracking-tighter text-foreground"
+                    >
+                        BROCK SHAFFER
+                    </h1>
+
+                    <p
+                        class="max-w-[500px] mx-auto text-lg text-muted-foreground/80 font-light leading-relaxed"
+                    >
+                        Crafting logic in code and capturing moments in light.
+                        <span class="hidden md:inline"
+                            >Precision in every pixel and parameter.</span
+                        >
+                    </p>
+
+                    <div class="flex flex-wrap justify-center gap-4 pt-4">
+                        <a
+                            href="https://github.com/CodedMasonry"
+                            class={btnPrimary}
+                        >
+                            <span>Projects</span>
+                            <Code2
+                                size={16}
+                                className="opacity-60 transition-transform group-hover:-translate-y-0.5"
+                            />
+                        </a>
+                        <a href="photos" class={btnSecondary}>
+                            <span>Gallery</span>
+                            <Aperture
+                                size={16}
+                                className="opacity-60 transition-transform group-hover:rotate-45"
+                            />
+                        </a>
+                    </div>
+                </div>
+
+                <!--Hero Image-->
+                <div
+                    class="relative w-full max-w-6xl group perspective-1000 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200"
+                >
+                    <div
+                        class="absolute -top-4 -left-4 w-8 h-8 border-t-2 border-l-2 border-primary/30 transition-all duration-500 group-hover:border-primary group-hover:-top-5 group-hover:-left-5"
+                    >
+                    </div>
+                    <div
+                        class="absolute -top-4 -right-4 w-8 h-8 border-t-2 border-r-2 border-primary/30 transition-all duration-500 group-hover:border-primary group-hover:-top-5 group-hover:-right-5"
+                    >
+                    </div>
+                    <div
+                        class="absolute -bottom-4 -left-4 w-8 h-8 border-b-2 border-l-2 border-primary/30 transition-all duration-500 group-hover:border-primary group-hover:-bottom-5 group-hover:-left-5"
+                    >
+                    </div>
+                    <div
+                        class="absolute -bottom-4 -right-4 w-8 h-8 border-b-2 border-r-2 border-primary/30 transition-all duration-500 group-hover:border-primary group-hover:-bottom-5 group-hover:-right-5"
+                    >
+                    </div>
+
+                    <div
+                        class="relative aspect-video md:aspect-21/9 w-full overflow-hidden bg-muted/20 border border-border/50 shadow-2xl"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full p-4 flex justify-between items-start z-20 pointer-events-none text-[10px] md:text-xs font-mono tracking-wider text-muted-foreground/70 mix-blend-difference"
+                        >
+                            <div class="flex flex-col gap-1">
+                                <span>REC.709</span>
+                                <span>RAW_VIEWER.EXE</span>
+                            </div>
+                            <div class="flex gap-4">
+                                <span>ISO 800</span>
+                                <span>1/125s</span>
+                                <span>f/2.8</span>
+                            </div>
+                        </div>
+
+                        <CldImage
+                            src={heroImage}
+                            alt="Portfolio Highlight"
+                            width={1920}
+                            height={1080}
+                            sizes="90vw"
+                            loading="eager"
+                            fetchpriority="high"
+                            class="h-full w-full object-cover opacity-90 transition-transform duration-[2s] ease-out group-hover:scale-[1.02]"
+                        />
+
+                        <div
+                            class="absolute inset-0 bg-black/10 pointer-events-none z-10 bg-size-[4px_4px] bg-[linear-gradient(rgba(0,0,0,0)_50%,rgba(0,0,0,0.2)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))]"
+                        >
+                        </div>
+                    </div>
+
+                    <div
+                        class="flex justify-between items-center mt-2 px-1 text-xs font-mono text-muted-foreground/60"
+                    >
+                        <span>[001] MAIN_ENTRY</span>
+                        <span>39.9612° N, 82.9988° W</span>
                     </div>
                 </div>
             </section>
+
+            <div class="h-[50vh]"></div>
         </main>
 
+        <!--Loading Screen-->
         <div
-            class="loading-screen fixed inset-0 z-40 flex flex-col w-full h-full text-center items-center bg-background"
+            class="loading-screen fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden"
         >
             <div
-                class="flex flex-col my-auto items-center w-24 overflow-hidden"
+                class="shutter-top absolute top-0 left-0 w-full h-1/2 bg-neutral-950 border-b border-neutral-800 z-10"
             >
-                <DownloadCloud className="loading-icon mt-4" size={32} />
-                <div class="loading-bar h-1 bg-muted w-12 rounded mt-2"></div>
+            </div>
+            <div
+                class="shutter-bottom absolute bottom-0 left-0 w-full h-1/2 bg-neutral-950 border-t border-neutral-800 z-10"
+            >
+            </div>
+
+            <div
+                class="loading-content relative z-20 flex flex-col items-center gap-4 mix-blend-difference"
+            >
+                <div
+                    class="font-mono text-4xl md:text-6xl font-bold tracking-tighter text-white mb-8"
+                >
+                    <span class="counter">000</span>%
+                </div>
+
+                <div
+                    class="flex items-center gap-2 text-xs font-mono text-neutral-400 uppercase tracking-[0.2em]"
+                >
+                    <span
+                        class="w-2 h-2 bg-green-500 rounded-full animate-pulse"
+                    ></span>
+                    <span>System Initializing</span>
+                </div>
             </div>
         </div>
     </body>
 </html>
 
-<style>
-    .loading-title {
-        font-family: "Kanit";
-    }
-
-    .hero-image-mask {
-        mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-        -webkit-mask-image: linear-gradient(
-            to bottom,
-            black 70%,
-            transparent 100%
-        );
-    }
-</style>
-
 <script is:inline>
-    let load_pulse = gsap.to(".loading-bar", {
-        duration: 1,
-        backgroundColor: "var(--foreground)",
-        ease: "power3.out",
-        repeat: -1,
-        yoyo: true,
-    });
+    window.addEventListener("load", () => {
+        const tl = gsap.timeline();
+        const counterObj = { value: 0 };
 
-    // Initial setup
-    document.addEventListener("DOMContentLoaded", () => {
-        load_pulse.kill();
-        let tl = gsap.timeline();
+        tl.to(counterObj, {
+            value: 100,
+            duration: 0.8,
+            ease: "power2.out",
+            onUpdate: () => {
+                document.querySelector(".counter").textContent = Math.round(
+                    counterObj.value,
+                )
+                    .toString()
+                    .padStart(3, "0");
+            },
+        });
 
-        tl.to(".loading-bar", {
-            duration: 0.75,
-            backgroundColor: "var(--foreground)",
-            scaleX: 1.5,
-            ease: "power3.out",
+        tl.to(
+            ".loading-content",
+            {
+                opacity: 0,
+                duration: 0.3,
+                ease: "power2.in",
+            },
+            "-=0.2",
+        );
+        tl.to(
+            ".shutter-top",
+            {
+                yPercent: -100,
+                duration: 0.8,
+                ease: "power4.inOut",
+            },
+            "open",
+        );
+
+        tl.to(
+            ".shutter-bottom",
+            {
+                yPercent: 100,
+                duration: 0.8,
+                ease: "power4.inOut",
+            },
+            "open",
+        );
+        tl.set(".loading-screen", {
+            display: "none",
         });
-        tl.to(".loading-icon", {
-            duration: 0.75,
-            yPercent: 150,
-            ease: "back.in(1.7)",
-        });
-        tl.to(".loading-screen", {
-            duration: 1,
-            autoAlpha: 0,
-            ease: "power3.out",
-        });
+        tl.fromTo(
+            "h1, .animate-in",
+            { y: 20, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8 },
+            "-=0.4",
+        );
     });
 </script>

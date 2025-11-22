@@ -2,7 +2,7 @@
 import "@/styles/global.css";
 import { getCollection } from "astro:content";
 import { CldImage } from "astro-cloudinary";
-import PublicNavbar from "@/components/public-navbar.astro";
+import PublicNavbar from "@/components/Navbar.astro";
 import { ArrowRight } from "lucide-react";
 
 // Load all photos into a single array
@@ -15,6 +15,11 @@ const photos = await getCollection("photos");
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"
+        />
+
         <title>Brock Shaffer - Photo Gallery</title>
 
         <script
