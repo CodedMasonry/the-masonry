@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 import { CldImage } from "astro-cloudinary";
 import PublicNavbar from "@/components/Navbar.astro";
 import { ArrowRight } from "lucide-react";
+import GridBackground from "@/components/GridBackground.astro";
 
 // Load all photos into a single array
 const photos = await getCollection("photos");
@@ -32,6 +33,7 @@ const photos = await getCollection("photos");
         ></script>
     </head>
     <body>
+        <GridBackground />
         <PublicNavbar />
         <main class="min-h-screen">
             <div class="flex flex-col pb-12 pt-20 mx-4 lg:mx-8">
