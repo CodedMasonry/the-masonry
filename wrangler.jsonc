@@ -13,7 +13,7 @@
   },
   "routes": [
     {
-      "pattern": "dev.brockshaffer.dev",
+      "pattern": "brockshaffer.dev",
       "custom_domain": true,
     },
   ],
