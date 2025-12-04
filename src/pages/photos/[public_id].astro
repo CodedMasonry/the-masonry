@@ -1,9 +1,16 @@
 ---
+// Set the page to be Server-Side Rendered
+// NOTE: Make sure your astro.config.mjs has an SSR adapter configured (e.g., @astrojs/node)
+export const prerender = false;
+
 import "@/styles/global.css";
+// We no longer use getCollection for *all* photos at once.
+// Instead, we will use it to fetch a *single* photo based on the URL parameter.
 import { getCollection } from "astro:content";
 import { CldImage } from "astro-cloudinary";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+// The PhotoActions component must remain a client component (client:idle)
 import PhotoActions from "@/components/PhotoActions";
 import { v2 as cloudinary } from "cloudinary";
 import { z } from "zod";
@@ -21,6 +28,10 @@ import {
 cloudinary.config({
     cloud_name: import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME,
     api_key: import.meta.env.PUBLIC_CLOUDINARY_API_KEY,
+    // CLOUDINARY_API_SECRET is a sensitive secret, so it MUST be accessed using `Astro.locals`
+    // or through the standard server-only `import.meta.env` when using SSR.
+    // It's generally best practice to use `import.meta.env` for environment variables
+    // that are only used in the server-side setup script.
     api_secret: import.meta.env.CLOUDINARY_API_SECRET,
 });
 
@@ -39,17 +50,23 @@ const CloudinaryMetadataSchema = z
 
 type CloudinaryMetadata = z.infer<typeof CloudinaryMetadataSchema>;
 
-// Fetch metadata at build time
-export async function getStaticPaths() {
-    const photos = await getCollection("photos");
-    return photos.map((photo) => ({
-        params: { public_id: photo.data.public_id },
-        props: { photo },
-    }));
-}
+// 1. REMOVE getStaticPaths() for SSR
+// 2. GET public_id from URL params
+const { public_id } = Astro.params;
 
-// Props destructure
-const { photo } = Astro.props;
+// 3. FETCH the photo data from the content collection based on public_id
+// This replaces the logic that was previously in getStaticPaths and passed via Astro.props
+const photos = await getCollection("photos", ({ data }) => {
+    return data.public_id === public_id;
+});
+
+// Check if photo exists and get the single photo object
+const photo = photos[0];
+
+// Handle 404 if the photo is not found
+if (!photo) {
+    return Astro.redirect("/404");
+}
 
 // Fetch metadata for this photo
 let metadata: CloudinaryMetadata | null = null;
