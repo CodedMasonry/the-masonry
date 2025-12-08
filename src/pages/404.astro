@@ -1,0 +1,20 @@
+---
+import Main from "@/layouts/main.astro";
+import NotFoundImage from "@/assets/illustrations/notfound.svg";
+---
+
+<Main title="Not Found">
+    <div class="flex h-svh">
+        <div
+            class="m-auto p-8 items-center justify-center text-center relative"
+        >
+            <NotFoundImage class="size-64 md:size-96 mx-auto" />
+            <h1 class="text-2xl md:text-4xl text-primary font-bold">
+                404 Not Found
+            </h1>
+            <h2 class="text-lg md:text-xl text-foreground">
+                It just doesn't exist. I don't know what to tell you.
+            </h2>
+        </div>
+    </div>
+</Main>

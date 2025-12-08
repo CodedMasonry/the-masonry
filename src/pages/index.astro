@@ -1,0 +1,432 @@
+---
+import "@/styles/global.css";
+import PublicNavbar from "@/components/Navbar.astro";
+import GridBackground from "@/components/GridBackground.astro";
+import { CldImage } from "astro-cloudinary";
+import {
+    DownloadCloud,
+    Camera,
+    Code2,
+    ArrowRight,
+    Aperture,
+    Drone,
+    FileUser,
+} from "lucide-react";
+
+const btnBase =
+    "group relative inline-flex h-11 items-center justify-center gap-2 overflow-hidden rounded-md border px-8 text-sm font-medium transition-all duration-300 hover:ring-1 hover:ring-ring";
+const btnPrimary = `${btnBase} border-primary/50 bg-primary/10 text-primary hover:bg-primary/20 hover:border-primary`;
+const btnSecondary = `${btnBase} border-border bg-background/50 text-muted-foreground hover:bg-accent hover:text-foreground`;
+
+const heroImage = "sp6_ogh3om";
+---
+
+<html lang="en" class="dark">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap"
+            rel="stylesheet"
+        />
+
+        <title>Brock Shaffer</title>
+
+        <script
+            is:inline
+            src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"
+        ></script>
+    </head>
+
+    <body
+        class="bg-background text-foreground overflow-x-hidden selection:bg-primary/30 selection:text-primary-foreground"
+    >
+        <main class="min-h-screen relative flex flex-col items-center">
+            <!--Critical Components-->
+            <GridBackground />
+            <PublicNavbar />
+
+            <!--Hero Section-->
+            <section
+                class="relative flex min-h-[90vh] w-full flex-col items-center justify-center pt-24 pb-12 px-4 md:px-6 max-w-[1400px] mx-auto"
+            >
+                <div
+                    class="text-center space-y-6 mb-12 animate-in fade-in slide-in-from-bottom-8 duration-1000"
+                >
+                    <div
+                        class="flex items-center justify-center gap-4 text-xs md:text-sm font-mono text-muted-foreground tracking-widest uppercase opacity-80"
+                    >
+                        <span class="flex items-center align-middle gap-1"
+                            ><Code2 size={14} /> Developer</span
+                        >
+                        <span class="text-border">|</span>
+                        <span class="flex items-center align-middle gap-1"
+                            ><Drone size={14} /> Drone Pilot</span
+                        >
+                        <span class="text-border">|</span>
+                        <span class="flex items-center align-middle gap-1"
+                            ><Camera size={14} /> Photographer</span
+                        >
+                    </div>
+
+                    <h1
+                        class="text-6xl md:text-8xl font-bold tracking-tighter text-foreground"
+                    >
+                        BROCK SHAFFER
+                    </h1>
+
+                    <p
+                        class="max-w-[500px] mx-auto text-lg text-muted-foreground/80 font-light leading-relaxed"
+                    >
+                        Crafting logic in code and capturing moments in light.
+                        <span class="hidden md:block"
+                            >Precision in every pixel and parameter.</span
+                        >
+                    </p>
+
+                    <div class="flex flex-wrap justify-center gap-4 pt-4">
+                        <a
+                            href="https://github.com/CodedMasonry"
+                            class={btnPrimary}
+                        >
+                            <span>Resume</span>
+                            <FileUser
+                                size={16}
+                                className="opacity-60 transition-transform group-hover:-translate-y-0.5"
+                            />
+                        </a>
+                        <a
+                            href="https://github.com/CodedMasonry"
+                            class={btnSecondary}
+                        >
+                            <span>Projects</span>
+                            <Code2
+                                size={16}
+                                className="opacity-60 transition-transform group-hover:-translate-y-0.5"
+                            />
+                        </a>
+                        <a href="photos" class={btnSecondary}>
+                            <span>Gallery</span>
+                            <Aperture
+                                size={16}
+                                className="opacity-60 transition-transform group-hover:rotate-45"
+                            />
+                        </a>
+                    </div>
+                </div>
+
+                <!--Hero Image-->
+                <div
+                    class="relative w-11/12 lg:w-full max-w-6xl group perspective-1000 animate-in fade-in slide-in-from-bottom-10 duration-500 delay-200"
+                >
+                    <div
+                        class="absolute -top-4 -left-4 w-8 h-8 border-t-2 border-l-2 border-primary/30 transition-all duration-500 group-hover:border-primary group-hover:-top-5 group-hover:-left-5"
+                    >
+                    </div>
+                    <div
+                        class="absolute -top-4 -right-4 w-8 h-8 border-t-2 border-r-2 border-primary/30 transition-all duration-500 group-hover:border-primary group-hover:-top-5 group-hover:-right-5"
+                    >
+                    </div>
+                    <div
+                        class="absolute -bottom-4 -left-4 w-8 h-8 border-b-2 border-l-2 border-primary/30 transition-all duration-500 group-hover:border-primary group-hover:-bottom-5 group-hover:-left-5"
+                    >
+                    </div>
+                    <div
+                        class="absolute -bottom-4 -right-4 w-8 h-8 border-b-2 border-r-2 border-primary/30 transition-all duration-500 group-hover:border-primary group-hover:-bottom-5 group-hover:-right-5"
+                    >
+                    </div>
+
+                    <div
+                        class="relative aspect-video md:aspect-21/9 w-full overflow-hidden bg-muted/20 border border-border/50 shadow-2xl"
+                    >
+                        <div
+                            class="absolute top-0 left-0 w-full p-4 flex justify-between items-start z-20 pointer-events-none text-[10px] md:text-xs font-mono tracking-wider text-muted-foreground/70 mix-blend-difference"
+                        >
+                            <div class="flex flex-col gap-1">
+                                <span>REC.709</span>
+                                <span>RAW_VIEWER.BIN</span>
+                            </div>
+                            <div class="flex gap-4">
+                                <span>ISO 120</span>
+                                <span>1/60s</span>
+                                <span>f/2.8</span>
+                            </div>
+                        </div>
+
+                        <CldImage
+                            src={heroImage}
+                            alt="Portfolio Highlight"
+                            width={1920}
+                            height={1080}
+                            sizes="90vw"
+                            loading="eager"
+                            fetchpriority="high"
+                            quality="auto"
+                            format="auto"
+                            class="h-full w-full object-cover opacity-90 transition-transform duration-[2s] ease-out group-hover:scale-[1.02]"
+                        />
+
+                        <div
+                            class="absolute inset-0 bg-black/10 pointer-events-none z-10 bg-size-[4px_4px] bg-[linear-gradient(rgba(0,0,0,0)_50%,rgba(0,0,0,0.2)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))]"
+                        >
+                        </div>
+                    </div>
+
+                    <div
+                        class="flex justify-between items-center mt-2 px-1 text-xs font-mono text-muted-foreground/60"
+                    >
+                        <span>[001] MAIN_ENTRY</span>
+                        <span>39.9612° N, 82.9988° W</span>
+                    </div>
+                </div>
+            </section>
+
+            <section
+                class="relative flex w-full flex-col items-center justify-center pt-24 pb-12 px-4 md:px-6 max-w-[1400px] mx-auto"
+            >
+                <h2
+                    class="text-2xl md:text-5xl font-semibold tracking-tighter text-foreground"
+                >
+                    FINDING BEAUTY IN DETAILS
+                </h2>
+                <div
+                    class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mt-10 md:mt-16"
+                >
+                    <a
+                        href="/photos"
+                        class="relative aspect-video w-full group overflow-hidden border border-border/50 bg-muted/20 hover:border-primary/50 transition-colors duration-300"
+                    >
+                        <CldImage
+                            src="DJI_20240801201214_0045_D_vtzl3w"
+                            alt="Downtown Dublin Ohio"
+                            width={768}
+                            height={432}
+                            sizes="(max-width: 768px) 90vw, 30vw"
+                            quality="auto"
+                            format="auto"
+                            class="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-out group-hover:scale-[1.05] group-hover:opacity-100"
+                        />
+                        <div
+                            class="absolute inset-0 bg-black/15 group-hover:bg-black/5 transition-colors duration-500"
+                        >
+                        </div>
+
+                        <div
+                            class="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-primary/30 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                        >
+                        </div>
+                        <div
+                            class="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-primary/30 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                        >
+                        </div>
+
+                        <div
+                            class="absolute bottom-0 left-0 right-0 p-3 flex justify-between items-end text-white/90 font-mono text-xs md:text-sm mix-blend-difference"
+                        >
+                            <span class="font-medium text-shadow-sm"
+                                >DRONE / CITYSCAPE</span
+                            >
+                            <ArrowRight
+                                size={16}
+                                className="transition-transform group-hover:translate-x-1"
+                            />
+                        </div>
+                    </a>
+
+                    <a
+                        href="/projects"
+                        class="relative aspect-video w-full group overflow-hidden border border-border/50 bg-muted/20 hover:border-primary/50 transition-colors duration-300"
+                    >
+                        <CldImage
+                            src="DJI_20251108110602_0075_D_j0ie3e"
+                            alt="Suburban Columbus Ohio"
+                            width={768}
+                            height={432}
+                            sizes="(max-width: 768px) 90vw, 30vw"
+                            quality="auto"
+                            format="auto"
+                            class="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-out group-hover:scale-[1.05] group-hover:opacity-100"
+                        />
+                        <div
+                            class="absolute inset-0 bg-black/15 group-hover:bg-black/5 transition-colors duration-500"
+                        >
+                        </div>
+
+                        <div
+                            class="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-primary/30 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                        >
+                        </div>
+                        <div
+                            class="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-primary/30 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                        >
+                        </div>
+
+                        <div
+                            class="absolute bottom-0 left-0 right-0 p-3 flex justify-between items-end text-white/90 font-mono text-xs md:text-sm mix-blend-difference"
+                        >
+                            <span class="font-medium text-shadow-sm"
+                                >PHOTO / CITYSCAPE</span
+                            >
+                            <ArrowRight
+                                size={16}
+                                className="transition-transform group-hover:translate-x-1"
+                            />
+                        </div>
+                    </a>
+
+                    <a
+                        href="/photos"
+                        class="relative aspect-video w-full group overflow-hidden border border-border/50 bg-muted/20 hover:border-primary/50 transition-colors duration-300"
+                    >
+                        <CldImage
+                            src="damA2_09_20_25_rkfd0k"
+                            alt="Black and white portrait"
+                            width={768}
+                            height={432}
+                            sizes="(max-width: 768px) 90vw, 30vw"
+                            quality="auto"
+                            format="auto"
+                            class="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-out group-hover:scale-[1.05] group-hover:opacity-100"
+                        />
+                        <div
+                            class="absolute inset-0 bg-black/15 group-hover:bg-black/5 transition-colors duration-500"
+                        >
+                        </div>
+
+                        <div
+                            class="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-primary/30 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                        >
+                        </div>
+                        <div
+                            class="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-primary/30 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                        >
+                        </div>
+
+                        <div
+                            class="absolute bottom-0 left-0 right-0 p-3 flex justify-between items-end text-white/90 font-mono text-xs md:text-sm mix-blend-difference"
+                        >
+                            <span class="font-medium text-shadow-sm"
+                                >DRONE / INFRASTRUCTURE</span
+                            >
+                            <ArrowRight
+                                size={16}
+                                className="transition-transform group-hover:translate-x-1"
+                            />
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <div
+            class="flex flex-col space-y-2 py-4 px-6 w-full min-h-16 bg-muted/20 border-t border-muted text-muted-foreground"
+        >
+            <a
+                href="mailto:contact@brockshaffer.dev"
+                class="hover:text-foreground transition w-fit"
+                >Contact@brockshaffer.dev</a
+            >
+            <a
+                class="hover:text-foreground transition w-fit"
+                href="https://www.linkedin.com/in/brockshaffer">LinkedIn</a
+            >
+            <a
+                class="hover:text-foreground transition w-fit"
+                href="https://github.com/CodedMasonry">Github</a
+            >
+        </div>
+
+        <!--Loading Screen-->
+        <div
+            class="loading-screen fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden"
+        >
+            <div
+                class="shutter-top absolute top-0 left-0 w-full h-1/2 bg-neutral-950 border-b border-neutral-800 z-10"
+            >
+            </div>
+            <div
+                class="shutter-bottom absolute bottom-0 left-0 w-full h-1/2 bg-neutral-950 border-t border-neutral-800 z-10"
+            >
+            </div>
+
+            <div
+                class="loading-content relative z-20 flex flex-col items-center gap-4 mix-blend-difference"
+            >
+                <div
+                    class="font-mono text-4xl md:text-6xl font-bold tracking-tighter text-white mb-8"
+                >
+                    <span class="counter">000</span>%
+                </div>
+
+                <div
+                    class="flex items-center gap-2 text-xs font-mono text-neutral-400 uppercase tracking-[0.2em]"
+                >
+                    <span
+                        class="w-2 h-2 bg-green-500 rounded-full animate-pulse"
+                    ></span>
+                    <span>System Initializing</span>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+        const tl = gsap.timeline();
+        const counterObj = { value: 0 };
+
+        tl.to(counterObj, {
+            value: 100,
+            duration: 0.8,
+            ease: "power2.out",
+            onUpdate: () => {
+                document.querySelector(".counter").textContent = Math.round(
+                    counterObj.value,
+                )
+                    .toString()
+                    .padStart(3, "0");
+            },
+        });
+
+        tl.to(
+            ".loading-content",
+            {
+                opacity: 0,
+                duration: 0.3,
+                ease: "power2.in",
+            },
+            "-=0.2",
+        );
+        tl.to(
+            ".shutter-top",
+            {
+                yPercent: -100,
+                duration: 0.8,
+                ease: "power4.inOut",
+            },
+            "open",
+        );
+
+        tl.to(
+            ".shutter-bottom",
+            {
+                yPercent: 100,
+                duration: 0.8,
+                ease: "power4.inOut",
+            },
+            "open",
+        );
+        tl.set(".loading-screen", {
+            display: "none",
+        });
+        tl.fromTo(
+            "h1, .animate-in",
+            { y: 20, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8 },
+            "-=0.4",
+        );
+    });
+</script>
