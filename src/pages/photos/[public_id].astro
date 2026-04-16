@@ -1,16 +1,11 @@
 ---
-// Set the page to be Server-Side Rendered
-// NOTE: Make sure your astro.config.mjs has an SSR adapter configured (e.g., @astrojs/node)
 export const prerender = false;
 
 import "@/styles/global.css";
-// We no longer use getCollection for *all* photos at once.
-// Instead, we will use it to fetch a *single* photo based on the URL parameter.
 import { getCollection } from "astro:content";
 import { CldImage } from "astro-cloudinary";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-// The PhotoActions component must remain a client component (client:idle)
 import PhotoActions from "@/components/PhotoActions";
 import { v2 as cloudinary } from "cloudinary";
 import { z } from "zod";
@@ -24,18 +19,12 @@ import {
     CalendarFold,
 } from "lucide-react";
 
-// Cloudinary configuration
 cloudinary.config({
     cloud_name: import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME,
     api_key: import.meta.env.PUBLIC_CLOUDINARY_API_KEY,
-    // CLOUDINARY_API_SECRET is a sensitive secret, so it MUST be accessed using `Astro.locals`
-    // or through the standard server-only `import.meta.env` when using SSR.
-    // It's generally best practice to use `import.meta.env` for environment variables
-    // that are only used in the server-side setup script.
     api_secret: import.meta.env.CLOUDINARY_API_SECRET,
 });
 
-// Zod schema for Cloudinary metadata
 const CloudinaryMetadataSchema = z
     .object({
         make: z.string().optional(),
@@ -50,50 +39,36 @@ const CloudinaryMetadataSchema = z
 
 type CloudinaryMetadata = z.infer<typeof CloudinaryMetadataSchema>;
 
-// 1. REMOVE getStaticPaths() for SSR
-// 2. GET public_id from URL params
 const { public_id } = Astro.params;
 
-// 3. FETCH the photo data from the content collection based on public_id
-// This replaces the logic that was previously in getStaticPaths and passed via Astro.props
-const photos = await getCollection("photos", ({ data }) => {
-    return data.public_id === public_id;
-});
-
-// Check if photo exists and get the single photo object
+const photos = await getCollection(
+    "photos",
+    ({ data }) => data.public_id === public_id,
+);
 const photo = photos[0];
 
-// Handle 404 if the photo is not found
-if (!photo) {
-    return Astro.redirect("/404");
-}
+if (!photo) return Astro.redirect("/404");
 
-// Fetch metadata for this photo
+// Fetch metadata in parallel — don't await until needed
 let metadata: CloudinaryMetadata | null = null;
 try {
     const result = await cloudinary.api.resource(photo.data.public_id, {
         media_metadata: true,
     });
-
-    metadata = CloudinaryMetadataSchema.parse(result.media_metadata || null);
+    metadata = CloudinaryMetadataSchema.parse(result.media_metadata ?? null);
 } catch (err) {
     console.error(`Error fetching metadata for ${photo.data.public_id}`, err);
 }
 
-const createDateRaw =
-    metadata?.CreateDate !== undefined
-        ? metadata?.CreateDate
-        : photo.data.created_at; // e.g., '2024:11:03 08:00:40'
+const createDateRaw = metadata?.CreateDate ?? photo.data.created_at;
 let formattedDate = "";
 
 if (createDateRaw) {
-    // Replace only the first two colons with dashes
     const isoString = createDateRaw.replace(
         /^(\d{4}):(\d{2}):(\d{2})/,
         "$1-$2-$3",
     );
-    const dateObj = new Date(isoString); // JS can parse 'YYYY-MM-DD HH:MM:SS'
-
+    const dateObj = new Date(isoString);
     if (!isNaN(dateObj.getTime())) {
         formattedDate = dateObj.toLocaleDateString("en-US", {
             year: "numeric",
@@ -121,17 +96,12 @@ const metadataItems = [
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         <link
-            href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;0,700;1,400&display=swap"
             rel="stylesheet"
         />
-
         <title>{`${photo.data.display_name} - Brock Shaffer`}</title>
-
-        <script
-            is:inline
-            src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"
-        ></script>
     </head>
     <body>
         <main class="flex flex-col min-h-screen">
@@ -140,7 +110,7 @@ const metadataItems = [
                 data-astro-prefetch="hover"
                 class="z-20 cursor-default ml-2 xl:ml-8 mt-4 mb-4 md:mb-0"
             >
-                <Button variant="ghost"> ← Back to Gallery </Button>
+                <Button variant="ghost">← Back to Gallery</Button>
             </a>
 
             <div
@@ -154,8 +124,7 @@ const metadataItems = [
                         class="photo-image w-full h-full md:rounded-lg"
                         src={photo.data.public_id}
                         format="auto"
-                        dpr="auto"
-                        quality="auto:sensitive"
+                        quality="auto:good"
                         loading="eager"
                         fetchpriority="high"
                         decoding="async"
@@ -191,6 +160,7 @@ const metadataItems = [
                         format={photo.data.format}
                     />
                     <Separator className="my-6" />
+
                     {
                         metadata && (
                             <div class="grid grid-cols-1 gap-4 text-sm text-muted-foreground">
@@ -219,58 +189,56 @@ const metadataItems = [
             <div id="loading-bar" class="h-full bg-primary w-0"></div>
         </div>
 
-        <script is:inline>
-            (function () {
-                const photoCard = document.getElementById("photo-card-main");
-                const image = photoCard?.querySelector(".photo-image");
-                const loadingBarContainer = document.getElementById(
-                    "loading-bar-container",
-                );
-                const loadingBar = document.getElementById("loading-bar");
+        <script>
+            // Use native CSS animation instead of GSAP for the loading bar
+            const loadingBarContainer = document.getElementById(
+                "loading-bar-container",
+            );
+            const loadingBar = document.getElementById(
+                "loading-bar",
+            ) as HTMLElement;
+            const photoCard = document.getElementById(
+                "photo-card-main",
+            ) as HTMLElement;
+            const image = photoCard?.querySelector(
+                ".photo-image",
+            ) as HTMLImageElement;
 
-                if (image && loadingBar && loadingBarContainer) {
-                    // Set initial state for animation
-                    gsap.set("#photo-card-main", {
-                        scale: 0.98,
-                    });
+            if (image && loadingBar && loadingBarContainer) {
+                photoCard.style.transform = "scale(0.98)";
+                loadingBar.style.animation =
+                    "loadingPulse 1.5s ease-in-out infinite alternate";
 
-                    // Loading animation
-                    gsap.to(loadingBar, {
-                        width: "100%",
-                        duration: 5,
-                        ease: "linear",
-                        repeat: -1,
-                        yoyo: true,
-                    });
+                const reveal = () => {
+                    loadingBarContainer.style.transition = "opacity 0.3s";
+                    loadingBarContainer.style.opacity = "0";
+                    setTimeout(() => {
+                        loadingBarContainer.style.display = "none";
+                    }, 300);
 
-                    const runAnimation = () => {
-                        // Image load is complete, so hide the loading bar first
-                        gsap.killTweensOf(loadingBar); // Stop the infinite progress animation
-                        gsap.to(loadingBarContainer, {
-                            opacity: 0,
-                            duration: 0.3,
-                            onComplete: () => {
-                                // Once faded out, remove it from the flow
-                                loadingBarContainer.style.display = "none";
-                            },
-                        });
+                    photoCard.style.transition =
+                        "opacity 0.6s ease, transform 0.6s ease";
+                    photoCard.style.opacity = "1";
+                    photoCard.style.transform = "scale(1)";
+                };
 
-                        // Run photo card animation
-                        gsap.to("#photo-card-main", {
-                            opacity: 1,
-                            scale: 1,
-                            duration: 0.6,
-                            ease: "power2.out",
-                        });
-                    };
-
-                    image.onload = runAnimation;
-
-                    if (image.complete && image.naturalHeight !== 0) {
-                        runAnimation();
-                    }
+                if (image.complete && image.naturalHeight !== 0) {
+                    reveal();
+                } else {
+                    image.onload = reveal;
                 }
-            })();
+            }
         </script>
+
+        <style>
+            @keyframes loadingPulse {
+                from {
+                    width: 0%;
+                }
+                to {
+                    width: 100%;
+                }
+            }
+        </style>
     </body>
 </html>
