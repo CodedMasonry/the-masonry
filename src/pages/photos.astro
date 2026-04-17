@@ -16,11 +16,9 @@ const EAGER_COUNT = 6;
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-        <!-- Preconnect to Cloudinary early -->
         <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
 
-        <!-- Preload GSAP from CDN cache — non-blocking -->
         <link
             rel="preload"
             href="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"
@@ -32,7 +30,6 @@ const EAGER_COUNT = 6;
             as="script"
         />
 
-        <!-- Non-render-blocking font load -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -82,8 +79,8 @@ const EAGER_COUNT = 6;
                                         quality="auto:eco"
                                         crop="fill"
                                         gravity="auto"
-                                        placeholder="blur"
-                                        widths={[400, 800, 1200]}
+                                        width={800}
+                                        height={450}
                                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                         loading={isEager ? "eager" : "lazy"}
                                         fetchpriority={isEager ? "high" : "low"}
@@ -103,7 +100,6 @@ const EAGER_COUNT = 6;
 
         <script is:inline>
             (function () {
-                // Defer GSAP init until after first paint
                 function initGSAP() {
                     if (
                         typeof gsap === "undefined" ||
@@ -131,7 +127,6 @@ const EAGER_COUNT = 6;
                             }),
                     });
 
-                    // Hover logic — desktop only
                     gsap.matchMedia().add("(min-width: 769px)", () => {
                         cards.forEach((card) => {
                             const image = card.querySelector(".photo-image");
@@ -164,7 +159,6 @@ const EAGER_COUNT = 6;
                     });
                 }
 
-                // Wait for GSAP scripts to be ready
                 if (document.readyState === "complete") {
                     initGSAP();
                 } else {
