@@ -86,43 +86,50 @@ function App() {
   const { push } = useTerminal()
 
   useEffect(() => {
-    const lines: Parameters<typeof push>[] = [
-      ["SYSTEM_INITIALIZING", "separator"],
-      [`[NODE] LINK_ESTABLISHED : ${cf.colo}-${cf.country ?? "??"}`, "ok"],
+    const lines: [
+      Parameters<typeof push>[0],
+      Parameters<typeof push>[1],
+      number,
+    ][] = [
+      ["SYSTEM_INITIALIZING", "separator", 60],
+      [`[NODE] LINK_ESTABLISHED : ${cf.colo}-${cf.country ?? "??"}`, "ok", 640],
       [
         `[SYS] STREAM_READY // ${crypto.randomUUID().toUpperCase().split("-")[0]}`,
         "ok",
+        480,
       ],
-      [`[NET] PROTOCOL_SYNC ↔ ${cf.httpProtocol} · ${cf.tlsVersion}`, "ok"],
-      [`[NET] CIPHER_SUITE ↔ ${cf.tlsCipher}`, "ok"],
-
-      ["REMOTE_METRICS_RESOLVING", "separator"],
+      [`[NET] PROTOCOL_SYNC ↔ ${cf.httpProtocol} · ${cf.tlsVersion}`, "ok", 80],
+      [`[NET] CIPHER_SUITE ↔ ${cf.tlsCipher}`, "ok", 60],
+      ["REMOTE_METRICS_RESOLVING", "separator", 60],
       [
         `[GEO] LOC_RESOLVED : ${cf.city}, ${cf.regionCode} // ${cf.latitude},${cf.longitude}`,
         "ok",
+        480,
       ],
-      [`[GEO] ASN_UPLINK : ${cf.asOrganization} // ID:${cf.asn}`, "ok"],
-      [`[GEO] TZ_LOCAL : ${cf.timezone} // PC:${cf.postalCode}`, "stdout"],
-
+      [`[GEO] ASN_UPLINK : ${cf.asOrganization} // ID:${cf.asn}`, "ok", 80],
+      [`[GEO] TZ_LOCAL : ${cf.timezone} // PC:${cf.postalCode}`, "stdout", 80],
       cf.isEU
-        ? [`[ID_GATE] REGION_LOCK_APPLIED // GDPR_COMPLIANT`, "warn"]
-        : [`[ID_GATE] REGION_BYPASS // EXTERNAL_ORIGIN`, "stdout"],
-
-      [`[ID_GATE] HANDSHAKE_COMPLETE // TRUST_LVL=HIGH · GUEST`, "ok"],
-      [`[ID_GATE] SESSION_OPEN // WELCOME_USER`, "ok"],
+        ? [`[ID_GATE] REGION_LOCK_APPLIED // GDPR_COMPLIANT`, "warn", 240]
+        : [`[ID_GATE] REGION_BYPASS // EXTERNAL_ORIGIN`, "stdout", 240],
+      [`[ID_GATE] HANDSHAKE_COMPLETE // TRUST_LVL=HIGH · GUEST`, "ok", 120],
+      [`[ID_GATE] SESSION_OPEN // WELCOME_USER`, "ok", 120],
     ]
 
     let i = 0
-    const interval = setInterval(() => {
-      if (i < lines.length) {
-        push(...lines[i])
-        i++
-      } else {
-        clearInterval(interval)
-      }
-    }, 240)
+    let timeout: ReturnType<typeof setTimeout>
 
-    return () => clearInterval(interval)
+    const schedule = () => {
+      if (i >= lines.length) return
+      const [text, type, delay] = lines[i]
+      timeout = setTimeout(() => {
+        push(text, type)
+        i++
+        schedule()
+      }, delay)
+    }
+
+    schedule()
+    return () => clearTimeout(timeout)
   }, [])
 
   return (
