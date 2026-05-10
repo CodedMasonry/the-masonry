@@ -135,9 +135,14 @@ function App() {
 
   return (
     <GridBackground className="min-h-screen bg-background">
-      <div className="flex flex-col gap-4">
-        <h1 className="mt-16 text-6xl font-bold">BROCK SHAFFER</h1>
-        <h1 className="mt-16 text-6xl font-bold"></h1>
+      <div className="flex flex-col antialiased">
+        <h1 className="mt-24 text-6xl font-bold">BROCK SHAFFER</h1>
+        <p className="font-barcode tracking-widest">
+          BROCK SHAFFER: DEVELOPER, DRONE PILOT, PHOTOGRAPHER
+        </p>
+        <p className="mt-2 text-2xl">DEVELOPER</p>
+        <p className="mt-2 text-2xl">DRONE PILOT</p>
+        <p className="mt-2 text-2xl">PHOTOGRAPHER</p>
         <h2></h2>
       </div>
       <Terminal />
