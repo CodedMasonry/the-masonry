@@ -23,7 +23,7 @@ export function Terminal() {
   const { lines } = useTerminal()
 
   return (
-    <div className="fixed bottom-6 left-6 flex flex-col border border-border bg-background/95 text-[10px] tracking-wider uppercase shadow-2xl backdrop-blur-md">
+    <div className="fixed bottom-6 left-6 flex flex-col border border-border bg-background/95 text-[10px] tracking-wider uppercase shadow-2xl">
       <div className="flex min-w-120 flex-col gap-0 px-4 py-3">
         {lines.map((line) => {
           if (line.type === "separator") {
@@ -67,7 +67,7 @@ export function Terminal() {
         })}
       </div>
 
-      <div className="flex items-center justify-between border-t border-border bg-muted/20 px-3 py-1.5 text-[9px] text-muted-foreground/60">
+      <div className="flex items-center justify-between border-t border-border bg-muted/10 px-3 py-1.5 text-[9px] text-muted-foreground/60">
         <div className="flex gap-4">
           <span className="flex items-center gap-1.5">
             <span className="h-1 w-1 animate-pulse rounded-full bg-amber-500" />

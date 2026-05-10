@@ -3,8 +3,10 @@ import { createServerFn } from "@tanstack/react-start"
 import { getRequest } from "@tanstack/react-start/server"
 import { Terminal } from "@/components/terminal"
 import { useTerminal } from "@/hooks/useTerminal"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { GridBackground } from "@/components/grid-background"
+import gsap from "gsap"
+import { useGSAP } from "@gsap/react"
 
 export interface IncomingRequestCfProperties {
   // Identity
@@ -83,6 +85,57 @@ export const Route = createFileRoute("/")({
 })
 
 function App() {
+  const container = useRef(null)
+
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({ defaults: { ease: "power4.out" } })
+      tl.from(".corner-line", {
+        width: 0,
+        height: 0,
+        duration: 0.8,
+        delay: 1.6,
+        autoAlpha: 0,
+      }).from(
+        ".animate-text",
+        {
+          y: 20,
+          opacity: 0,
+          duration: 0.6,
+          stagger: 0.1,
+        },
+        "-=0.4"
+      )
+    },
+    { scope: container }
+  )
+
+  return (
+    <GridBackground className="min-h-screen bg-background">
+      <div
+        ref={container}
+        className="relative mt-24 flex w-fit flex-col p-8 antialiased"
+      >
+        <div className="corner-line invisible absolute top-0 left-0 h-6 w-6 border-t-2 border-l-2 border-foreground" />
+        <div className="corner-line invisible absolute top-0 right-0 h-6 w-6 border-t-2 border-r-2 border-foreground" />
+        <div className="corner-line invisible absolute bottom-0 left-0 h-6 w-6 border-b-2 border-l-2 border-foreground" />
+        <div className="corner-line invisible absolute right-0 bottom-0 h-6 w-6 border-r-2 border-b-2 border-foreground" />
+        <h1 className="animate-text text-6xl font-bold">BROCK SHAFFER</h1>
+        <p className="animate-text font-barcode tracking-widest text-muted-foreground select-none">
+          Security Through Obscurity Defines Our World
+        </p>
+        <div className="mt-4 space-y-1">
+          <p className="animate-text text-2xl">DEVELOPER</p>
+          <p className="animate-text text-2xl">DRONE PILOT</p>
+          <p className="animate-text text-2xl">PHOTOGRAPHER</p>
+        </div>
+      </div>
+      <IndexTerminal />
+    </GridBackground>
+  )
+}
+
+function IndexTerminal() {
   const cf = Route.useLoaderData()
   const { push } = useTerminal()
 
@@ -102,6 +155,7 @@ function App() {
       [`[NET] PROTOCOL_SYNC ↔ ${cf.httpProtocol} · ${cf.tlsVersion}`, "ok", 80],
       [`[NET] CIPHER_SUITE ↔ ${cf.tlsCipher}`, "ok", 60],
       ["REMOTE_METRICS_RESOLVING", "separator", 60],
+      [`[UI] DRAWING HEADER`, "stdout", 200],
       [
         `[GEO] LOC_RESOLVED : ${cf.city}, ${cf.regionCode} // ${cf.latitude},${cf.longitude}`,
         "ok",
@@ -133,19 +187,5 @@ function App() {
     return () => clearTimeout(timeout)
   }, [])
 
-  return (
-    <GridBackground className="min-h-screen bg-background">
-      <div className="flex flex-col antialiased">
-        <h1 className="mt-24 text-6xl font-bold">BROCK SHAFFER</h1>
-        <p className="font-barcode tracking-widest">
-          BROCK SHAFFER: DEVELOPER, DRONE PILOT, PHOTOGRAPHER
-        </p>
-        <p className="mt-2 text-2xl">DEVELOPER</p>
-        <p className="mt-2 text-2xl">DRONE PILOT</p>
-        <p className="mt-2 text-2xl">PHOTOGRAPHER</p>
-        <h2></h2>
-      </div>
-      <Terminal />
-    </GridBackground>
-  )
+  return <Terminal />
 }
