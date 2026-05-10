@@ -23,7 +23,7 @@ export function Terminal() {
   const { lines } = useTerminal()
 
   return (
-    <div className="fixed bottom-4 left-4 flex flex-col border border-border bg-background/95 text-[10px] tracking-wider uppercase shadow-2xl backdrop-blur-md">
+    <div className="fixed bottom-6 left-6 flex flex-col border border-border bg-background/95 text-[10px] tracking-wider uppercase shadow-2xl backdrop-blur-md">
       <div className="flex min-w-120 flex-col gap-0 px-4 py-3">
         {lines.map((line) => {
           if (line.type === "separator") {

@@ -4,6 +4,7 @@ import { getRequest } from "@tanstack/react-start/server"
 import { Terminal } from "@/components/terminal"
 import { useTerminal } from "@/hooks/useTerminal"
 import { useEffect } from "react"
+import { GridBackground } from "@/components/grid-background"
 
 export interface IncomingRequestCfProperties {
   // Identity
@@ -133,10 +134,13 @@ function App() {
   }, [])
 
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <Terminal />
+    <GridBackground className="min-h-screen bg-background">
+      <div className="flex flex-col gap-4">
+        <h1 className="mt-16 text-6xl font-bold">BROCK SHAFFER</h1>
+        <h1 className="mt-16 text-6xl font-bold"></h1>
+        <h2></h2>
       </div>
-    </div>
+      <Terminal />
+    </GridBackground>
   )
 }
