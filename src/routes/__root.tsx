@@ -17,13 +17,18 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "TanStack Start Starter",
+        title: "Brock Shaffer",
       },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      {
+        rel: "icon",
+        href: "/icon.svg",
+        type: "image/svg+xml",
       },
     ],
   }),
@@ -52,6 +57,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <link rel="manifest" href="/manifest.json" />
       </head>
       <body>
         <QueryClientProvider client={queryClient}>
