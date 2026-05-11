@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { createServerFn } from "@tanstack/react-start"
 import { getRequest } from "@tanstack/react-start/server"
-import { Terminal } from "@/components/terminal"
+import { Terminal } from "@/components/Terminal"
 import { useTerminal } from "@/hooks/useTerminal"
 import { useEffect, useRef } from "react"
-import { GridBackground } from "@/components/grid-background"
+import { GridBackground } from "@/components/GridBackground"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 
