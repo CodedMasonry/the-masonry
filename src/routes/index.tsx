@@ -8,7 +8,6 @@ import { GridBackground } from "@/components/GridBackground"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { CloudinaryImage } from "@/components/CloudinaryImage"
-import { CameraIcon, CodeIcon, DroneIcon } from "@phosphor-icons/react"
 import { ScrambleTextPlugin } from "gsap/all"
 
 export interface IncomingRequestCfProperties {
@@ -131,13 +130,14 @@ function Header() {
         .fromTo(
           ".header-image",
           { autoAlpha: 0 },
-          { duration: 0.6, autoAlpha: 1 }
+          { duration: 0.6, autoAlpha: 1 },
+          "<0.75"
         )
         .fromTo(
           ".header-image-footer",
           { autoAlpha: 0 },
           { autoAlpha: 0.6, duration: 0.5 },
-          "<"
+          "<0.25"
         )
 
       // ── Hover: corners ────────────────────────────────────────────
@@ -179,6 +179,7 @@ function Header() {
         scale: 1.04,
         duration: 1.8,
         ease: "power2.out",
+        easeReverse: true,
       })
 
       // ── Mouse events ──────────────────────────────────────────────
