@@ -8,16 +8,16 @@ interface GridBackgroundProps {
   className?: string
   gridColor?: string
   plusColor?: string
-  /** The radius of the spotlight effect in pixels */
   radius?: number
 }
 
 export const GridBackground = ({
   children,
   className,
-  gridColor = "stroke-border/30",
-  plusColor = "stroke-border/50",
-  radius = 300,
+  // Using muted-foreground ensures it adapts to dark/light automatically
+  gridColor = "stroke-muted-foreground/15",
+  plusColor = "stroke-muted-foreground/25",
+  radius = 400,
 }: GridBackgroundProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const spotlightRef = useRef<HTMLDivElement>(null)
@@ -32,7 +32,6 @@ export const GridBackground = ({
         const x = e.clientX - rect.left
         const y = e.clientY - rect.top
 
-        // Use GSAP for smooth interpolation (inertia)
         gsap.to(spotlightRef.current, {
           "--x": `${x}px`,
           "--y": `${y}px`,
@@ -50,9 +49,13 @@ export const GridBackground = ({
   return (
     <div
       ref={containerRef}
-      className={cn("relative w-full overflow-hidden bg-background", className)}
+      className={cn(
+        "relative w-full overflow-hidden bg-background",
+        "[--ambient-opacity:0.15] dark:[--ambient-opacity:0.4]",
+        className
+      )}
     >
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 opacity-50">
         <GridSVG gridColor={gridColor} plusColor={plusColor} id="base-grid" />
       </div>
 
@@ -60,12 +63,12 @@ export const GridBackground = ({
         ref={spotlightRef}
         className="pointer-events-none absolute inset-0"
         style={{
-          maskImage: `radial-gradient(${radius}px circle at var(--x, -100%) var(--y, -100%), black 0%, transparent 100%)`,
-          WebkitMaskImage: `radial-gradient(${radius}px circle at var(--x, -100%) var(--y, -100%), black 0%, transparent 100%)`,
+          maskImage: `radial-gradient(${radius}px circle at var(--x, 50%) var(--y, 50%), black 0%, rgba(0, 0, 0, var(--ambient-opacity)) 100%)`,
+          WebkitMaskImage: `radial-gradient(${radius}px circle at var(--x, 50%) var(--y, 50%), black 0%, rgba(0, 0, 0, var(--ambient-opacity)) 100%)`,
         }}
       >
         <GridSVG
-          gridColor="stroke-primary/50"
+          gridColor="stroke-primary/40"
           plusColor="stroke-primary"
           strokeWidth={1}
           id="highlight-grid"
@@ -88,11 +91,7 @@ const GridSVG = ({
   id: string
   strokeWidth?: number
 }) => (
-  <svg
-    className="h-full w-full"
-    aria-hidden="true"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg className="h-full w-full" aria-hidden="true">
     <defs>
       <pattern
         id={id}

@@ -59,7 +59,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body>
+      <body className="dark">
         <QueryClientProvider client={queryClient}>
           {children}
           <TanStackDevtools

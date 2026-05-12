@@ -8,6 +8,7 @@ import { GridBackground } from "@/components/GridBackground"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { CloudinaryImage } from "@/components/CloudinaryImage"
+import { CameraIcon, CodeIcon, DroneIcon } from "@phosphor-icons/react"
 
 export interface IncomingRequestCfProperties {
   // Identity
@@ -87,7 +88,7 @@ export const Route = createFileRoute("/")({
 
 function App() {
   return (
-    <GridBackground className="min-h-screen bg-background">
+    <GridBackground className="min-h-screen bg-background text-foreground">
       <main className="relative pb-[25vh] transition-all duration-500 lg:pb-0 lg:pl-80">
         <Header />
         <IndexTerminal />
@@ -129,20 +130,28 @@ function Header() {
 
   return (
     <div ref={container} className="mt-16 flex flex-col lg:flex-row">
-      <div className="relative mx-auto flex h-fit w-fit flex-col p-8 antialiased lg:mx-0">
+      <div className="relative mx-auto flex h-fit w-fit flex-col p-8 transition-all lg:mx-0">
         <h1 className="animate-text invisible text-6xl font-bold">
           BROCK SHAFFER
         </h1>
-        <p className="animate-text invisible text-center font-barcode tracking-widest text-muted-foreground text-primary select-none lg:text-left">
+        <p className="animate-text invisible text-center font-barcode tracking-widest text-primary select-none lg:ml-1 lg:text-left dark:text-foreground">
           Security Through Obscurity Defines Our World
         </p>
-        <div className="mt-4 flex flex-row gap-4 lg:flex-col">
-          <p className="animate-text invisible text-2xl">DEVELOPER</p>
-          <p className="animate-text invisible text-2xl">DRONE PILOT</p>
-          <p className="animate-text invisible text-2xl">PHOTOGRAPHER</p>
+        <div className="flex items-center justify-center gap-4 text-sm text-foreground uppercase lg:ml-1 lg:flex-col lg:items-start lg:justify-start lg:gap-1 lg:text-2xl">
+          <span className="animate-text invisible flex items-center gap-1 align-middle">
+            <CodeIcon className="lg:hidden" /> Developer
+          </span>
+          <span className="text-border lg:hidden">|</span>
+          <span className="animate-text invisible flex items-center gap-1 align-middle">
+            <DroneIcon className="lg:hidden" /> Drone Pilot
+          </span>
+          <span className="text-border lg:hidden">|</span>
+          <span className="animate-text invisible flex items-center gap-1 align-middle">
+            <CameraIcon className="lg:hidden" /> Photographer
+          </span>
         </div>
       </div>
-      <div className="group perspective-1000 relative mx-auto max-w-15/16 lg:mr-16 lg:ml-auto">
+      <div className="group perspective-1000 relative mx-auto max-w-2/3 md:max-w-15/16 lg:mr-16 lg:ml-auto">
         <div className="header-image-corner invisible">
           <div className="absolute -top-4 -left-4 h-8 w-8 border-t-2 border-l-2 border-primary/60 transition-all duration-500 group-hover:-top-5 group-hover:-left-5 group-hover:border-primary"></div>
           <div className="absolute -top-4 -right-4 h-8 w-8 border-t-2 border-r-2 border-primary/60 transition-all duration-500 group-hover:-top-5 group-hover:-right-5 group-hover:border-primary"></div>
