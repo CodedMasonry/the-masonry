@@ -1,7 +1,7 @@
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react"
 import { fill } from "@cloudinary/url-gen/actions/resize"
 import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity"
-import { cld } from "../utils/cloudinary" // Your config file
+import { cld } from "../utils/cloudinary"
 
 interface ImageProps {
   publicId: string
@@ -31,6 +31,7 @@ export function CloudinaryImage({
         .gravity(autoGravity())
     )
   }
+  console.log(myImage.toURL())
 
   return (
     <AdvancedImage

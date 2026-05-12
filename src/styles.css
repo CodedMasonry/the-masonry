@@ -51,13 +51,14 @@
 }
 
 :root {
+  --radius: 0;
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.473 0.137 46.201);
+  --primary: oklch(0.555 0.163 48.998);
   --primary-foreground: oklch(0.987 0.022 95.277);
   --secondary: oklch(0.274 0.006 286.033);
   --secondary-foreground: oklch(0.985 0 0);
@@ -69,12 +70,11 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.879 0.169 91.605);
-  --chart-2: oklch(0.769 0.188 70.08);
-  --chart-3: oklch(0.666 0.179 58.318);
-  --chart-4: oklch(0.555 0.163 48.998);
-  --chart-5: oklch(0.473 0.137 46.201);
-  --radius: 0;
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.769 0.188 70.08);
@@ -103,6 +103,28 @@
   border-color: red;
 }
 
-.text-glow {
-  text-shadow: 0 0 5px rgba(0, 255, 65, 0.7);
+@keyframes scan-wipe {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+.animate-scan-wipe {
+  position: absolute;
+  animation: scan-wipe 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.is-loading {
+  filter: url(#chromatic-aberration);
 }

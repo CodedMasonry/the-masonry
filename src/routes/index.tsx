@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react"
 import { GridBackground } from "@/components/GridBackground"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
+import { CloudinaryImage } from "@/components/CloudinaryImage"
 
 export interface IncomingRequestCfProperties {
   // Identity
@@ -85,53 +86,99 @@ export const Route = createFileRoute("/")({
 })
 
 function App() {
+  return (
+    <GridBackground className="min-h-screen bg-background">
+      <main className="relative pb-[25vh] transition-all duration-500 lg:pb-0 lg:pl-80">
+        <Header />
+        <IndexTerminal />
+      </main>
+    </GridBackground>
+  )
+}
+
+function Header() {
   const container = useRef(null)
 
   useGSAP(
     () => {
       const tl = gsap.timeline({ defaults: { ease: "power4.out" } })
-      tl.from(".corner-line", {
-        width: 0,
-        height: 0,
-        duration: 0.8,
-        delay: 1.6,
+      tl.from(".animate-text", {
+        y: 20,
         autoAlpha: 0,
-      }).from(
-        ".animate-text",
-        {
-          y: 20,
-          opacity: 0,
-          duration: 0.6,
-          stagger: 0.1,
-        },
-        "-=0.4"
-      )
+        delay: 1.8,
+        duration: 0.6,
+        stagger: 0.1,
+      })
+        .from(
+          ".header-image-corner",
+          {
+            duration: 0.8,
+            autoAlpha: 0,
+          },
+          "-=0.4"
+        )
+        .from(".header-image", { autoAlpha: 0, duration: 0.8 })
+        .fromTo(
+          ".header-image-footer",
+          { autoAlpha: 0, duration: 0 },
+          { autoAlpha: 0.6, duration: 0.2 }
+        )
     },
     { scope: container }
   )
 
   return (
-    <GridBackground className="min-h-screen bg-background">
-      <div
-        ref={container}
-        className="relative mt-24 flex w-fit flex-col p-8 antialiased"
-      >
-        <div className="corner-line invisible absolute top-0 left-0 h-6 w-6 border-t-2 border-l-2 border-foreground" />
-        <div className="corner-line invisible absolute top-0 right-0 h-6 w-6 border-t-2 border-r-2 border-foreground" />
-        <div className="corner-line invisible absolute bottom-0 left-0 h-6 w-6 border-b-2 border-l-2 border-foreground" />
-        <div className="corner-line invisible absolute right-0 bottom-0 h-6 w-6 border-r-2 border-b-2 border-foreground" />
-        <h1 className="animate-text text-6xl font-bold">BROCK SHAFFER</h1>
-        <p className="animate-text font-barcode tracking-widest text-muted-foreground select-none">
+    <div ref={container} className="mt-16 flex flex-col lg:flex-row">
+      <div className="relative mx-auto flex h-fit w-fit flex-col p-8 antialiased lg:mx-0">
+        <h1 className="animate-text invisible text-6xl font-bold">
+          BROCK SHAFFER
+        </h1>
+        <p className="animate-text invisible text-center font-barcode tracking-widest text-muted-foreground text-primary select-none lg:text-left">
           Security Through Obscurity Defines Our World
         </p>
-        <div className="mt-4 space-y-1">
-          <p className="animate-text text-2xl">DEVELOPER</p>
-          <p className="animate-text text-2xl">DRONE PILOT</p>
-          <p className="animate-text text-2xl">PHOTOGRAPHER</p>
+        <div className="mt-4 flex flex-row gap-4 lg:flex-col">
+          <p className="animate-text invisible text-2xl">DEVELOPER</p>
+          <p className="animate-text invisible text-2xl">DRONE PILOT</p>
+          <p className="animate-text invisible text-2xl">PHOTOGRAPHER</p>
         </div>
       </div>
-      <IndexTerminal />
-    </GridBackground>
+      <div className="group perspective-1000 relative mx-auto max-w-15/16 lg:mr-16 lg:ml-auto">
+        <div className="header-image-corner invisible">
+          <div className="absolute -top-4 -left-4 h-8 w-8 border-t-2 border-l-2 border-primary/60 transition-all duration-500 group-hover:-top-5 group-hover:-left-5 group-hover:border-primary"></div>
+          <div className="absolute -top-4 -right-4 h-8 w-8 border-t-2 border-r-2 border-primary/60 transition-all duration-500 group-hover:-top-5 group-hover:-right-5 group-hover:border-primary"></div>
+          <div className="absolute -bottom-4 -left-4 h-8 w-8 border-b-2 border-l-2 border-primary/60 transition-all duration-500 group-hover:-bottom-5 group-hover:-left-5 group-hover:border-primary"></div>
+          <div className="absolute -right-4 -bottom-4 h-8 w-8 border-r-2 border-b-2 border-primary/60 transition-all duration-500 group-hover:-right-5 group-hover:-bottom-5 group-hover:border-primary"></div>
+        </div>
+
+        <div className="header-image invisible relative aspect-video w-full overflow-hidden border border-border/50 bg-muted/20 shadow-2xl md:aspect-21/9">
+          <div className="pointer-events-none absolute top-0 left-0 z-20 flex w-full items-start justify-between p-4 font-mono text-[10px] tracking-wider text-muted-foreground/70 mix-blend-difference md:text-xs">
+            <div className="flex flex-col gap-1">
+              <span>REC.709</span>
+              <span>RAW_VIEWER.BIN</span>
+            </div>
+            <div className="flex gap-4">
+              <span>ISO 120</span>
+              <span>1/60s</span>
+              <span>f/2.8</span>
+            </div>
+          </div>
+          <CloudinaryImage
+            publicId="sp1_iuncqb"
+            alt="Photo Of Brock Shaffer"
+            priority
+            aspectRatio="16:9"
+            className="aspect-video h-full w-full object-cover opacity-90 transition-transform duration-[2s] ease-out group-hover:scale-[1.02]"
+          />
+
+          <div className="pointer-events-none absolute inset-0 z-10 bg-black/10 bg-[linear-gradient(rgba(0,0,0,0)_50%,rgba(0,0,0,0.2)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-size-[4px_4px]"></div>
+        </div>
+
+        <div className="header-image-footer invisible mt-2 flex items-center justify-between px-1 font-mono text-xs text-muted-foreground">
+          <span>[001] MAIN_ENTRY</span>
+          <span>39.9612° N, 82.9988° W</span>
+        </div>
+      </div>
+    </div>
   )
 }
 
