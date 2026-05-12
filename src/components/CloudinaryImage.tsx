@@ -9,6 +9,8 @@ interface ImageProps {
   aspectRatio?: string // "16:9" or "1:1"
   priority?: boolean
   className?: string
+  wrapperClassName?: string
+  wrapperRef?: React.RefObject<HTMLDivElement | null>
 }
 
 export function CloudinaryImage({
@@ -17,6 +19,8 @@ export function CloudinaryImage({
   aspectRatio,
   priority = false,
   className,
+  wrapperClassName,
+  wrapperRef,
 }: ImageProps) {
   const myImage = cld.image(publicId)
 
@@ -31,21 +35,19 @@ export function CloudinaryImage({
         .gravity(autoGravity())
     )
   }
-  console.log(myImage.toURL())
 
   return (
-    <AdvancedImage
-      cldImg={myImage}
-      alt={alt}
-      attr={{
-        loading: priority ? "eager" : "lazy",
-        fetchpriority: priority ? "high" : "auto",
-      }}
-      plugins={[
-        responsive({ steps: [640, 768, 1024, 1280] }),
-        placeholder({ mode: "pixelate" }),
-      ]}
-      className={className}
-    />
+    <div ref={wrapperRef} className={wrapperClassName}>
+      <AdvancedImage
+        cldImg={myImage}
+        alt={alt}
+        attr={{
+          loading: priority ? "eager" : "lazy",
+          fetchpriority: priority ? "high" : "auto",
+        }}
+        plugins={[responsive({ steps: [640, 768, 1024, 1280] })]}
+        className={className}
+      />
+    </div>
   )
 }

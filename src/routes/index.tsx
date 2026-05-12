@@ -9,6 +9,7 @@ import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { CloudinaryImage } from "@/components/CloudinaryImage"
 import { CameraIcon, CodeIcon, DroneIcon } from "@phosphor-icons/react"
+import { ScrambleTextPlugin } from "gsap/all"
 
 export interface IncomingRequestCfProperties {
   // Identity
@@ -89,7 +90,7 @@ export const Route = createFileRoute("/")({
 function App() {
   return (
     <GridBackground className="min-h-screen bg-background text-foreground">
-      <main className="relative pb-[25vh] transition-all duration-500 lg:pb-0 lg:pl-80">
+      <main className="relative pb-[25vh] transition-all duration-500 lg:pb-0 lg:pl-100">
         <Header />
         <IndexTerminal />
       </main>
@@ -99,67 +100,138 @@ function App() {
 
 function Header() {
   const container = useRef(null)
+  const imageRef = useRef<HTMLDivElement>(null)
+  const cornerTL = useRef<gsap.core.Timeline | null>(null)
+  const imageTL = useRef<gsap.core.Timeline | null>(null)
+  const imageWrapperRef = useRef<HTMLDivElement>(null)
 
   useGSAP(
     () => {
+      gsap.registerPlugin(ScrambleTextPlugin)
+
+      // ── Entrance timeline ──────────────────────────────────────────
       const tl = gsap.timeline({ defaults: { ease: "power4.out" } })
-      tl.from(".animate-text", {
-        y: 20,
-        autoAlpha: 0,
-        delay: 1.8,
-        duration: 0.6,
-        stagger: 0.1,
-      })
-        .from(
+      tl.fromTo(
+        ".animate-text",
+        { autoAlpha: 0 },
+        {
+          autoAlpha: 1,
+          delay: 1.8,
+          duration: 3,
+          stagger: 0.2,
+          scrambleText: { text: "{original}" },
+        }
+      )
+        .fromTo(
           ".header-image-corner",
-          {
-            duration: 0.8,
-            autoAlpha: 0,
-          },
-          "-=0.4"
+          { autoAlpha: 0 },
+          { duration: 0.6, autoAlpha: 1 },
+          "-=2.5"
         )
-        .from(".header-image", { autoAlpha: 0, duration: 0.8 })
+        .fromTo(
+          ".header-image",
+          { autoAlpha: 0 },
+          { duration: 0.6, autoAlpha: 1 }
+        )
         .fromTo(
           ".header-image-footer",
-          { autoAlpha: 0, duration: 0 },
-          { autoAlpha: 0.6, duration: 0.2 }
+          { autoAlpha: 0 },
+          { autoAlpha: 0.6, duration: 0.5 },
+          "<"
         )
+
+      // ── Hover: corners ────────────────────────────────────────────
+      cornerTL.current = gsap.timeline({ paused: true })
+      cornerTL.current
+        .to(
+          ".corner-tl",
+          { top: -20, left: -20, duration: 0.3, ease: "power2.out" },
+          0
+        )
+        .to(
+          ".corner-tr",
+          { top: -20, right: -20, duration: 0.3, ease: "power2.out" },
+          0
+        )
+        .to(
+          ".corner-bl",
+          { bottom: -20, left: -20, duration: 0.3, ease: "power2.out" },
+          0
+        )
+        .to(
+          ".corner-br",
+          { bottom: -20, right: -20, duration: 0.3, ease: "power2.out" },
+          0
+        )
+        .to(
+          ".corner-piece",
+          {
+            borderColor: "var(--color-primary)",
+            duration: 0.3,
+            ease: "power2.out",
+          },
+          0
+        )
+
+      // ── Hover: image zoom ─────────────────────────────────────────
+      imageTL.current = gsap.timeline({ paused: true })
+      imageTL.current.to(".header-image-photo", {
+        scale: 1.04,
+        duration: 1.8,
+        ease: "power2.out",
+      })
+
+      // ── Mouse events ──────────────────────────────────────────────
+      const onEnter = () => {
+        cornerTL.current?.play()
+        imageTL.current?.play()
+      }
+      const onLeave = () => {
+        cornerTL.current?.reverse()
+        imageTL.current?.reverse()
+      }
+
+      imageWrapperRef.current?.addEventListener("mouseenter", onEnter)
+      imageWrapperRef.current?.addEventListener("mouseleave", onLeave)
+
+      return () => {
+        imageWrapperRef.current?.removeEventListener("mouseenter", onEnter)
+        imageWrapperRef.current?.removeEventListener("mouseleave", onLeave)
+      }
     },
     { scope: container }
   )
 
   return (
     <div ref={container} className="mt-16 flex flex-col lg:flex-row">
-      <div className="relative mx-auto flex h-fit w-fit flex-col p-8 transition-all lg:mx-0">
-        <h1 className="animate-text invisible text-6xl font-bold">
+      <div className="relative mx-auto flex h-fit w-fit flex-col p-8 lg:mx-0">
+        <h1 className="animate-text text-center text-4xl font-bold md:text-6xl lg:text-start">
           BROCK SHAFFER
         </h1>
-        <p className="animate-text invisible text-center font-barcode tracking-widest text-primary select-none lg:ml-1 lg:text-left dark:text-foreground">
+        <p className="animate-text text-center font-barcode tracking-widest text-primary select-none lg:ml-1 lg:text-left dark:text-foreground">
           Security Through Obscurity Defines Our World
         </p>
         <div className="flex items-center justify-center gap-4 text-sm text-foreground uppercase lg:ml-1 lg:flex-col lg:items-start lg:justify-start lg:gap-1 lg:text-2xl">
-          <span className="animate-text invisible flex items-center gap-1 align-middle">
-            <CodeIcon className="lg:hidden" /> Developer
-          </span>
+          <span className="animate-text">Developer</span>
           <span className="text-border lg:hidden">|</span>
-          <span className="animate-text invisible flex items-center gap-1 align-middle">
-            <DroneIcon className="lg:hidden" /> Drone Pilot
-          </span>
+          <span className="animate-text">Drone Pilot</span>
           <span className="text-border lg:hidden">|</span>
-          <span className="animate-text invisible flex items-center gap-1 align-middle">
-            <CameraIcon className="lg:hidden" /> Photographer
-          </span>
+          <span className="animate-text">Photographer</span>
         </div>
       </div>
-      <div className="group perspective-1000 relative mx-auto max-w-2/3 md:max-w-15/16 lg:mr-16 lg:ml-auto">
-        <div className="header-image-corner invisible">
-          <div className="absolute -top-4 -left-4 h-8 w-8 border-t-2 border-l-2 border-primary/60 transition-all duration-500 group-hover:-top-5 group-hover:-left-5 group-hover:border-primary"></div>
-          <div className="absolute -top-4 -right-4 h-8 w-8 border-t-2 border-r-2 border-primary/60 transition-all duration-500 group-hover:-top-5 group-hover:-right-5 group-hover:border-primary"></div>
-          <div className="absolute -bottom-4 -left-4 h-8 w-8 border-b-2 border-l-2 border-primary/60 transition-all duration-500 group-hover:-bottom-5 group-hover:-left-5 group-hover:border-primary"></div>
-          <div className="absolute -right-4 -bottom-4 h-8 w-8 border-r-2 border-b-2 border-primary/60 transition-all duration-500 group-hover:-right-5 group-hover:-bottom-5 group-hover:border-primary"></div>
+
+      <div
+        ref={imageWrapperRef}
+        className="header-image-wrapper relative mx-auto mt-8 max-w-2/3 md:max-w-15/16 lg:mt-0 lg:mr-16 lg:ml-auto"
+      >
+        <div className="header-image-corner">
+          <div className="corner-piece corner-tl absolute -top-4 -left-4 h-8 w-8 border-t-2 border-l-2 border-primary/60" />
+          <div className="corner-piece corner-tr absolute -top-4 -right-4 h-8 w-8 border-t-2 border-r-2 border-primary/60" />
+          <div className="corner-piece corner-bl absolute -bottom-4 -left-4 h-8 w-8 border-b-2 border-l-2 border-primary/60" />
+          <div className="corner-piece corner-br absolute -right-4 -bottom-4 h-8 w-8 border-r-2 border-b-2 border-primary/60" />
         </div>
 
-        <div className="header-image invisible relative aspect-video w-full overflow-hidden border border-border/50 bg-muted/20 shadow-2xl md:aspect-21/9">
+        <div className="header-image relative aspect-video w-full overflow-hidden border border-border/50 bg-muted/20 shadow-2xl md:aspect-21/9">
           <div className="pointer-events-none absolute top-0 left-0 z-20 flex w-full items-start justify-between p-4 font-mono text-[10px] tracking-wider text-muted-foreground/70 mix-blend-difference md:text-xs">
             <div className="flex flex-col gap-1">
               <span>REC.709</span>
@@ -171,18 +243,20 @@ function Header() {
               <span>f/2.8</span>
             </div>
           </div>
+
           <CloudinaryImage
             publicId="sp1_iuncqb"
             alt="Photo Of Brock Shaffer"
             priority
             aspectRatio="16:9"
-            className="aspect-video h-full w-full object-cover opacity-90 transition-transform duration-[2s] ease-out group-hover:scale-[1.02]"
+            wrapperRef={imageRef}
+            className="header-image-photo aspect-video h-full w-full object-cover opacity-90"
           />
 
-          <div className="pointer-events-none absolute inset-0 z-10 bg-black/10 bg-[linear-gradient(rgba(0,0,0,0)_50%,rgba(0,0,0,0.2)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-size-[4px_4px]"></div>
+          <div className="pointer-events-none absolute inset-0 z-10 bg-black/10 bg-[linear-gradient(rgba(0,0,0,0)_50%,rgba(0,0,0,0.2)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-size-[4px_4px]" />
         </div>
 
-        <div className="header-image-footer invisible mt-2 flex items-center justify-between px-1 font-mono text-xs text-muted-foreground">
+        <div className="header-image-footer mt-2 flex items-center justify-between px-1 font-mono text-xs text-muted-foreground">
           <span>[001] MAIN_ENTRY</span>
           <span>39.9612° N, 82.9988° W</span>
         </div>

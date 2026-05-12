@@ -38,7 +38,7 @@ export function Terminal() {
         // Mobile: Fixed bottom bar
         "fixed bottom-0 left-0 h-[25vh] w-full border-t border-border/50",
         // Desktop: Vertical Gutter
-        "border-border lg:top-0 lg:right-auto lg:left-0 lg:h-screen lg:w-80 lg:border-t-0 lg:border-r lg:bg-background/95"
+        "border-border lg:top-0 lg:right-auto lg:left-0 lg:h-screen lg:w-100 lg:border-t-0 lg:border-r lg:bg-background/95"
       )}
     >
       <div className="flex items-center justify-between border-b border-border/50 px-4 py-2 text-[9px] tracking-widest text-muted-foreground/80">
