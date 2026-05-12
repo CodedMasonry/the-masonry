@@ -51,7 +51,7 @@ export const GridBackground = ({
       ref={containerRef}
       className={cn(
         "relative w-full overflow-hidden bg-background",
-        "[--ambient-opacity:0.15] dark:[--ambient-opacity:0.4]",
+        "[--ambient-opacity:0.15] dark:[--ambient-opacity:0.25]",
         className
       )}
     >

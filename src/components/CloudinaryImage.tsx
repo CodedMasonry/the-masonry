@@ -1,4 +1,9 @@
-import { AdvancedImage, responsive } from "@cloudinary/react"
+import {
+  AdvancedImage,
+  responsive,
+  lazyload,
+  placeholder,
+} from "@cloudinary/react"
 import { fill } from "@cloudinary/url-gen/actions/resize"
 import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity"
 import { cld } from "../utils/cloudinary"
@@ -6,7 +11,7 @@ import { cld } from "../utils/cloudinary"
 interface ImageProps {
   publicId: string
   alt: string
-  aspectRatio?: string // "16:9" or "1:1"
+  aspectRatio?: string // "16:9" or "21:9" etc.
   priority?: boolean
   className?: string
   wrapperClassName?: string
@@ -26,26 +31,56 @@ export function CloudinaryImage({
 
   myImage.format("auto").quality("auto")
 
+  // Only set a max-resolution crop — the responsive plugin handles
+  // actual sizing. Cap at 2560px wide so we never fetch a giant master.
   if (aspectRatio) {
-    const [width, height] = aspectRatio.split(":").map(Number)
-    myImage.resize(
-      fill()
-        .width(width * 100)
-        .height(height * 100)
-        .gravity(autoGravity())
-    )
+    const [w, h] = aspectRatio.split(":").map(Number)
+    const MAX_W = 2560
+    const MAX_H = Math.round((h / w) * MAX_W)
+    myImage.resize(fill().width(MAX_W).height(MAX_H).gravity(autoGravity()))
   }
 
+  const plugins = priority
+    ? [
+        // Priority images: responsive sizing only, no lazy/placeholder
+        responsive({ steps: [320, 640, 768, 1024, 1280, 1536, 1920, 2560] }),
+      ]
+    : [
+        lazyload({ rootMargin: "200px 0px" }), // start loading before in-view
+        placeholder({ mode: "blur" }), // blurry LQIP while loading
+        responsive({ steps: [320, 640, 768, 1024, 1280, 1536, 1920, 2560] }),
+      ]
+
   return (
-    <div ref={wrapperRef} className={wrapperClassName}>
+    // Outer wrapper: reserves space via aspect-ratio to eliminate CLS
+    <div
+      ref={wrapperRef}
+      className={wrapperClassName}
+      style={
+        aspectRatio
+          ? {
+              position: "relative",
+              width: "100%",
+              aspectRatio: aspectRatio.replace(":", " / "),
+            }
+          : undefined
+      }
+    >
       <AdvancedImage
         cldImg={myImage}
         alt={alt}
+        plugins={plugins}
         attr={{
           loading: priority ? "eager" : "lazy",
           fetchpriority: priority ? "high" : "auto",
+          decoding: priority ? "sync" : "async",
+          // responsive plugin writes srcset; this is the fallback size hint
+          sizes: [
+            "(max-width: 640px) 100vw",
+            "(max-width: 1024px) 90vw",
+            "75vw",
+          ].join(", "),
         }}
-        plugins={[responsive({ steps: [640, 768, 1024, 1280] })]}
         className={className}
       />
     </div>

@@ -9,6 +9,7 @@ import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { CloudinaryImage } from "@/components/CloudinaryImage"
 import { ScrambleTextPlugin } from "gsap/all"
+import { ModeToggle } from "@/components/ModeToggle"
 
 export interface IncomingRequestCfProperties {
   // Identity
@@ -84,7 +85,10 @@ export const getConnectionData = createServerFn().handler(async () => {
 export const Route = createFileRoute("/")({
   component: App,
   loader: () => getConnectionData(),
+  staleTime: Infinity,
 })
+
+gsap.registerPlugin(ScrambleTextPlugin)
 
 function App() {
   return (
@@ -106,8 +110,6 @@ function Header() {
 
   useGSAP(
     () => {
-      gsap.registerPlugin(ScrambleTextPlugin)
-
       // ── Entrance timeline ──────────────────────────────────────────
       const tl = gsap.timeline({ defaults: { ease: "power4.out" } })
       tl.fromTo(
@@ -198,6 +200,9 @@ function Header() {
       return () => {
         imageWrapperRef.current?.removeEventListener("mouseenter", onEnter)
         imageWrapperRef.current?.removeEventListener("mouseleave", onLeave)
+        tl.kill()
+        cornerTL.current?.kill()
+        imageTL.current?.kill()
       }
     },
     { scope: container }
@@ -206,33 +211,33 @@ function Header() {
   return (
     <div ref={container} className="mt-16 flex flex-col lg:flex-row">
       <div className="relative mx-auto flex h-fit w-fit flex-col p-8 lg:mx-0">
-        <h1 className="animate-text text-center text-4xl font-bold md:text-6xl lg:text-start">
+        <h1 className="animate-text text-center text-4xl font-bold opacity-0 md:text-6xl lg:text-start">
           BROCK SHAFFER
         </h1>
-        <p className="animate-text text-center font-barcode tracking-widest text-primary select-none lg:ml-1 lg:text-left dark:text-foreground">
+        <p className="animate-text text-center font-barcode tracking-widest text-primary opacity-0 select-none lg:ml-1 lg:text-left dark:text-foreground">
           Security Through Obscurity Defines Our World
         </p>
         <div className="flex items-center justify-center gap-4 text-sm text-foreground uppercase lg:ml-1 lg:flex-col lg:items-start lg:justify-start lg:gap-1 lg:text-2xl">
-          <span className="animate-text">Developer</span>
+          <span className="animate-text opacity-0">Developer</span>
           <span className="text-border lg:hidden">|</span>
-          <span className="animate-text">Drone Pilot</span>
+          <span className="animate-text opacity-0">Drone Pilot</span>
           <span className="text-border lg:hidden">|</span>
-          <span className="animate-text">Photographer</span>
+          <span className="animate-text opacity-0">Photographer</span>
         </div>
       </div>
 
       <div
         ref={imageWrapperRef}
-        className="header-image-wrapper relative mx-auto mt-8 max-w-2/3 md:max-w-15/16 lg:mt-0 lg:mr-16 lg:ml-auto"
+        className="header-image-wrapper relative mx-auto mt-8 w-full max-w-[66vw] md:max-w-[90%] lg:mt-0 lg:mr-16 lg:ml-auto lg:max-w-[55vw] xl:max-w-[50vw]"
       >
-        <div className="header-image-corner">
+        <div className="header-image-corner opacity-0">
           <div className="corner-piece corner-tl absolute -top-4 -left-4 h-8 w-8 border-t-2 border-l-2 border-primary/60" />
           <div className="corner-piece corner-tr absolute -top-4 -right-4 h-8 w-8 border-t-2 border-r-2 border-primary/60" />
           <div className="corner-piece corner-bl absolute -bottom-4 -left-4 h-8 w-8 border-b-2 border-l-2 border-primary/60" />
           <div className="corner-piece corner-br absolute -right-4 -bottom-4 h-8 w-8 border-r-2 border-b-2 border-primary/60" />
         </div>
 
-        <div className="header-image relative aspect-video w-full overflow-hidden border border-border/50 bg-muted/20 shadow-2xl md:aspect-21/9">
+        <div className="header-image relative w-full overflow-hidden border border-border/50 bg-muted/20 opacity-0 shadow-2xl">
           <div className="pointer-events-none absolute top-0 left-0 z-20 flex w-full items-start justify-between p-4 font-mono text-[10px] tracking-wider text-muted-foreground/70 mix-blend-difference md:text-xs">
             <div className="flex flex-col gap-1">
               <span>REC.709</span>
@@ -251,13 +256,14 @@ function Header() {
             priority
             aspectRatio="16:9"
             wrapperRef={imageRef}
-            className="header-image-photo aspect-video h-full w-full object-cover opacity-90"
+            wrapperClassName="w-full [aspect-ratio:16/9] md:[aspect-ratio:21/9]"
+            className="header-image-photo h-full w-full object-cover opacity-90"
           />
 
           <div className="pointer-events-none absolute inset-0 z-10 bg-black/10 bg-[linear-gradient(rgba(0,0,0,0)_50%,rgba(0,0,0,0.2)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-size-[4px_4px]" />
         </div>
 
-        <div className="header-image-footer mt-2 flex items-center justify-between px-1 font-mono text-xs text-muted-foreground">
+        <div className="header-image-footer mt-2 flex items-center justify-between px-1 font-mono text-xs text-muted-foreground opacity-0">
           <span>[001] MAIN_ENTRY</span>
           <span>39.9612° N, 82.9988° W</span>
         </div>
@@ -301,21 +307,22 @@ function IndexTerminal() {
       [`[ID_GATE] SESSION_OPEN // WELCOME_USER`, "ok", 120],
     ]
 
+    const timeouts: ReturnType<typeof setTimeout>[] = []
     let i = 0
-    let timeout: ReturnType<typeof setTimeout>
 
     const schedule = () => {
       if (i >= lines.length) return
       const [text, type, delay] = lines[i]
-      timeout = setTimeout(() => {
+      const id = setTimeout(() => {
         push(text, type)
         i++
         schedule()
       }, delay)
+      timeouts.push(id)
     }
 
     schedule()
-    return () => clearTimeout(timeout)
+    return () => timeouts.forEach(clearTimeout)
   }, [])
 
   return <Terminal />

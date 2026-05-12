@@ -5,6 +5,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools"
 import appCss from "../styles.css?url"
 import { useState } from "react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ThemeProvider } from "@/components/ThemeProvider"
 
 export const Route = createRootRoute({
   head: () => ({
@@ -54,14 +55,16 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   )
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className="dark">
+      <body>
         <QueryClientProvider client={queryClient}>
-          {children}
+          <ThemeProvider defaultTheme="system" storageKey="theme">
+            {children}
+          </ThemeProvider>
           <TanStackDevtools
             config={{ position: "bottom-right" }}
             plugins={[
