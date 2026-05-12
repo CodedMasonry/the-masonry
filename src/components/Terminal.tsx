@@ -51,7 +51,7 @@ export function Terminal() {
 
       <div
         ref={scrollRef}
-        className="scrollbar-hide flex-1 overflow-y-auto p-4"
+        className="scrollbar-hide flex-1 overflow-hidden p-4"
       >
         <div className="flex flex-col gap-1 tracking-tight">
           {lines.map((line) => (

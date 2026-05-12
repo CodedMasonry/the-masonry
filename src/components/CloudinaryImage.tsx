@@ -1,4 +1,4 @@
-import { AdvancedImage, responsive, placeholder } from "@cloudinary/react"
+import { AdvancedImage, responsive } from "@cloudinary/react"
 import { fill } from "@cloudinary/url-gen/actions/resize"
 import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity"
 import { cld } from "../utils/cloudinary"
