@@ -1,12 +1,10 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "the-masonry",
+  "name": "the-masonry-devbuild",
   "compatibility_date": "2026-05-09",
   "observability": {
-    "enabled": true
+    "enabled": true,
   },
   "main": "@tanstack/react-start/server-entry",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ]
+  "compatibility_flags": ["nodejs_compat"],
 }

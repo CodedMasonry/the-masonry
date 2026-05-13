@@ -10,6 +10,7 @@ import { useGSAP } from "@gsap/react"
 import { CloudinaryImage } from "@/components/CloudinaryImage"
 import { ScrambleTextPlugin } from "gsap/all"
 import { ModeToggle } from "@/components/ModeToggle"
+import { useMediaQuery } from "@/hooks/useMediaQuery"
 
 export interface IncomingRequestCfProperties {
   // Identity
@@ -108,6 +109,8 @@ function Header() {
   const cornerTL = useRef<gsap.core.Timeline | null>(null)
   const imageTL = useRef<gsap.core.Timeline | null>(null)
   const imageWrapperRef = useRef<HTMLDivElement>(null)
+
+  const isDesktop = useMediaQuery("(min-width: 768px)")
 
   useGSAP(
     () => {
@@ -211,25 +214,23 @@ function Header() {
 
   return (
     <div ref={container} className="mt-16 flex flex-col lg:flex-row">
-      <div className="relative mx-auto flex h-fit w-fit flex-col p-8 lg:mx-0">
+      <div className="relative mx-auto flex h-fit w-full flex-col p-4 md:w-fit md:p-8 lg:mx-0">
         <h1 className="animate-text text-center text-4xl font-bold opacity-0 md:text-6xl lg:text-start">
           BROCK SHAFFER
         </h1>
-        <p className="animate-text text-center font-barcode tracking-widest text-primary opacity-0 select-none lg:ml-1 lg:text-left dark:text-foreground">
+        <p className="animate-text text-center font-barcode text-xs tracking-widest text-primary opacity-0 select-none md:text-base lg:ml-1 lg:text-left dark:text-foreground">
           Security Through Obscurity Defines Our World
         </p>
-        <div className="flex items-center justify-center gap-4 text-sm text-foreground uppercase lg:justify-start lg:gap-1 lg:text-lg">
+        <div className="flex w-full items-center justify-center gap-4 text-sm text-foreground uppercase lg:justify-start lg:text-lg">
           <span className="animate-text opacity-0">Developer</span>
-          <span className="text-border">|</span>
           <span className="animate-text opacity-0">Drone Pilot</span>
-          <span className="text-border">|</span>
           <span className="animate-text opacity-0">Photographer</span>
         </div>
       </div>
 
       <div
         ref={imageWrapperRef}
-        className="header-image-wrapper relative mx-auto mt-8 w-full max-w-[66vw] md:max-w-[90%] lg:mt-0 lg:mr-16 lg:ml-auto lg:max-w-[40vw]"
+        className="header-image-wrapper relative mx-auto mt-8 w-full max-w-[90%] lg:mt-0 lg:mr-16 lg:ml-auto lg:max-w-[40vw]"
       >
         <div className="header-image-corner opacity-0">
           <div className="corner-piece corner-tl absolute -top-4 -left-4 h-8 w-8 border-t-2 border-l-2 border-primary/60" />
@@ -255,7 +256,7 @@ function Header() {
             publicId="sp1_iuncqb"
             alt="Photo Of Brock Shaffer"
             priority
-            aspectRatio="21:9"
+            aspectRatio={isDesktop ? "21:9" : "16:9"}
             wrapperRef={imageRef}
             wrapperClassName="w-full [aspect-ratio:16/9] md:[aspect-ratio:21/9]"
             className="header-image-photo h-full w-full object-cover opacity-90"
