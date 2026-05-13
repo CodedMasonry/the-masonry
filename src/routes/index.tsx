@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router"
 import { createServerFn } from "@tanstack/react-start"
 import { getRequest } from "@tanstack/react-start/server"
 import { Terminal } from "@/components/Terminal"
-import { useTerminal } from "@/hooks/useTerminal"
+import { useTerminal, type TerminalLineType } from "@/hooks/useTerminal"
 import { useEffect, useRef } from "react"
 import { GridBackground } from "@/components/GridBackground"
 import gsap from "gsap"
@@ -96,6 +96,7 @@ function App() {
       <main className="relative pb-[25vh] transition-all duration-500 lg:pb-0 lg:pl-100">
         <Header />
         <IndexTerminal />
+        <ModeToggle />
       </main>
     </GridBackground>
   )
@@ -217,18 +218,18 @@ function Header() {
         <p className="animate-text text-center font-barcode tracking-widest text-primary opacity-0 select-none lg:ml-1 lg:text-left dark:text-foreground">
           Security Through Obscurity Defines Our World
         </p>
-        <div className="flex items-center justify-center gap-4 text-sm text-foreground uppercase lg:ml-1 lg:flex-col lg:items-start lg:justify-start lg:gap-1 lg:text-2xl">
+        <div className="flex items-center justify-center gap-4 text-sm text-foreground uppercase lg:justify-start lg:gap-1 lg:text-lg">
           <span className="animate-text opacity-0">Developer</span>
-          <span className="text-border lg:hidden">|</span>
+          <span className="text-border">|</span>
           <span className="animate-text opacity-0">Drone Pilot</span>
-          <span className="text-border lg:hidden">|</span>
+          <span className="text-border">|</span>
           <span className="animate-text opacity-0">Photographer</span>
         </div>
       </div>
 
       <div
         ref={imageWrapperRef}
-        className="header-image-wrapper relative mx-auto mt-8 w-full max-w-[66vw] md:max-w-[90%] lg:mt-0 lg:mr-16 lg:ml-auto lg:max-w-[55vw] xl:max-w-[50vw]"
+        className="header-image-wrapper relative mx-auto mt-8 w-full max-w-[66vw] md:max-w-[90%] lg:mt-0 lg:mr-16 lg:ml-auto lg:max-w-[40vw]"
       >
         <div className="header-image-corner opacity-0">
           <div className="corner-piece corner-tl absolute -top-4 -left-4 h-8 w-8 border-t-2 border-l-2 border-primary/60" />
@@ -277,53 +278,120 @@ function IndexTerminal() {
   const { push } = useTerminal()
 
   useEffect(() => {
-    const lines: [
-      Parameters<typeof push>[0],
-      Parameters<typeof push>[1],
+    // Structure: [text, type, options, delay]
+    const sequence: [
+      string,
+      TerminalLineType,
+      { label?: string; meta?: string; status?: string; text?: string },
       number,
     ][] = [
-      ["SYSTEM_INITIALIZING", "separator", 60],
-      [`[NODE] LINK_ESTABLISHED : ${cf.colo}-${cf.country ?? "??"}`, "ok", 640],
+      ["SYSTEM_INITIALIZING", "separator", {}, 60],
       [
-        `[SYS] STREAM_READY // ${crypto.randomUUID().toUpperCase().split("-")[0]}`,
+        "LINK_ESTABLISHED",
         "ok",
+        {
+          label: "NODE",
+          meta: `${cf.colo}-${cf.country ?? "??"}`,
+        },
+        640,
+      ],
+      [
+        "STREAM_READY",
+        "ok",
+        {
+          label: "SYS",
+          meta: crypto.randomUUID().toUpperCase().split("-")[0],
+          status: "Ok",
+        },
         480,
       ],
-      [`[NET] PROTOCOL_SYNC ↔ ${cf.httpProtocol} · ${cf.tlsVersion}`, "ok", 80],
-      [`[NET] CIPHER_SUITE ↔ ${cf.tlsCipher}`, "ok", 60],
-      ["REMOTE_METRICS_RESOLVING", "separator", 60],
-      [`[UI] DRAWING HEADER`, "stdout", 200],
       [
-        `[GEO] LOC_RESOLVED : ${cf.city}, ${cf.regionCode} // ${cf.latitude},${cf.longitude}`,
+        "PROTOCOL_SYNC",
         "ok",
+        {
+          label: "NET",
+          meta: `${cf.httpProtocol} · ${cf.tlsVersion}`,
+          status: "Ok",
+        },
+        80,
+      ],
+      [
+        "CIPHER_SUITE",
+        "ok",
+        { label: "NET", meta: cf.tlsCipher, status: "Ok" },
+        60,
+      ],
+      ["REMOTE_METRICS_RESOLVING", "separator", {}, 60],
+      ["DRAWING HEADER", "stdout", { label: "UI", status: "Started:" }, 200],
+      [
+        "LOC_RESOLVED",
+        "ok",
+        {
+          label: "GEO",
+          meta: `${cf.latitude},${cf.longitude}`,
+          status: "Ok",
+          text: `${cf.city}, ${cf.regionCode}`,
+        },
         480,
       ],
-      [`[GEO] ASN_UPLINK : ${cf.asOrganization} // ID:${cf.asn}`, "ok", 80],
-      [`[GEO] TZ_LOCAL : ${cf.timezone} // PC:${cf.postalCode}`, "stdout", 80],
+      [
+        `ASN_UPLINK : ${cf.asOrganization}`,
+        "ok",
+        { label: "GEO", meta: `ID:${cf.asn}`, status: "Ok" },
+        80,
+      ],
+      [
+        "TZ_LOCAL",
+        "stdout",
+        { label: "GEO", meta: `PC:${cf.postalCode}`, status: "Ok" },
+        80,
+      ],
       cf.isEU
-        ? [`[ID_GATE] REGION_LOCK_APPLIED // GDPR_COMPLIANT`, "warn", 240]
-        : [`[ID_GATE] REGION_BYPASS // EXTERNAL_ORIGIN`, "stdout", 240],
-      [`[ID_GATE] HANDSHAKE_COMPLETE // TRUST_LVL=HIGH · GUEST`, "ok", 120],
-      [`[ID_GATE] SESSION_OPEN // WELCOME_USER`, "ok", 120],
+        ? [
+            "REGION_LOCK_APPLIED",
+            "warn",
+            { label: "ID_GATE", meta: "GDPR_COMPLIANT", status: "Active" },
+            240,
+          ]
+        : [
+            "REGION_BYPASS",
+            "stdout",
+            { label: "ID_GATE", meta: "EXTERNAL_ORIGIN", status: "Ok" },
+            240,
+          ],
+      [
+        "HANDSHAKE_COMPLETE",
+        "ok",
+        { label: "ID_GATE", meta: "TRUST_LVL=HIGH", status: "Ok" },
+        120,
+      ],
+      [
+        "WELCOME_USER",
+        "ok",
+        { label: "ID_GATE", meta: "SESSION_OPEN", status: "Ok" },
+        120,
+      ],
     ]
 
     const timeouts: ReturnType<typeof setTimeout>[] = []
     let i = 0
 
     const schedule = () => {
-      if (i >= lines.length) return
-      const [text, type, delay] = lines[i]
+      if (i >= sequence.length) return
+      const [text, type, opts, delay] = sequence[i]
+
       const id = setTimeout(() => {
-        push(text, type)
+        push(text, type, opts)
         i++
         schedule()
       }, delay)
+
       timeouts.push(id)
     }
 
     schedule()
     return () => timeouts.forEach(clearTimeout)
-  }, [])
+  }, [cf])
 
   return <Terminal />
 }

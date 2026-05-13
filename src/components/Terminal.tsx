@@ -1,108 +1,86 @@
-import { useTerminal } from "@/hooks/useTerminal"
+import { useTerminal, type TerminalLine } from "@/hooks/useTerminal"
 import { cn } from "@/lib/utils"
-import { useEffect, useRef } from "react"
-
-const LINE_COLOR: Record<string, string> = {
-  ok: "text-foreground",
-  warn: "text-amber-400/90",
-  stderr: "text-red-400/90",
-  stdout: "text-muted-foreground/90",
-  separator: "text-muted-foreground",
-  session: "text-muted-foreground",
-}
-
-// Map specific symbols to line types
-const LINE_SYMBOL: Record<string, string> = {
-  ok: ">",
-  warn: "!",
-  stderr: "×",
-  stdout: ">",
-  separator: "",
-}
 
 export function Terminal() {
   const { lines } = useTerminal()
-  const scrollRef = useRef<HTMLDivElement>(null)
-
-  // Auto-scroll to bottom when new lines arrive
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
-    }
-  }, [lines])
 
   return (
     <div
       className={cn(
-        "z-50 flex flex-col bg-background uppercase backdrop-blur-md transition-all duration-500",
-        // Mobile: Fixed bottom bar
-        "fixed bottom-0 left-0 h-[25vh] w-full border-t border-border/50",
-        // Desktop: Vertical Gutter
-        "border-border lg:top-0 lg:right-auto lg:left-0 lg:h-screen lg:w-100 lg:border-t-0 lg:border-r lg:bg-background/95"
+        "fixed z-50 flex flex-col border-border bg-background font-mono",
+        "bottom-0 left-0 h-[25vh] w-full border-t",
+        "lg:top-0 lg:left-0 lg:h-screen lg:w-96 lg:border-t-0 lg:border-r"
       )}
     >
-      <div className="flex items-center justify-between border-b border-border/50 px-4 py-2 text-[9px] tracking-widest text-muted-foreground/80">
-        <span className="flex items-center gap-2">
+      <div className="flex shrink-0 items-center justify-between border-b border-border px-3 py-1.5 text-[10px] tracking-widest text-muted-foreground uppercase">
+        <div className="flex items-center gap-2">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-          SYSTEM_LOG
-        </span>
-        <span className="font-mono">v3.0.0</span>
-      </div>
-
-      <div
-        ref={scrollRef}
-        className="scrollbar-hide flex-1 overflow-hidden p-4"
-      >
-        <div className="flex flex-col gap-1 tracking-tight">
-          {lines.map((line) => (
-            <TerminalLine key={line.id} line={line} />
-          ))}
+          <span className="font-bold">MASONRY_WEB</span>
         </div>
-      </div>
-
-      <div className="flex items-center justify-between border-t border-border/50 px-4 py-2 font-mono text-[9px] text-muted-foreground/40">
-        <div className="flex gap-3">
-          <span>{new Date().getUTCFullYear()}©</span>
-          <span className="hidden lg:inline">
-            UTC_{new Date().getUTCHours()}:00
-          </span>
-        </div>
-        <span className="tabular-nums">
+        <span className="opacity-50">
           0x{Math.random().toString(16).slice(2, 6).toUpperCase()}
         </span>
+      </div>
+
+      <div className="no-scrollbar flex min-h-0 flex-1 flex-col-reverse overflow-y-auto overscroll-none">
+        <div className="flex flex-col px-3 py-2">
+          {lines.map((line) => (
+            <TerminalLineItem key={line.id} line={line} />
+          ))}
+        </div>
       </div>
     </div>
   )
 }
 
-// Sub-component for cleaner mapping
-function TerminalLine({ line }: { line: any }) {
+function TerminalLineItem({ line }: { line: TerminalLine }) {
   if (line.type === "separator") {
     return (
-      <div className="flex items-center gap-2 py-2 text-muted-foreground/30">
-        <div className="h-px flex-1 bg-current" />
-        <span className="text-[8px] font-bold">{line.text}</span>
-        <div className="h-px flex-1 bg-current" />
+      <div className="flex items-center gap-2 py-1 opacity-40">
+        <div className="h-px flex-1 bg-muted" />
+        <span className="text-[9px] font-black tracking-tighter text-muted-foreground uppercase">
+          {line.text}
+        </span>
+        <div className="h-px flex-1 bg-muted" />
       </div>
     )
   }
 
   return (
-    <div
-      className={cn(
-        "flex items-baseline gap-2 text-[10px] leading-tight transition-all duration-300",
-        LINE_COLOR[line.type]
-      )}
-    >
-      <span
-        className={cn(
-          "shrink-0 font-bold opacity-50",
-          line.type === "ok" && "text-emerald-500"
-        )}
-      >
-        {LINE_SYMBOL[line.type] || ">"}
-      </span>
-      <span className="break-all">{line.text}</span>
+    <div className="group relative flex flex-col py-px text-[11px] leading-tight transition-colors hover:bg-muted/40">
+      <div className="relative pl-21">
+        <span className="absolute top-0 left-0 shrink-0 font-mono text-muted-foreground/70 tabular-nums">
+          [{line.timestamp}]
+        </span>
+        <div className="inline-flex flex-wrap items-baseline gap-x-1.5">
+          {line.status && (
+            <span className="shrink-0 font-bold tracking-tighter text-primary uppercase">
+              {line.status}:
+            </span>
+          )}
+          {line.label && (
+            <span className="shrink-0 font-bold text-muted-foreground">
+              [{line.label}]
+            </span>
+          )}
+          <span
+            className={cn(
+              "overflow-wrap-anywhere break-all",
+              line.type === "stderr"
+                ? "text-destructive"
+                : "text-foreground/80",
+              line.type === "warn" && "text-warning"
+            )}
+          >
+            {line.text}
+          </span>
+          {line.meta && (
+            <span className="tracking-tighter break-all text-muted-foreground/60 italic opacity-70 group-hover:opacity-100">
+              // {line.meta}
+            </span>
+          )}
+        </div>
+      </div>
     </div>
   )
 }

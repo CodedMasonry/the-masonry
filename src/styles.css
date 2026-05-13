@@ -131,6 +131,10 @@
   }
 }
 
+@utility no-scrollbar {
+  @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+}
+
 .debug {
   border-style: var(--tw-border-style);
   border-width: 2px;

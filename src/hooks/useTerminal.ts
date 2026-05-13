@@ -1,18 +1,25 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 const TERMINAL_KEY = ["terminal"]
-const MAX_LINES = 30
+const MAX_LINES = 40
+const SESSION_START = Date.now()
 
-type TerminalLineType = "stdout" | "stderr" | "ok" | "warn" | "separator"
+export type TerminalLineType =
+  | "stdout"
+  | "stderr"
+  | "ok"
+  | "warn"
+  | "separator"
+  | "system"
 
-type TerminalLine = {
-  id: number
+export type TerminalLine = {
+  id: string
   text: string
   type: TerminalLineType
-  timestamp: number
-  tag?: string // override the auto-tag, e.g. "GDPR_SKIP"
-  label?: string // left-side key, e.g. "NODE" or "CONN"
-  meta?: string // dimmed trailing text, e.g. "ASN-13335"
+  timestamp: string
+  label?: string
+  meta?: string
+  status?: string
 }
 
 export function useTerminal() {
@@ -28,13 +35,19 @@ export function useTerminal() {
   const push = (
     text: string,
     type: TerminalLineType = "stdout",
-    opts?: Pick<TerminalLine, "tag" | "label" | "meta">
+    opts?: Pick<TerminalLine, "label" | "meta" | "status">
   ) => {
     queryClient.setQueryData<TerminalLine[]>(TERMINAL_KEY, (prev = []) => {
-      const next = [
-        ...prev,
-        { id: Date.now(), text, type, timestamp: Date.now(), ...opts },
-      ]
+      const elapsedSeconds = (Date.now() - SESSION_START) / 1000
+
+      const newLine: TerminalLine = {
+        id: crypto.randomUUID(),
+        text,
+        type,
+        timestamp: elapsedSeconds.toFixed(6),
+        ...opts,
+      }
+      const next = [...prev, newLine]
       return next.length > MAX_LINES ? next.slice(-MAX_LINES) : next
     })
   }
