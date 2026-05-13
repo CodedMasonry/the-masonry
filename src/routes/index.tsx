@@ -255,7 +255,7 @@ function Header() {
             publicId="sp1_iuncqb"
             alt="Photo Of Brock Shaffer"
             priority
-            aspectRatio="16:9"
+            aspectRatio="21:9"
             wrapperRef={imageRef}
             wrapperClassName="w-full [aspect-ratio:16/9] md:[aspect-ratio:21/9]"
             className="header-image-photo h-full w-full object-cover opacity-90"
@@ -299,7 +299,6 @@ function IndexTerminal() {
         "STREAM_READY",
         "ok",
         {
-          label: "SYS",
           meta: crypto.randomUUID().toUpperCase().split("-")[0],
           status: "Ok",
         },
@@ -311,25 +310,18 @@ function IndexTerminal() {
         {
           label: "NET",
           meta: `${cf.httpProtocol} · ${cf.tlsVersion}`,
-          status: "Ok",
         },
         80,
       ],
-      [
-        "CIPHER_SUITE",
-        "ok",
-        { label: "NET", meta: cf.tlsCipher, status: "Ok" },
-        60,
-      ],
+      ["CIPHER_SUITE", "ok", { label: "NET", meta: cf.tlsCipher }, 60],
       ["REMOTE_METRICS_RESOLVING", "separator", {}, 60],
-      ["DRAWING HEADER", "stdout", { label: "UI", status: "Started:" }, 200],
+      ["DRAWING HEADER", "stdout", { label: "UI", status: "Started" }, 200],
       [
         "LOC_RESOLVED",
         "ok",
         {
           label: "GEO",
           meta: `${cf.latitude},${cf.longitude}`,
-          status: "Ok",
           text: `${cf.city}, ${cf.regionCode}`,
         },
         480,
@@ -337,15 +329,10 @@ function IndexTerminal() {
       [
         `ASN_UPLINK : ${cf.asOrganization}`,
         "ok",
-        { label: "GEO", meta: `ID:${cf.asn}`, status: "Ok" },
+        { label: "GEO", meta: `ID:${cf.asn}` },
         80,
       ],
-      [
-        "TZ_LOCAL",
-        "stdout",
-        { label: "GEO", meta: `PC:${cf.postalCode}`, status: "Ok" },
-        80,
-      ],
+      ["TZ_LOCAL", "stdout", { label: "GEO", meta: `PC:${cf.postalCode}` }, 80],
       cf.isEU
         ? [
             "REGION_LOCK_APPLIED",
@@ -356,21 +343,16 @@ function IndexTerminal() {
         : [
             "REGION_BYPASS",
             "stdout",
-            { label: "ID_GATE", meta: "EXTERNAL_ORIGIN", status: "Ok" },
+            { label: "ID_GATE", meta: "EXTERNAL_ORIGIN" },
             240,
           ],
       [
         "HANDSHAKE_COMPLETE",
         "ok",
-        { label: "ID_GATE", meta: "TRUST_LVL=HIGH", status: "Ok" },
+        { label: "ID_GATE", meta: "TRUST_LVL=HIGH" },
         120,
       ],
-      [
-        "WELCOME_USER",
-        "ok",
-        { label: "ID_GATE", meta: "SESSION_OPEN", status: "Ok" },
-        120,
-      ],
+      ["WELCOME_USER", "ok", { label: "ID_GATE", meta: "SESSION_OPEN" }, 120],
     ]
 
     const timeouts: ReturnType<typeof setTimeout>[] = []
