@@ -1,0 +1,17 @@
+<svg width="800" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+  <path id="flightPath"
+        d="M 0 20
+           C 40 20, 60 180, 100 180
+           C 140 180, 160 20, 200 20
+           C 240 20, 260 180, 300 180
+           C 340 180, 360 20, 400 20
+           C 440 20, 460 180, 500 180
+           C 540 180, 560 20, 600 20
+           C 640 20, 660 180, 700 180
+           C 740 180, 760 20, 800 20"
+        fill="none"
+        stroke="#7f8c8d"
+        stroke-width="3"
+        stroke-dasharray="10, 8" /> <!-- 10px dash, 8px gap -->
+
+</svg>

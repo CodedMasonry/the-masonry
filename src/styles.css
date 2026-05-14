@@ -132,7 +132,7 @@
 }
 
 @utility no-scrollbar {
-  @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+  @apply scrollbar-none [&::-webkit-scrollbar]:hidden;
 }
 
 .debug {
@@ -141,28 +141,21 @@
   border-color: red;
 }
 
-@keyframes scan-wipe {
-  0% {
-    top: 0%;
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    top: 100%;
-    opacity: 0;
-  }
+.reveal-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  line-height: 1.2;
 }
 
-.animate-scan-wipe {
+.wipe-bar {
   position: absolute;
-  animation: scan-wipe 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-.is-loading {
-  filter: url(#chromatic-aberration);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  z-index: 10;
+  transform: translateX(-100%);
+  will-change: transform;
 }

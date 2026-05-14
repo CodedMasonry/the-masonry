@@ -3,14 +3,14 @@ import { createServerFn } from "@tanstack/react-start"
 import { getRequest } from "@tanstack/react-start/server"
 import { Terminal } from "@/components/Terminal"
 import { useTerminal, type TerminalLineType } from "@/hooks/useTerminal"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { GridBackground } from "@/components/GridBackground"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { CloudinaryImage } from "@/components/CloudinaryImage"
-import { ScrambleTextPlugin } from "gsap/all"
-import { ModeToggle } from "@/components/ModeToggle"
+import { MotionPathPlugin } from "gsap/all"
 import { useMediaQuery } from "@/hooks/useMediaQuery"
+import { ArrowRightIcon } from "@phosphor-icons/react"
 
 export interface IncomingRequestCfProperties {
   // Identity
@@ -89,15 +89,22 @@ export const Route = createFileRoute("/")({
   staleTime: Infinity,
 })
 
-gsap.registerPlugin(ScrambleTextPlugin)
+gsap.registerPlugin(MotionPathPlugin)
 
 function App() {
+  const [headerFinished, setHeaderFinished] = useState(false)
+
   return (
     <GridBackground className="min-h-screen bg-background text-foreground">
       <main className="relative h-full pb-[25vh] transition-all duration-500 lg:pb-0 lg:pl-100">
-        <Header />
+        <Header
+          onComplete={() => {
+            setHeaderFinished(true)
+          }}
+        />
+        <GalleryShowcase active={headerFinished} />
         <IndexTerminal />
-        <div className="pointer-none: fixed right-4 bottom-4 font-barcode">
+        <div className="pointer-events-none fixed right-4 bottom-4 font-barcode">
           security through obscurity is no security at all
         </div>
       </main>
@@ -105,92 +112,88 @@ function App() {
   )
 }
 
-function Header() {
-  const container = useRef(null)
-  const imageRef = useRef<HTMLDivElement>(null)
+function Header({ onComplete }: { onComplete: () => void }) {
+  const container = useRef<HTMLDivElement>(null)
   const cornerTL = useRef<gsap.core.Timeline | null>(null)
   const imageTL = useRef<gsap.core.Timeline | null>(null)
   const imageWrapperRef = useRef<HTMLDivElement>(null)
-
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
   useGSAP(
     () => {
-      // ── Entrance timeline ──────────────────────────────────────────
-      const tl = gsap.timeline({ defaults: { ease: "power4.out" } })
+      gsap.set(".corner-tl", { x: -8, y: -8 })
+      gsap.set(".corner-tr", { x: 8, y: -8 })
+      gsap.set(".corner-bl", { x: -8, y: 8 })
+      gsap.set(".corner-br", { x: 8, y: 8 })
+      gsap.set(".corner-piece", { "--corner-opacity": 0.6 })
+
+      const tl = gsap.timeline({
+        defaults: { ease: "power4.out" },
+        onComplete: onComplete,
+      })
+
       tl.fromTo(
         ".animate-text",
-        { autoAlpha: 0 },
-        {
-          autoAlpha: 1,
-          delay: 1.8,
-          duration: 3,
-          stagger: 0.2,
-          scrambleText: { text: "{original}" },
-        }
+        { autoAlpha: 0, y: 15 },
+        { autoAlpha: 1, y: 0, delay: 1, duration: 1.5, stagger: 0.1 }
       )
         .fromTo(
           ".header-image-corner",
-          { autoAlpha: 0 },
-          { duration: 0.6, autoAlpha: 1 },
-          "-=2.5"
+          { autoAlpha: 0, scale: 1.1 },
+          { autoAlpha: 1, scale: 1, duration: 0.8 },
+          "-=1"
         )
         .fromTo(
           ".header-image",
-          { autoAlpha: 0 },
-          { duration: 0.6, autoAlpha: 1 },
-          "<0.75"
+          { autoAlpha: 0, y: 30 },
+          { autoAlpha: 1, y: 0, duration: 1 },
+          "<0.2"
         )
         .fromTo(
           ".header-image-footer",
           { autoAlpha: 0 },
           { autoAlpha: 0.6, duration: 0.5 },
-          "<0.25"
+          "<0.5"
         )
 
-      // ── Hover: corners ────────────────────────────────────────────
       cornerTL.current = gsap.timeline({ paused: true })
       cornerTL.current
         .to(
           ".corner-tl",
-          { top: -20, left: -20, duration: 0.3, ease: "power2.out" },
+          { x: -16, y: -16, duration: 0.4, ease: "power2.out" },
           0
         )
         .to(
           ".corner-tr",
-          { top: -20, right: -20, duration: 0.3, ease: "power2.out" },
+          { x: 16, y: -16, duration: 0.4, ease: "power2.out" },
           0
         )
         .to(
           ".corner-bl",
-          { bottom: -20, left: -20, duration: 0.3, ease: "power2.out" },
+          { x: -16, y: 16, duration: 0.4, ease: "power2.out" },
           0
         )
         .to(
           ".corner-br",
-          { bottom: -20, right: -20, duration: 0.3, ease: "power2.out" },
+          { x: 16, y: 16, duration: 0.4, ease: "power2.out" },
           0
         )
         .to(
           ".corner-piece",
           {
-            borderColor: "var(--color-primary)",
-            duration: 0.3,
-            ease: "power2.out",
+            "--corner-opacity": 1,
+            duration: 0.4,
           },
           0
         )
 
-      // ── Hover: image zoom ─────────────────────────────────────────
       imageTL.current = gsap.timeline({ paused: true })
       imageTL.current.to(".header-image-photo", {
-        scale: 1.04,
-        duration: 1.8,
+        scale: 1.05,
+        duration: 1.2,
         ease: "power2.out",
-        easeReverse: true,
       })
 
-      // ── Mouse events ──────────────────────────────────────────────
       const onEnter = () => {
         cornerTL.current?.play()
         imageTL.current?.play()
@@ -200,15 +203,13 @@ function Header() {
         imageTL.current?.reverse()
       }
 
-      imageWrapperRef.current?.addEventListener("mouseenter", onEnter)
-      imageWrapperRef.current?.addEventListener("mouseleave", onLeave)
+      const wrapper = imageWrapperRef.current
+      wrapper?.addEventListener("mouseenter", onEnter)
+      wrapper?.addEventListener("mouseleave", onLeave)
 
       return () => {
-        imageWrapperRef.current?.removeEventListener("mouseenter", onEnter)
-        imageWrapperRef.current?.removeEventListener("mouseleave", onLeave)
-        tl.kill()
-        cornerTL.current?.kill()
-        imageTL.current?.kill()
+        wrapper?.removeEventListener("mouseenter", onEnter)
+        wrapper?.removeEventListener("mouseleave", onLeave)
       }
     },
     { scope: container }
@@ -216,54 +217,62 @@ function Header() {
 
   return (
     <div ref={container} className="mt-16 flex flex-col lg:flex-row">
-      <div className="relative mx-auto flex h-fit w-full flex-col p-4 md:w-fit md:p-8 lg:mx-0">
-        <h1 className="animate-text text-center text-4xl font-bold opacity-0 md:text-6xl lg:text-start">
+      <div className="relative mx-auto flex h-fit w-full flex-col items-center gap-1 p-4 text-center md:w-fit md:p-8 lg:mx-0 lg:items-start lg:text-start">
+        <h1 className="animate-text text-4xl font-extrabold opacity-0 md:text-6xl">
           BROCK SHAFFER
         </h1>
-        <p className="animate-text text-sm text-muted-foreground md:text-base">
+        <p className="animate-text text-sm font-light tracking-tight text-muted-foreground italic opacity-0 md:text-base">
           Still can't figure out what to name component files.
         </p>
-        <div className="mt-2 flex w-full items-center justify-center gap-4 text-sm text-foreground uppercase lg:flex-col lg:items-start lg:justify-start lg:text-2xl">
-          <span className="animate-text opacity-0">Developer</span>
-          <span className="animate-text opacity-0">Drone Pilot</span>
-          <span className="animate-text opacity-0">Photographer</span>
-        </div>
+        <span className="animate-text text-lg font-medium uppercase opacity-0 lg:text-2xl">
+          Developer
+        </span>
       </div>
 
       <div
         ref={imageWrapperRef}
         className="header-image-wrapper relative mx-auto mt-8 w-full max-w-[90%] lg:mt-0 lg:mr-16 lg:ml-auto lg:max-w-[40vw]"
       >
-        <div className="header-image-corner opacity-0">
-          <div className="corner-piece corner-tl absolute -top-4 -left-4 h-8 w-8 border-t-2 border-l-2 border-primary/60" />
-          <div className="corner-piece corner-tr absolute -top-4 -right-4 h-8 w-8 border-t-2 border-r-2 border-primary/60" />
-          <div className="corner-piece corner-bl absolute -bottom-4 -left-4 h-8 w-8 border-b-2 border-l-2 border-primary/60" />
-          <div className="corner-piece corner-br absolute -right-4 -bottom-4 h-8 w-8 border-r-2 border-b-2 border-primary/60" />
+        <div className="header-image-corner pointer-events-none absolute inset-0 z-20 opacity-0">
+          {[
+            { id: "tl", pos: "top-0 left-0", borders: "border-t-2 border-l-2" },
+            {
+              id: "tr",
+              pos: "top-0 right-0",
+              borders: "border-t-2 border-r-2",
+            },
+            {
+              id: "bl",
+              pos: "bottom-0 left-0",
+              borders: "border-b-2 border-l-2",
+            },
+            {
+              id: "br",
+              pos: "bottom-0 right-0",
+              borders: "border-r-2 border-b-2",
+            },
+          ].map((corner) => (
+            <div
+              key={corner.id}
+              className={`corner-piece corner-${corner.id} absolute h-8 w-8 ${corner.pos} ${corner.borders}`}
+              style={
+                {
+                  borderColor: `oklch(0.473 0.137 46.201 / var(--corner-opacity))`,
+                } as React.CSSProperties
+              }
+            />
+          ))}
         </div>
 
         <div className="header-image relative w-full overflow-hidden border border-border/50 bg-muted/20 opacity-0 shadow-2xl">
-          <div className="pointer-events-none absolute top-0 left-0 z-20 flex w-full items-start justify-between p-4 font-mono text-[10px] tracking-wider text-muted-foreground/70 mix-blend-difference md:text-xs">
-            <div className="flex flex-col gap-1">
-              <span>REC.709</span>
-              <span>RAW_VIEWER.BIN</span>
-            </div>
-            <div className="flex gap-4">
-              <span>ISO 120</span>
-              <span>1/60s</span>
-              <span>f/2.8</span>
-            </div>
-          </div>
-
           <CloudinaryImage
             publicId="sp1_iuncqb"
             alt="Photo Of Brock Shaffer"
             priority
             aspectRatio={isDesktop ? "21:9" : "16:9"}
-            wrapperRef={imageRef}
             wrapperClassName="w-full [aspect-ratio:16/9] md:[aspect-ratio:21/9]"
             className="header-image-photo h-full w-full object-cover opacity-90"
           />
-
           <div className="pointer-events-none absolute inset-0 z-10 bg-black/10 bg-[linear-gradient(rgba(0,0,0,0)_50%,rgba(0,0,0,0.2)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-size-[4px_4px]" />
         </div>
 
@@ -273,6 +282,112 @@ function Header() {
         </div>
       </div>
     </div>
+  )
+}
+
+function GalleryShowcase({ active }: { active: boolean }) {
+  const container = useRef<HTMLDivElement>(null)
+
+  useGSAP(
+    () => {
+      // If active is false, ensure everything is hidden initially
+      if (!active) {
+        gsap.set([".section-title", ".gallery-card"], { autoAlpha: 0, y: 20 })
+        return
+      }
+
+      const entranceTl = gsap.timeline({ defaults: { ease: "power3.out" } })
+
+      entranceTl
+        .to(".section-title", { autoAlpha: 1, y: 0, duration: 1 })
+        .to(
+          ".gallery-card",
+          { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.15 },
+          "-=0.6"
+        )
+
+      const cards = gsap.utils.toArray<HTMLElement>(".gallery-card")
+      cards.forEach((card) => {
+        const image = card.querySelector(".card-image")
+        const corners = card.querySelectorAll(".card-corner")
+        const arrow = card.querySelector(".card-arrow")
+        const overlay = card.querySelector(".card-overlay")
+
+        const hoverTl = gsap.timeline({ paused: true })
+        hoverTl
+          .to(image, { scale: 1.05, duration: 0.6, ease: "power2.out" }, 0)
+          .to(
+            overlay,
+            { backgroundColor: "rgba(0,0,0,0.05)", duration: 0.4 },
+            0
+          )
+          .to(corners[0], { x: -4, y: -4, opacity: 1, duration: 0.3 }, 0) // TL
+          .to(corners[1], { x: 4, y: 4, opacity: 1, duration: 0.3 }, 0) // BR
+          .to(arrow, { x: 5, duration: 0.3 }, 0)
+
+        card.addEventListener("mouseenter", () => hoverTl.play())
+        card.addEventListener("mouseleave", () => hoverTl.reverse())
+      })
+    },
+    { scope: container, dependencies: [active] }
+  )
+
+  const galleryItems = [
+    {
+      id: "DJI_20240801201214_0045_D_vtzl3w",
+      label: "DRONE / CITYSCAPE",
+      alt: "Downtown Dublin Ohio",
+      href: "/photos",
+    },
+    {
+      id: "DJI_20251108110602_0075_D_j0ie3e",
+      label: "PHOTO / CITYSCAPE",
+      alt: "Suburban Columbus Ohio",
+      href: "/projects",
+    },
+    {
+      id: "damA2_09_20_25_rkfd0k",
+      label: "DRONE / INFRASTRUCTURE",
+      alt: "Black and white portrait",
+      href: "/photos",
+    },
+  ]
+
+  return (
+    <section
+      ref={container}
+      className="relative mx-auto flex w-full flex-col px-4 pt-36 md:px-6"
+    >
+      <h2 className="section-title text-2xl font-semibold tracking-tighter text-foreground opacity-0 md:text-4xl lg:self-start">
+        FINDING BEAUTY IN DETAILS
+      </h2>
+
+      <div className="mt-4 grid w-full grid-cols-1 gap-6 md:grid-cols-3">
+        {galleryItems.map((item) => (
+          <a
+            key={item.id}
+            href={item.href}
+            className="gallery-card group relative aspect-video cursor-default overflow-hidden border border-border/50 bg-muted/20 opacity-0"
+          >
+            <div className="card-image h-full w-full">
+              <CloudinaryImage
+                publicId={item.id}
+                alt={item.alt}
+                className="h-full w-full object-cover opacity-90"
+              />
+            </div>
+            <div className="card-overlay absolute inset-0 bg-black/15" />
+            <div className="card-corner absolute top-0 left-0 h-4 w-4 border-t-2 border-l-2 border-primary/40 opacity-0" />
+            <div className="card-corner absolute right-0 bottom-0 h-4 w-4 border-r-2 border-b-2 border-primary/40 opacity-0" />
+
+            <div className="absolute right-0 bottom-0 left-0 flex items-end justify-between p-3 font-mono text-xs text-white/90 mix-blend-difference md:text-sm">
+              <span className="font-medium">{item.label}</span>
+              <ArrowRightIcon size={16} className="card-arrow" />
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
   )
 }
 

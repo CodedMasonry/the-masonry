@@ -46,8 +46,8 @@ export function CloudinaryImage({
         responsive({ steps: [320, 640, 768, 1024, 1280, 1536, 1920, 2560] }),
       ]
     : [
-        lazyload({ rootMargin: "200px 0px" }), // start loading before in-view
-        placeholder({ mode: "blur" }), // blurry LQIP while loading
+        lazyload({ rootMargin: "200px 0px" }),
+        placeholder({ mode: "pixelate" }),
         responsive({ steps: [320, 640, 768, 1024, 1280, 1536, 1920, 2560] }),
       ]
 
