@@ -216,7 +216,7 @@ function Header({ onComplete }: { onComplete: () => void }) {
   )
 
   return (
-    <div ref={container} className="mt-16 flex flex-col lg:flex-row">
+    <section ref={container} className="mt-16 flex flex-col lg:flex-row">
       <div className="relative mx-auto flex h-fit w-full flex-col items-center gap-1 p-4 text-center md:w-fit md:p-8 lg:mx-0 lg:items-start lg:text-start">
         <h1 className="animate-text text-4xl font-extrabold opacity-0 md:text-6xl">
           BROCK SHAFFER
@@ -281,7 +281,7 @@ function Header({ onComplete }: { onComplete: () => void }) {
           <span>39.9612° N, 82.9988° W</span>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 
