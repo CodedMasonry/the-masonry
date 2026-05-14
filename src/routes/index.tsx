@@ -94,10 +94,12 @@ gsap.registerPlugin(ScrambleTextPlugin)
 function App() {
   return (
     <GridBackground className="min-h-screen bg-background text-foreground">
-      <main className="relative pb-[25vh] transition-all duration-500 lg:pb-0 lg:pl-100">
+      <main className="relative h-full pb-[25vh] transition-all duration-500 lg:pb-0 lg:pl-100">
         <Header />
         <IndexTerminal />
-        <ModeToggle />
+        <div className="pointer-none: fixed right-4 bottom-4 font-barcode">
+          security through obscurity is no security at all
+        </div>
       </main>
     </GridBackground>
   )
@@ -218,10 +220,10 @@ function Header() {
         <h1 className="animate-text text-center text-4xl font-bold opacity-0 md:text-6xl lg:text-start">
           BROCK SHAFFER
         </h1>
-        <p className="animate-text text-center font-barcode text-xs tracking-widest text-primary opacity-0 select-none md:text-base lg:ml-1 lg:text-left dark:text-foreground">
-          Security Through Obscurity Defines Our World
+        <p className="animate-text text-sm text-muted-foreground md:text-base">
+          Still can't figure out what to name component files.
         </p>
-        <div className="flex w-full items-center justify-center gap-4 text-sm text-foreground uppercase lg:justify-start lg:text-lg">
+        <div className="mt-2 flex w-full items-center justify-center gap-4 text-sm text-foreground uppercase lg:flex-col lg:items-start lg:justify-start lg:text-2xl">
           <span className="animate-text opacity-0">Developer</span>
           <span className="animate-text opacity-0">Drone Pilot</span>
           <span className="animate-text opacity-0">Photographer</span>
