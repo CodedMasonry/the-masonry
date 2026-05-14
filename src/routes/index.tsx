@@ -134,8 +134,8 @@ function Header({ onComplete }: { onComplete: () => void }) {
 
       tl.fromTo(
         ".animate-text",
-        { autoAlpha: 0, y: 15 },
-        { autoAlpha: 1, y: 0, delay: 1, duration: 1.5, stagger: 0.1 }
+        { autoAlpha: 0 },
+        { autoAlpha: 1, delay: 1, duration: 1.5, stagger: 0.1 }
       )
         .fromTo(
           ".header-image-corner",
@@ -156,7 +156,10 @@ function Header({ onComplete }: { onComplete: () => void }) {
           "<0.5"
         )
 
-      cornerTL.current = gsap.timeline({ paused: true })
+      cornerTL.current = gsap.timeline({
+        paused: true,
+        defaults: { easeReverse: true },
+      })
       cornerTL.current
         .to(
           ".corner-tl",
@@ -192,6 +195,7 @@ function Header({ onComplete }: { onComplete: () => void }) {
         scale: 1.05,
         duration: 1.2,
         ease: "power2.out",
+        easeReverse: true,
       })
 
       const onEnter = () => {
