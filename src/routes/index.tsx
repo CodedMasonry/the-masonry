@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, Link } from "@tanstack/react-router"
 import { createServerFn } from "@tanstack/react-start"
 import { getRequest } from "@tanstack/react-start/server"
 import { Terminal } from "@/components/Terminal"
@@ -10,7 +10,11 @@ import { useGSAP } from "@gsap/react"
 import { CloudinaryImage } from "@/components/CloudinaryImage"
 import { MotionPathPlugin } from "gsap/all"
 import { useMediaQuery } from "@/hooks/useMediaQuery"
-import { ArrowRightIcon } from "@phosphor-icons/react"
+import {
+  ApertureIcon,
+  ArrowRightIcon,
+  GithubLogoIcon,
+} from "@phosphor-icons/react"
 
 export interface IncomingRequestCfProperties {
   // Identity
@@ -145,15 +149,21 @@ function Header({ onComplete }: { onComplete: () => void }) {
         )
         .fromTo(
           ".header-image",
-          { autoAlpha: 0, y: 30 },
-          { autoAlpha: 1, y: 0, duration: 1 },
+          { autoAlpha: 0 },
+          { autoAlpha: 1, duration: 1 },
           "<0.2"
         )
         .fromTo(
           ".header-image-footer",
           { autoAlpha: 0 },
           { autoAlpha: 0.6, duration: 0.5 },
-          "<0.5"
+          "<0.25"
+        )
+        .fromTo(
+          ".link-display",
+          { autoAlpha: 0 },
+          { autoAlpha: 1, duration: 0.5 },
+          "<.25"
         )
 
       cornerTL.current = gsap.timeline({
@@ -231,6 +241,24 @@ function Header({ onComplete }: { onComplete: () => void }) {
         <span className="animate-text text-lg font-medium uppercase opacity-0 lg:text-2xl">
           Developer
         </span>
+
+        <div className="link-display mt-10 flex w-full cursor-default flex-col gap-3 border border-border bg-background px-2 py-1 opacity-0">
+          <p className="text-xs font-light text-muted-foreground">FOUND:</p>
+          <a
+            href="https://github.com/BitSiphon"
+            className="flex cursor-default decoration-primary hover:underline [&_svg]:shrink-0"
+          >
+            <GithubLogoIcon strokeWidth={2} className="size-6" />
+            Github
+          </a>
+          <Link
+            to="/photos"
+            className="flex cursor-default decoration-primary hover:underline [&_svg]:shrink-0"
+          >
+            <ApertureIcon strokeWidth={2} className="size-6" />
+            Gallery
+          </Link>
+        </div>
       </div>
 
       <div
