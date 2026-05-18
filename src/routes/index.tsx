@@ -252,7 +252,7 @@ function Header({ onComplete }: { onComplete: () => void }) {
             Github
           </a>
           <Link
-            to="/gallery"
+            to="/photos"
             className="flex cursor-default decoration-primary hover:underline [&_svg]:shrink-0"
           >
             <ApertureIcon strokeWidth={2} className="size-6" />
