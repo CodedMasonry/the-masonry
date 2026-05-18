@@ -15,6 +15,7 @@ import {
   ArrowRightIcon,
   GithubLogoIcon,
 } from "@phosphor-icons/react"
+import { Button } from "@/components/ui/button"
 
 export interface IncomingRequestCfProperties {
   // Identity
@@ -242,21 +243,21 @@ function Header({ onComplete }: { onComplete: () => void }) {
           Developer
         </span>
 
-        <div className="link-display mt-10 flex w-full cursor-default flex-col gap-3 border border-border bg-background px-2 py-1 opacity-0">
-          <p className="text-xs font-light text-muted-foreground">FOUND:</p>
+        <div className="link-display mx-auto mt-4 flex cursor-default gap-4 opacity-0 lg:ml-0">
           <a
             href="https://github.com/BitSiphon"
-            className="flex cursor-default decoration-primary hover:underline [&_svg]:shrink-0"
+            className="flex cursor-default"
           >
-            <GithubLogoIcon strokeWidth={2} className="size-6" />
-            Github
+            <Button size="lg">
+              <GithubLogoIcon strokeWidth={2} className="size-6" />
+              Github
+            </Button>
           </a>
-          <Link
-            to="/photos"
-            className="flex cursor-default decoration-primary hover:underline [&_svg]:shrink-0"
-          >
-            <ApertureIcon strokeWidth={2} className="size-6" />
-            Gallery
+          <Link to="/photos" className="flex cursor-default">
+            <Button variant="outline" size="lg">
+              <ApertureIcon strokeWidth={2} className="size-6" />
+              Gallery
+            </Button>
           </Link>
         </div>
       </div>
