@@ -270,7 +270,7 @@ function Header({ onComplete }: { onComplete: () => void }) {
         </h1>
         <p
           id="random-rambling"
-          className="animate-text text-xs font-light tracking-tight text-muted-foreground italic opacity-0 md:text-base"
+          className="animate-text font-light tracking-tight text-muted-foreground italic opacity-0"
         >
           Still can't figure out what to name component files.
         </p>
