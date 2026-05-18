@@ -56,9 +56,10 @@ function RouteComponent() {
 
       <div className="photo-gallery 3xl:columns-5 mt-4 columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
         {images.map((img) => (
-          <div
+          <a
             key={img.id}
-            className="photo-gallery-item mb-4 w-full break-inside-avoid overflow-hidden rounded-xl border border-border/40 bg-muted/40 transition-shadow duration-300 hover:shadow-lg"
+            href={"/photos/" + img.id}
+            className="photo-gallery-item mb-4 w-full cursor-default break-inside-avoid overflow-hidden rounded-xl border border-border/40 bg-muted/40 transition-shadow duration-300 hover:shadow-lg"
           >
             <CloudinaryImage
               publicId={img.id}
@@ -66,7 +67,7 @@ function RouteComponent() {
               aspectRatio={`${img.width}:${img.height}`}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, (max-width: 1536px) 25vw, 16vw"
             />
-          </div>
+          </a>
         ))}
       </div>
     </main>

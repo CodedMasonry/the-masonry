@@ -117,7 +117,7 @@ function PhotoDetailsPage() {
   return (
     <main className="flex min-h-screen flex-col">
       <Link
-        to="/gallery"
+        to="/photos"
         className="z-20 mt-4 mb-4 ml-2 cursor-default md:mb-0 xl:ml-8"
       >
         <Button variant="ghost">← Back to Gallery</Button>
