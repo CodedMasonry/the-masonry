@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PhotosRouteImport } from './routes/photos'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PhotosPublicIdRouteImport } from './routes/photos_/$publicId'
 
 const PhotosRoute = PhotosRouteImport.update({
   id: '/photos',
@@ -22,31 +23,40 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PhotosPublicIdRoute = PhotosPublicIdRouteImport.update({
+  id: '/photos_/$publicId',
+  path: '/photos/$publicId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/photos': typeof PhotosRoute
+  '/photos/$publicId': typeof PhotosPublicIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/photos': typeof PhotosRoute
+  '/photos/$publicId': typeof PhotosPublicIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/photos': typeof PhotosRoute
+  '/photos_/$publicId': typeof PhotosPublicIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/photos'
+  fullPaths: '/' | '/photos' | '/photos/$publicId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/photos'
-  id: '__root__' | '/' | '/photos'
+  to: '/' | '/photos' | '/photos/$publicId'
+  id: '__root__' | '/' | '/photos' | '/photos_/$publicId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PhotosRoute: typeof PhotosRoute
+  PhotosPublicIdRoute: typeof PhotosPublicIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/photos_/$publicId': {
+      id: '/photos_/$publicId'
+      path: '/photos/$publicId'
+      fullPath: '/photos/$publicId'
+      preLoaderRoute: typeof PhotosPublicIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PhotosRoute: PhotosRoute,
+  PhotosPublicIdRoute: PhotosPublicIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

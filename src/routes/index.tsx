@@ -252,7 +252,7 @@ function Header({ onComplete }: { onComplete: () => void }) {
             Github
           </a>
           <Link
-            to="/photos"
+            to="/gallery"
             className="flex cursor-default decoration-primary hover:underline [&_svg]:shrink-0"
           >
             <ApertureIcon strokeWidth={2} className="size-6" />
@@ -322,7 +322,6 @@ function GalleryShowcase({ active }: { active: boolean }) {
 
   useGSAP(
     () => {
-      // If active is false, ensure everything is hidden initially
       if (!active) {
         gsap.set([".section-title", ".gallery-card"], { autoAlpha: 0, y: 20 })
         return

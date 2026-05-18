@@ -1,5 +1,6 @@
 import { CloudinaryImage } from "@/components/CloudinaryImage"
 import { cloudinaryAdmin } from "@/utils/cloudinary.server"
+import { Link } from "@tanstack/react-router"
 import { createFileRoute } from "@tanstack/react-router"
 import { createServerFn } from "@tanstack/react-start"
 
@@ -44,11 +45,16 @@ function RouteComponent() {
 
   return (
     <main className="min-h-screen w-full p-4">
-      <h1 className="mb-6 px-1 text-3xl font-bold tracking-tight">
-        Photo Gallery
-      </h1>
+      <h1 className="hidden">Photo Gallery</h1>
+      <div className="flex gap-2 text-sm text-muted-foreground">
+        <Link to="/" className="hover:text-foreground">
+          HOME
+        </Link>{" "}
+        <span>/</span>
+        <p className="font-bold text-foreground">PHOTOS</p>
+      </div>
 
-      <div className="photo-gallery 3xl:columns-5 columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
+      <div className="photo-gallery 3xl:columns-5 mt-4 columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
         {images.map((img) => (
           <div
             key={img.id}
