@@ -16,6 +16,7 @@ import {
   GithubLogoIcon,
 } from "@phosphor-icons/react"
 import { Button } from "@/components/ui/button"
+import { ScrambleTextPlugin } from "gsap/all"
 
 export interface IncomingRequestCfProperties {
   // Identity
@@ -95,6 +96,15 @@ export const Route = createFileRoute("/")({
 })
 
 gsap.registerPlugin(MotionPathPlugin)
+gsap.registerPlugin(ScrambleTextPlugin)
+
+const RAMBLING_TEXTS = [
+  "Still can't figure out what to name loop variables",
+  "Thinks Java and C# are the same thing",
+  "Devised a plan to rewrite claude in rust",
+  "Forgot that drones hate trees",
+  "Crashes photoshop at least once per editing session",
+]
 
 function App() {
   const [headerFinished, setHeaderFinished] = useState(false)
@@ -116,7 +126,6 @@ function App() {
     </GridBackground>
   )
 }
-
 function Header({ onComplete }: { onComplete: () => void }) {
   const container = useRef<HTMLDivElement>(null)
   const cornerTL = useRef<gsap.core.Timeline | null>(null)
@@ -166,6 +175,28 @@ function Header({ onComplete }: { onComplete: () => void }) {
           { autoAlpha: 1, duration: 0.5 },
           "<.25"
         )
+
+      let ramblingTimeout: NodeJS.Timeout
+
+      const scrambleRandomRambling = () => {
+        const randomPhrase =
+          RAMBLING_TEXTS[Math.floor(Math.random() * RAMBLING_TEXTS.length)]
+
+        gsap.to("#random-rambling", {
+          duration: 1,
+          scrambleText: {
+            text: randomPhrase,
+            chars: "uppercase",
+            revealDelay: 0.2,
+            speed: 0.4,
+          },
+        })
+
+        const randomDelay = Math.random() * 30000 + 10000
+        ramblingTimeout = setTimeout(scrambleRandomRambling, randomDelay)
+      }
+
+      ramblingTimeout = setTimeout(scrambleRandomRambling, 5000)
 
       cornerTL.current = gsap.timeline({
         paused: true,
@@ -225,6 +256,7 @@ function Header({ onComplete }: { onComplete: () => void }) {
       return () => {
         wrapper?.removeEventListener("mouseenter", onEnter)
         wrapper?.removeEventListener("mouseleave", onLeave)
+        clearTimeout(ramblingTimeout)
       }
     },
     { scope: container }
@@ -233,14 +265,17 @@ function Header({ onComplete }: { onComplete: () => void }) {
   return (
     <section ref={container} className="mt-16 flex flex-col lg:flex-row">
       <div className="relative mx-auto flex h-fit w-full flex-col items-center gap-1 p-4 text-center md:w-fit md:p-8 lg:mx-0 lg:items-start lg:text-start">
-        <h1 className="animate-text text-4xl font-extrabold opacity-0 md:text-6xl">
+        <h1 className="animate-text text-4xl font-bold opacity-0 md:text-6xl">
           BROCK SHAFFER
         </h1>
-        <p className="animate-text text-sm font-light tracking-tight text-muted-foreground italic opacity-0 md:text-base">
+        <p
+          id="random-rambling"
+          className="animate-text text-xs font-light tracking-tight text-muted-foreground italic opacity-0 md:text-base"
+        >
           Still can't figure out what to name component files.
         </p>
-        <span className="animate-text text-lg font-medium uppercase opacity-0 lg:text-2xl">
-          Developer
+        <span className="animate-text text-lg opacity-0 lg:text-2xl">
+          I make stuff sometimes.
         </span>
 
         <div className="link-display mx-auto mt-4 flex cursor-default gap-4 opacity-0 lg:ml-0">
@@ -256,7 +291,7 @@ function Header({ onComplete }: { onComplete: () => void }) {
           <Link to="/photos" className="flex cursor-default">
             <Button variant="outline" size="lg">
               <ApertureIcon strokeWidth={2} className="size-6" />
-              Gallery
+              Photo Gallery
             </Button>
           </Link>
         </div>
@@ -391,7 +426,7 @@ function GalleryShowcase({ active }: { active: boolean }) {
       className="relative mx-auto flex w-full flex-col px-4 pt-36 md:px-6"
     >
       <h2 className="section-title text-2xl font-semibold tracking-tighter text-foreground opacity-0 md:text-4xl lg:self-start">
-        FINDING BEAUTY IN DETAILS
+        I take photos sometimes{" "}
       </h2>
 
       <div className="mt-4 grid w-full grid-cols-1 gap-6 md:grid-cols-3">
