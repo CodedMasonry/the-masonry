@@ -152,6 +152,11 @@ function Header({ onComplete }: { onComplete: () => void }) {
         { autoAlpha: 1, delay: 1, duration: 1.5, stagger: 0.1 }
       )
         .fromTo(
+          ".link-display",
+          { autoAlpha: 0 },
+          { autoAlpha: 1, duration: 0.5 }
+        )
+        .fromTo(
           ".header-image-corner",
           { autoAlpha: 0, scale: 1.1 },
           { autoAlpha: 1, scale: 1, duration: 0.8 },
@@ -168,12 +173,6 @@ function Header({ onComplete }: { onComplete: () => void }) {
           { autoAlpha: 0 },
           { autoAlpha: 0.6, duration: 0.5 },
           "<0.25"
-        )
-        .fromTo(
-          ".link-display",
-          { autoAlpha: 0 },
-          { autoAlpha: 1, duration: 0.5 },
-          "<.25"
         )
 
       let ramblingTimeout: NodeJS.Timeout

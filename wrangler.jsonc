@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "the-masonry-devbuild",
+  "name": "the-masonry",
   "compatibility_date": "2026-05-09",
   "observability": {
     "enabled": true,
