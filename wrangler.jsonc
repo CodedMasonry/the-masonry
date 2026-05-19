@@ -7,4 +7,10 @@
   },
   "main": "@tanstack/react-start/server-entry",
   "compatibility_flags": ["nodejs_compat"],
+  "routes": [
+    {
+      "pattern": "brockshaffer.dev",
+      "custom_domain": true,
+    },
+  ],
 }
