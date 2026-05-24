@@ -279,7 +279,7 @@ function Header({ onComplete }: { onComplete: () => void }) {
 
         <div className="link-display mx-auto mt-4 flex cursor-default gap-4 opacity-0 lg:ml-0">
           <a
-            href="https://github.com/BitSiphon"
+            href="https://github.com/broski-lib"
             className="flex cursor-default"
           >
             <Button size="lg">
