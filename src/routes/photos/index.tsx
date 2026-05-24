@@ -33,7 +33,7 @@ export const getCloudinaryImages = createServerFn({
   }
 })
 
-export const Route = createFileRoute("/photos")({
+export const Route = createFileRoute("/photos/")({
   loader: () => getCloudinaryImages(),
   staleTime: 1000 * 60 * 5,
   gcTime: 1000 * 60 * 15,

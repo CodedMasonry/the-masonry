@@ -55,7 +55,7 @@ const getPhotoDetails = createServerFn({ method: "GET" })
     return { photo, metadata }
   })
 
-export const Route = createFileRoute("/photos_/$publicId")({
+export const Route = createFileRoute("/photos/$publicId")({
   loader: async ({ params }) => {
     return await getPhotoDetails({ data: params.publicId })
   },

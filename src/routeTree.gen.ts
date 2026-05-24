@@ -9,80 +9,119 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as PhotosRouteImport } from './routes/photos'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ScriptsImageconvertRouteImport } from './routes/scripts/imageconvert'
-import { Route as PhotosPublicIdRouteImport } from './routes/photos_/$publicId'
+import { Route as ScriptsIndexRouteImport } from './routes/scripts/index'
+import { Route as PhotosIndexRouteImport } from './routes/photos/index'
+import { Route as ScriptsImageConvertRouteImport } from './routes/scripts/image-convert'
+import { Route as ScriptsContactSheetRouteImport } from './routes/scripts/contact-sheet'
+import { Route as ScriptsSplatRouteImport } from './routes/scripts/$'
+import { Route as PhotosPublicIdRouteImport } from './routes/photos/$publicId'
 
-const PhotosRoute = PhotosRouteImport.update({
-  id: '/photos',
-  path: '/photos',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ScriptsImageconvertRoute = ScriptsImageconvertRouteImport.update({
-  id: '/scripts/imageconvert',
-  path: '/scripts/imageconvert',
+const ScriptsIndexRoute = ScriptsIndexRouteImport.update({
+  id: '/scripts/',
+  path: '/scripts/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PhotosIndexRoute = PhotosIndexRouteImport.update({
+  id: '/photos/',
+  path: '/photos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScriptsImageConvertRoute = ScriptsImageConvertRouteImport.update({
+  id: '/scripts/image-convert',
+  path: '/scripts/image-convert',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScriptsContactSheetRoute = ScriptsContactSheetRouteImport.update({
+  id: '/scripts/contact-sheet',
+  path: '/scripts/contact-sheet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScriptsSplatRoute = ScriptsSplatRouteImport.update({
+  id: '/scripts/$',
+  path: '/scripts/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PhotosPublicIdRoute = PhotosPublicIdRouteImport.update({
-  id: '/photos_/$publicId',
-  path: '/photos/$publicId',
-  getParentRoute: () => rootRouteImport,
+  id: '/$publicId',
+  path: '/$publicId',
+  getParentRoute: () => PhotosRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/photos': typeof PhotosRoute
   '/photos/$publicId': typeof PhotosPublicIdRoute
-  '/scripts/imageconvert': typeof ScriptsImageconvertRoute
+  '/scripts/$': typeof ScriptsSplatRoute
+  '/scripts/contact-sheet': typeof ScriptsContactSheetRoute
+  '/scripts/image-convert': typeof ScriptsImageConvertRoute
+  '/photos/': typeof PhotosIndexRoute
+  '/scripts/': typeof ScriptsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/photos': typeof PhotosRoute
   '/photos/$publicId': typeof PhotosPublicIdRoute
-  '/scripts/imageconvert': typeof ScriptsImageconvertRoute
+  '/scripts/$': typeof ScriptsSplatRoute
+  '/scripts/contact-sheet': typeof ScriptsContactSheetRoute
+  '/scripts/image-convert': typeof ScriptsImageConvertRoute
+  '/photos': typeof PhotosIndexRoute
+  '/scripts': typeof ScriptsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/photos': typeof PhotosRoute
-  '/photos_/$publicId': typeof PhotosPublicIdRoute
-  '/scripts/imageconvert': typeof ScriptsImageconvertRoute
+  '/photos/$publicId': typeof PhotosPublicIdRoute
+  '/scripts/$': typeof ScriptsSplatRoute
+  '/scripts/contact-sheet': typeof ScriptsContactSheetRoute
+  '/scripts/image-convert': typeof ScriptsImageConvertRoute
+  '/photos/': typeof PhotosIndexRoute
+  '/scripts/': typeof ScriptsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/photos' | '/photos/$publicId' | '/scripts/imageconvert'
+  fullPaths:
+    | '/'
+    | '/photos/$publicId'
+    | '/scripts/$'
+    | '/scripts/contact-sheet'
+    | '/scripts/image-convert'
+    | '/photos/'
+    | '/scripts/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/photos' | '/photos/$publicId' | '/scripts/imageconvert'
+  to:
+    | '/'
+    | '/photos/$publicId'
+    | '/scripts/$'
+    | '/scripts/contact-sheet'
+    | '/scripts/image-convert'
+    | '/photos'
+    | '/scripts'
   id:
     | '__root__'
     | '/'
-    | '/photos'
-    | '/photos_/$publicId'
-    | '/scripts/imageconvert'
+    | '/photos/$publicId'
+    | '/scripts/$'
+    | '/scripts/contact-sheet'
+    | '/scripts/image-convert'
+    | '/photos/'
+    | '/scripts/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  PhotosRoute: typeof PhotosRoute
-  PhotosPublicIdRoute: typeof PhotosPublicIdRoute
-  ScriptsImageconvertRoute: typeof ScriptsImageconvertRoute
+  ScriptsSplatRoute: typeof ScriptsSplatRoute
+  ScriptsContactSheetRoute: typeof ScriptsContactSheetRoute
+  ScriptsImageConvertRoute: typeof ScriptsImageConvertRoute
+  PhotosIndexRoute: typeof PhotosIndexRoute
+  ScriptsIndexRoute: typeof ScriptsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/photos': {
-      id: '/photos'
-      path: '/photos'
-      fullPath: '/photos'
-      preLoaderRoute: typeof PhotosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -90,28 +129,58 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/scripts/imageconvert': {
-      id: '/scripts/imageconvert'
-      path: '/scripts/imageconvert'
-      fullPath: '/scripts/imageconvert'
-      preLoaderRoute: typeof ScriptsImageconvertRouteImport
+    '/scripts/': {
+      id: '/scripts/'
+      path: '/scripts'
+      fullPath: '/scripts/'
+      preLoaderRoute: typeof ScriptsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/photos_/$publicId': {
-      id: '/photos_/$publicId'
-      path: '/photos/$publicId'
+    '/photos/': {
+      id: '/photos/'
+      path: '/photos'
+      fullPath: '/photos/'
+      preLoaderRoute: typeof PhotosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scripts/image-convert': {
+      id: '/scripts/image-convert'
+      path: '/scripts/image-convert'
+      fullPath: '/scripts/image-convert'
+      preLoaderRoute: typeof ScriptsImageConvertRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scripts/contact-sheet': {
+      id: '/scripts/contact-sheet'
+      path: '/scripts/contact-sheet'
+      fullPath: '/scripts/contact-sheet'
+      preLoaderRoute: typeof ScriptsContactSheetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scripts/$': {
+      id: '/scripts/$'
+      path: '/scripts/$'
+      fullPath: '/scripts/$'
+      preLoaderRoute: typeof ScriptsSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/photos/$publicId': {
+      id: '/photos/$publicId'
+      path: '/$publicId'
       fullPath: '/photos/$publicId'
       preLoaderRoute: typeof PhotosPublicIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof PhotosRoute
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  PhotosRoute: PhotosRoute,
-  PhotosPublicIdRoute: PhotosPublicIdRoute,
-  ScriptsImageconvertRoute: ScriptsImageconvertRoute,
+  ScriptsSplatRoute: ScriptsSplatRoute,
+  ScriptsContactSheetRoute: ScriptsContactSheetRoute,
+  ScriptsImageConvertRoute: ScriptsImageConvertRoute,
+  PhotosIndexRoute: PhotosIndexRoute,
+  ScriptsIndexRoute: ScriptsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
