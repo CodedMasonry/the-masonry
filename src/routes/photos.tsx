@@ -54,12 +54,12 @@ function RouteComponent() {
         <p className="font-bold text-foreground">PHOTOS</p>
       </div>
 
-      <div className="photo-gallery 3xl:columns-5 mt-4 columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
+      <div className="3xl:columns-5 mt-4 columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
         {images.map((img) => (
           <a
             key={img.id}
             href={"/photos/" + img.id}
-            className="photo-gallery-item mb-4 w-full cursor-default break-inside-avoid overflow-hidden rounded-xl border border-border/40 bg-muted/40 transition-shadow duration-300 hover:shadow-lg"
+            className="mb-4 w-full cursor-default break-inside-avoid overflow-hidden rounded-xl border border-border/40 bg-muted/40 transition-shadow duration-300 hover:shadow-lg"
           >
             <CloudinaryImage
               publicId={img.id}
