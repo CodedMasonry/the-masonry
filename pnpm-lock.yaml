@@ -65,6 +65,9 @@ importers:
       gsap:
         specifier: ^3.15.0
         version: 3.15.0
+      heic2any:
+        specifier: ^0.0.4
+        version: 0.0.4
       nitro:
         specifier: latest
         version: 3.0.260429-beta(dotenv@17.4.2)(jiti@2.7.0)(lru-cache@11.4.0)(miniflare@4.20260518.0)(rollup@4.60.3)(vite@8.0.13(@types/node@25.9.0)(esbuild@0.27.7)(jiti@2.7.0))
@@ -3044,6 +3047,9 @@ packages:
 
   headers-polyfill@5.0.1:
     resolution: {integrity: sha512-1TJ6Fih/b8h5TIcv+1+Hw0PDQWJTKDKzFZzcKOiW1wJza3XoAQlkCuXLbymPYB8+ZQyw8mHvdw560e8zVFIWyA==}
+
+  heic2any@0.0.4:
+    resolution: {integrity: sha512-3lLnZiDELfabVH87htnRolZ2iehX9zwpRyGNz22GKXIu0fznlblf0/ftppXKNqS26dqFSeqfIBhAmAj/uSp0cA==}
 
   hono@4.12.21:
     resolution: {integrity: sha512-uV63apnb0kyPtAUwoWgaGh9HyIFcv8lgmzPZSiTBQAFOFGIzka5EZ1dZocmGnn0XdX0+XTqJ6Tqv7selMuGLRQ==}
@@ -7195,6 +7201,8 @@ snapshots:
     dependencies:
       '@types/set-cookie-parser': 2.4.10
       set-cookie-parser: 3.1.0
+
+  heic2any@0.0.4: {}
 
   hono@4.12.21: {}
 

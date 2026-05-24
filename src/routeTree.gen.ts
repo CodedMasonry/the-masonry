@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PhotosRouteImport } from './routes/photos'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ScriptsImageconvertRouteImport } from './routes/scripts/imageconvert'
 import { Route as PhotosPublicIdRouteImport } from './routes/photos_/$publicId'
 
 const PhotosRoute = PhotosRouteImport.update({
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ScriptsImageconvertRoute = ScriptsImageconvertRouteImport.update({
+  id: '/scripts/imageconvert',
+  path: '/scripts/imageconvert',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PhotosPublicIdRoute = PhotosPublicIdRouteImport.update({
   id: '/photos_/$publicId',
   path: '/photos/$publicId',
@@ -33,30 +39,39 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/photos': typeof PhotosRoute
   '/photos/$publicId': typeof PhotosPublicIdRoute
+  '/scripts/imageconvert': typeof ScriptsImageconvertRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/photos': typeof PhotosRoute
   '/photos/$publicId': typeof PhotosPublicIdRoute
+  '/scripts/imageconvert': typeof ScriptsImageconvertRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/photos': typeof PhotosRoute
   '/photos_/$publicId': typeof PhotosPublicIdRoute
+  '/scripts/imageconvert': typeof ScriptsImageconvertRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/photos' | '/photos/$publicId'
+  fullPaths: '/' | '/photos' | '/photos/$publicId' | '/scripts/imageconvert'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/photos' | '/photos/$publicId'
-  id: '__root__' | '/' | '/photos' | '/photos_/$publicId'
+  to: '/' | '/photos' | '/photos/$publicId' | '/scripts/imageconvert'
+  id:
+    | '__root__'
+    | '/'
+    | '/photos'
+    | '/photos_/$publicId'
+    | '/scripts/imageconvert'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PhotosRoute: typeof PhotosRoute
   PhotosPublicIdRoute: typeof PhotosPublicIdRoute
+  ScriptsImageconvertRoute: typeof ScriptsImageconvertRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -75,6 +90,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/scripts/imageconvert': {
+      id: '/scripts/imageconvert'
+      path: '/scripts/imageconvert'
+      fullPath: '/scripts/imageconvert'
+      preLoaderRoute: typeof ScriptsImageconvertRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/photos_/$publicId': {
       id: '/photos_/$publicId'
       path: '/photos/$publicId'
@@ -89,6 +111,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PhotosRoute: PhotosRoute,
   PhotosPublicIdRoute: PhotosPublicIdRoute,
+  ScriptsImageconvertRoute: ScriptsImageconvertRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
