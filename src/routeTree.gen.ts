@@ -48,9 +48,9 @@ const ScriptsSplatRoute = ScriptsSplatRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const PhotosPublicIdRoute = PhotosPublicIdRouteImport.update({
-  id: '/$publicId',
-  path: '/$publicId',
-  getParentRoute: () => PhotosRoute,
+  id: '/photos/$publicId',
+  path: '/photos/$publicId',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -113,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PhotosPublicIdRoute: typeof PhotosPublicIdRoute
   ScriptsSplatRoute: typeof ScriptsSplatRoute
   ScriptsContactSheetRoute: typeof ScriptsContactSheetRoute
   ScriptsImageConvertRoute: typeof ScriptsImageConvertRoute
@@ -166,16 +167,17 @@ declare module '@tanstack/react-router' {
     }
     '/photos/$publicId': {
       id: '/photos/$publicId'
-      path: '/$publicId'
+      path: '/photos/$publicId'
       fullPath: '/photos/$publicId'
       preLoaderRoute: typeof PhotosPublicIdRouteImport
-      parentRoute: typeof PhotosRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PhotosPublicIdRoute: PhotosPublicIdRoute,
   ScriptsSplatRoute: ScriptsSplatRoute,
   ScriptsContactSheetRoute: ScriptsContactSheetRoute,
   ScriptsImageConvertRoute: ScriptsImageConvertRoute,
